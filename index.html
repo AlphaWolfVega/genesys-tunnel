@@ -1229,6 +1229,20 @@
     font-weight: 600;
   }
 
+  /* ─── TITRES DE SECTION (PROGRAMME) ─── */
+  .programme-section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(15px, 1.6vw, 19px);
+    letter-spacing: 0.42em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0 auto 56px;
+    text-shadow: 0 0 14px rgba(91,139,201,0.45);
+    font-weight: 600;
+    padding: 0 16px;
+  }
+
   /* ─── BLOC COMPARATIF 3 COLONNES ─── */
   .compare-block {
     display: grid;
@@ -1242,29 +1256,41 @@
     background: var(--bg-card);
     border: 1px solid var(--line);
     backdrop-filter: blur(10px);
-    padding: 36px 30px;
-    text-align: left;
+    padding: 40px 32px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
   .compare-svg {
-    width: 64px; height: 64px;
-    margin-bottom: 22px;
-    filter: drop-shadow(0 0 12px rgba(91,139,201,0.4));
+    width: 72px; height: 72px;
+    margin: 0 auto 26px;
+    filter: drop-shadow(0 0 14px rgba(91,139,201,0.5));
   }
   .compare-card h3 {
     font-family: 'Cinzel', serif;
-    font-size: 22px;
+    font-size: 26px;
     color: var(--chrome-2);
-    margin-bottom: 16px;
-    letter-spacing: 0.06em;
-    text-shadow: 0 0 12px rgba(91,139,201,0.4);
-    line-height: 1.25;
+    margin-bottom: 8px;
+    letter-spacing: 0.08em;
+    text-shadow: 0 0 14px rgba(91,139,201,0.45);
+    line-height: 1.2;
+    text-align: center;
+  }
+  .compare-duration {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--text-3);
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    margin-bottom: 26px;
+    text-align: center;
   }
   .compare-card p {
     font-size: 16px;
     line-height: 1.7;
     color: var(--text-2);
+    text-align: left;
   }
 
   /* ─── 4 FORMULE CARDS — GRID + FLEX ALIGNED ─── */
@@ -1837,7 +1863,7 @@
         <p style="margin-top:18px; font-size:17px; color: var(--text-2);">C'est pour ça que nos formules sont calibrées sur le temps réel qu'il faut pour transformer une situation. Pas une heure de plus, pas une heure de moins.</p>
       </div>
 
-      <div class="step-eyebrow" style="text-align:center; margin-bottom:36px">3 niveaux de profondeur</div>
+      <div class="programme-section-title">3 niveaux de profondeur</div>
       <div class="compare-block">
 
         <!-- Optimisation -->
@@ -1850,8 +1876,9 @@
             <line x1="32" y1="2" x2="32" y2="62"/>
             <line x1="2" y1="32" x2="62" y2="32"/>
           </svg>
-          <h3>Optimisation<br>(1 mois)</h3>
-          <p>On identifie un blocage précis et on le débloque ensemble. Pas de transformation profonde, juste un déclic stratégique ciblé. Idéal si tu sens un point précis qui coince.</p>
+          <h3>OPTIMISATION</h3>
+          <div class="compare-duration">— 1 mois —</div>
+          <p>Une intervention chirurgicale et ciblée. On identifie le levier précis qui peut transformer immédiatement tes résultats, et on l'active ensemble. Précision maximale, exécution rapide, impact mesurable en 30 jours.</p>
         </div>
 
         <!-- Accompagnement -->
@@ -1863,8 +1890,9 @@
             <path d="M32 12 L48 40 L16 40 Z"/>
             <circle cx="32" cy="32" r="3" fill="#A5D8FF"/>
           </svg>
-          <h3>Accompagnement<br>(3 et 6 mois)</h3>
-          <p>On transforme ta posture d'opérateur. Ce que tu décides, ce que tu lâches, ce que tu construis. C'est là que la vraie évolution opérationnelle se joue — au-delà de la tactique.</p>
+          <h3>ACCOMPAGNEMENT</h3>
+          <div class="compare-duration">— 3 et 6 mois —</div>
+          <p>Une évolution structurelle complète de ta façon d'opérer. Sur la durée, on transforme ta posture, ton système et ton plafond. Pour ceux qui veulent franchir un vrai cap stratégique et installer un changement durable.</p>
         </div>
 
         <!-- Transformation -->
@@ -1875,12 +1903,13 @@
             <circle cx="32" cy="32" r="14"/>
             <circle cx="32" cy="32" r="6" fill="#A5D8FF"/>
           </svg>
-          <h3>Transformation<br>(12 mois)</h3>
-          <p>On reconstruit ton rôle. Tu passes de l'opérateur d'une boutique à l'architecte d'une marque. Une refonte complète qui inclut équipe, marque, vision long terme.</p>
+          <h3>TRANSFORMATION</h3>
+          <div class="compare-duration">— 12 mois —</div>
+          <p>Une refonte totale de ton activité sur 12 mois. Équipe, marque, structure, vision long terme. Tu deviens l'architecte stratégique d'une marque qui tourne sans toi, prête à scaler ou à être valorisée.</p>
         </div>
       </div>
 
-      <div class="step-eyebrow" style="text-align:center; margin-bottom:36px">Les 4 Formules</div>
+      <div class="programme-section-title">Les 4 Formules</div>
       <div class="formules-grid">
 
         <!-- 1 MOIS -->
