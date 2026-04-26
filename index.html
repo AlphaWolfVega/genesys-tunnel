@@ -1239,7 +1239,9 @@
     filter:
       drop-shadow(0 0 1px #4FC3F7)
       drop-shadow(0 0 2px #4FC3F7);
-    animation: beam-travel 5s linear infinite;
+    animation: beam-travel 8s linear infinite;
+    will-change: stroke-dashoffset;
+    transform: translateZ(0);
   }
   @keyframes beam-travel {
     from { stroke-dashoffset: 400; }
