@@ -1512,14 +1512,14 @@ const QUESTIONS = {
   ],
 
   intermediaire: [
-    { id: 'q3', title: "{prenom}, ta boutique aujourd'hui, c'est plutôt :",
+    { id: 'q3', title: "{prenom}, ton expérience e-commerce jusqu'ici, ça ressemble à quoi en chiffres ?",
       options: [
         { id: 'i1', text: "Entre 10 000 et 25 000 € de chiffre d'affaires cumulé (premières ventes régulières)", w: { a: 14, e: 10 } },
         { id: 'i2', text: "Entre 25 000 et 50 000 € de chiffre d'affaires cumulé (volume installé)", w: { a: 18, e: 14 } },
-        { id: 'i3', text: "Entre 50 000 et 100 000 € de chiffre d'affaires cumulé (proche du cap suivant)", w: { a: 22, e: 18 } },
-        { id: 'i4', text: "Tu as eu des pics au-dessus, mais tu n'arrives pas à les stabiliser", w: { a: 20, e: 14 } }
+        { id: 'i3', text: "Entre 50 000 et 100 000 € de chiffre d'affaires cumulé (proche du palier suivant)", w: { a: 22, e: 18 } },
+        { id: 'i4', text: "Tu as eu des pics au-dessus, mais sans stabilité", w: { a: 20, e: 14 } }
       ] },
-    { id: 'q4', title: "Quand tu regardes honnêtement, où ça coince le plus ?",
+    { id: 'q4', title: "Quand tu regardes honnêtement, où ça a coincé le plus ?",
       options: [
         { id: 'i1', text: "Acquisition / publicité — le trafic ne vient pas ou il est trop cher", blocker: 'technique' },
         { id: 'i2', text: "Conversion — il y a du monde mais ça n'achète pas", blocker: 'technique' },
@@ -1527,7 +1527,7 @@ const QUESTIONS = {
         { id: 'i4', text: "Stratégie globale — je sais faire les actions, mais je ne sais pas dans quel ordre", blocker: 'strategique' },
         { id: 'i5', text: "Mental / exécution — je sais quoi faire, je ne le fais pas", blocker: 'mental' }
       ] },
-    { id: 'q5', title: "D'où vient l'essentiel de ton trafic actuellement ?",
+    { id: 'q5', title: "D'où venait (ou vient) l'essentiel de ton trafic e-commerce ?",
       options: [
         { id: 'i1', text: "Publicité Meta / Facebook / Instagram" },
         { id: 'i2', text: "TikTok (organique ou ads)" },
@@ -1553,26 +1553,26 @@ const QUESTIONS = {
   ],
 
   avance: [
-    { id: 'q3', title: "{prenom}, parlons chiffres. Tu es plutôt à :",
+    { id: 'q3', title: "{prenom}, ton expérience e-commerce jusqu'ici, ça donne quoi en chiffres ?",
       options: [
         { id: 'a1', text: "Entre 100 000 et 300 000 € de chiffre d'affaires cumulé", w: { a: 28, e: 22 } },
         { id: 'a2', text: "Entre 300 000 et 1 000 000 € de chiffre d'affaires cumulé", w: { a: 33, e: 25 } },
         { id: 'a3', text: "Entre 1 000 000 et 3 000 000 € de chiffre d'affaires cumulé", w: { a: 37, e: 27 } },
         { id: 'a4', text: "Plus de 3 000 000 € de chiffre d'affaires cumulé", w: { a: 40, e: 28 } }
       ] },
-    { id: 'q4', title: "Quand tu regardes ton plafond actuel, le vrai problème c'est :",
+    { id: 'q4', title: "Quand tu regardes ton plafond, le vrai problème c'est (ou c'était) :",
       options: [
-        { id: 'a1', text: "Acquisition — mes coûts publicitaires explosent et je n'arrive plus à scaler", blocker: 'technique' },
+        { id: 'a1', text: "Acquisition — les coûts publicitaires explosent et c'est dur de scaler", blocker: 'technique' },
         { id: 'a2', text: "Conversion / copywriting — le trafic est là mais le taux n'est pas optimal", blocker: 'technique' },
-        { id: 'a3', text: "Stratégie — je n'ai pas une vision claire des 12 prochains mois", blocker: 'strategique' },
-        { id: 'a4', text: "Structure / équipe — je suis le bottleneck, je dois déléguer mais je ne sais pas comment", blocker: 'strategique' },
-        { id: 'a5', text: "Diversification — je dépends trop d'un produit ou d'un canal", blocker: 'strategique' }
+        { id: 'a3', text: "Stratégie — pas de vision claire pour les 12 prochains mois", blocker: 'strategique' },
+        { id: 'a4', text: "Structure / équipe — je suis (ou j'étais) le bottleneck, je dois déléguer mais je ne sais pas comment", blocker: 'strategique' },
+        { id: 'a5', text: "Diversification — je dépends (ou dépendais) trop d'un produit ou d'un canal", blocker: 'strategique' }
       ] },
-    { id: 'q5', title: "Combien d'heures par semaine tu y passes vraiment ?",
+    { id: 'q5', title: "Combien d'heures par semaine tu consacres (ou consacrais) à ton activité e-commerce ?",
       options: [
-        { id: 'a1', text: "Moins de 20h — je veux automatiser plus", w: { e: 28 } },
+        { id: 'a1', text: "Moins de 20h — je veux (ou je voulais) automatiser plus", w: { e: 28 } },
         { id: 'a2', text: "20 à 40h — temps plein", w: { e: 24 } },
-        { id: 'a3', text: "Plus de 40h — je suis dedans 24/7 et c'est trop", w: { e: 18 } }
+        { id: 'a3', text: "Plus de 40h — j'étais dedans 24/7 et c'était trop", w: { e: 18 } }
       ] },
     { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que tu te diras 'j'ai franchi un cap' ?",
       options: [
