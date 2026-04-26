@@ -1219,25 +1219,23 @@
     position: relative;
     z-index: 2;
   }
-  /* Train de lumière unique qui parcourt la bordure du cadre — apaisement neurologique */
+  /* Train de lumière unique qui parcourt la bordure du cadre — virage fluide aux coins */
   .programme-principle::before {
     content: '';
     position: absolute;
-    width: 160px;
+    width: 140px;
     height: 3px;
     border-radius: 2px;
     background: linear-gradient(90deg,
       transparent 0%,
-      rgba(165, 216, 255, 0.35) 25%,
-      rgba(220, 238, 255, 1) 50%,
-      rgba(165, 216, 255, 0.35) 75%,
+      rgba(165, 216, 255, 0.45) 30%,
+      rgba(235, 245, 255, 1) 50%,
+      rgba(165, 216, 255, 0.45) 70%,
       transparent 100%);
-    box-shadow:
-      0 0 14px rgba(220, 238, 255, 0.9),
-      0 0 32px rgba(91, 139, 201, 0.55);
-    offset-path: rect(0 100% 100% 0);
+    box-shadow: 0 0 10px rgba(220, 238, 255, 0.75);
+    offset-path: rect(0 100% 100% 0 round 32px);
     offset-rotate: auto;
-    animation: travelBorder 12s linear infinite;
+    animation: travelBorder 14s linear infinite;
     pointer-events: none;
     z-index: 1;
   }
