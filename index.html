@@ -1512,12 +1512,19 @@ const QUESTIONS = {
   ],
 
   intermediaire: [
-    { id: 'q3', title: "{prenom}, sur ta meilleure année e-commerce, ton chiffre d'affaires annuel a tourné autour de :",
+    { id: 'q3_active', title: "{prenom}, est-ce que ta boutique tourne actuellement ?",
       options: [
-        { id: 'i1', text: "Moins de 15 000 €", w: { a: 13, e: 10 } },
-        { id: 'i2', text: "Entre 15 000 et 50 000 €", w: { a: 17, e: 13 } },
-        { id: 'i3', text: "Entre 50 000 et 100 000 €", w: { a: 21, e: 16 } },
-        { id: 'i4', text: "Au-dessus de 100 000 €", w: { a: 24, e: 18 } }
+        { id: 'i1', text: "Oui, j'ai une boutique active", boutique_active: true },
+        { id: 'i2', text: "Non, pas en ce moment (en pause, transition ou arrêtée)", boutique_active: false }
+      ] },
+    { id: 'q3',
+      title_active: "Quel est ton chiffre d'affaires mensuel actuel ?",
+      title_inactive: "Sur ton meilleur mois e-commerce passé, ton chiffre d'affaires a tourné autour de :",
+      options: [
+        { id: 'i1', text: "Moins de 1 500 €", w: { a: 13, e: 10 } },
+        { id: 'i2', text: "Entre 1 500 et 5 000 €", w: { a: 17, e: 13 } },
+        { id: 'i3', text: "Entre 5 000 et 10 000 €", w: { a: 21, e: 16 } },
+        { id: 'i4', text: "Plus de 10 000 €", w: { a: 24, e: 18 } }
       ] },
     { id: 'q4', title: "Quand tu regardes honnêtement, où ça a coincé (ou ça coince) le plus ?",
       options: [
@@ -1553,12 +1560,19 @@ const QUESTIONS = {
   ],
 
   avance: [
-    { id: 'q3', title: "{prenom}, sur ta meilleure année e-commerce, ton chiffre d'affaires annuel a tourné autour de :",
+    { id: 'q3_active', title: "{prenom}, est-ce que ta boutique tourne actuellement ?",
       options: [
-        { id: 'a1', text: "Moins de 200 000 €", w: { a: 28, e: 22 } },
-        { id: 'a2', text: "Entre 200 000 et 500 000 €", w: { a: 33, e: 25 } },
-        { id: 'a3', text: "Entre 500 000 et 1 500 000 €", w: { a: 37, e: 27 } },
-        { id: 'a4', text: "Plus de 1 500 000 €", w: { a: 40, e: 28 } }
+        { id: 'a1', text: "Oui, j'ai une boutique active", boutique_active: true },
+        { id: 'a2', text: "Non, pas en ce moment (en pause, transition ou arrêtée)", boutique_active: false }
+      ] },
+    { id: 'q3',
+      title_active: "Quel est ton chiffre d'affaires mensuel actuel ?",
+      title_inactive: "Sur ton meilleur mois e-commerce passé, ton chiffre d'affaires a tourné autour de :",
+      options: [
+        { id: 'a1', text: "Moins de 20 000 €", w: { a: 28, e: 22 } },
+        { id: 'a2', text: "Entre 20 000 et 50 000 €", w: { a: 33, e: 25 } },
+        { id: 'a3', text: "Entre 50 000 et 150 000 €", w: { a: 37, e: 27 } },
+        { id: 'a4', text: "Plus de 150 000 €", w: { a: 40, e: 28 } }
       ] },
     { id: 'q4', title: "Quand tu regardes ton plafond, le vrai problème c'est (ou c'était) :",
       options: [
@@ -1609,7 +1623,13 @@ const ARCHETYPES = {
   ]
 };
 
-const STEP_TOTAL = 9;
+function getStepTotal() {
+  // Hero(1) + Niveau(2) + Prénom(3) + Questions(N) + Email + Diagnostic
+  // Débutant: 5 questions → 9 étapes
+  // Intermédiaire/Avancé: 6 questions (Q3_active + Q3 + Q4-Q7) → 10 étapes
+  if (STATE.niveau === 'intermediaire' || STATE.niveau === 'avance') return 10;
+  return 9;
+}
 
 // ─────────────────────────────────────────────────────────
 // PROGRESS DOTS
@@ -1618,7 +1638,8 @@ const STEP_TOTAL = 9;
 function renderDots() {
   const wrap = document.getElementById('progressDots');
   wrap.innerHTML = '';
-  for (let i = 0; i < STEP_TOTAL; i++) {
+  const total = getStepTotal();
+  for (let i = 0; i < total; i++) {
     const d = document.createElement('div');
     d.className = 'pdot';
     wrap.appendChild(d);
@@ -1653,16 +1674,23 @@ function goTo(screen, push = true) {
 }
 
 function updateProgress(screen) {
-  const map = { hero: 1, niveau: 2, prenom: 3, question: 4, email: 8, loader: 9, diagnostic: 9, skool: 9, call: 9 };
-  let step = map[screen] || 1;
-  if (screen === 'question') step = 4 + STATE.questionIndex;
-  document.getElementById('stepIndicator').textContent = String(step).padStart(2,'0') + ' / 09';
+  const total = getStepTotal();
+  const nbQuestions = STATE.niveau ? QUESTIONS[STATE.niveau].length : 5;
+  let step = 1;
+  if (screen === 'hero') step = 1;
+  else if (screen === 'niveau') step = 2;
+  else if (screen === 'prenom') step = 3;
+  else if (screen === 'question') step = 4 + STATE.questionIndex;
+  else if (screen === 'email') step = 4 + nbQuestions;
+  else if (screen === 'loader' || screen === 'diagnostic' || screen === 'skool' || screen === 'call') step = total;
+  document.getElementById('stepIndicator').textContent = String(step).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
   updateDots(step);
 }
 
 function setNiveau(niveau) {
   STATE.niveau = niveau;
   STATE.questionIndex = 0;
+  renderDots();
   goTo('prenom');
 }
 
@@ -1683,8 +1711,19 @@ function showQuestion() {
   STATE.history.push('question');
   saveState();
   const q = QUESTIONS[STATE.niveau][STATE.questionIndex];
-  document.getElementById('qLabel').textContent = `Question ${String(STATE.questionIndex + 1).padStart(2,'0')} / 05`;
-  document.getElementById('qTitle').textContent = q.title.replace('{prenom}', STATE.prenom);
+  const totalQ = QUESTIONS[STATE.niveau].length;
+  document.getElementById('qLabel').textContent = `Question ${String(STATE.questionIndex + 1).padStart(2,'0')} / ${String(totalQ).padStart(2,'0')}`;
+
+  // Titre conditionnel selon q3_active si défini
+  let titleRaw;
+  if (q.title_active && q.title_inactive) {
+    const isActive = STATE.answers.q3_active && STATE.answers.q3_active.boutique_active;
+    titleRaw = isActive ? q.title_active : q.title_inactive;
+  } else {
+    titleRaw = q.title;
+  }
+  document.getElementById('qTitle').textContent = titleRaw.replace('{prenom}', STATE.prenom);
+
   const opts = document.getElementById('qOptions');
   opts.innerHTML = '';
   q.options.forEach((opt, i) => {
@@ -1766,6 +1805,11 @@ function computeScoring() {
     }
   });
 
+  // Bonus +2 stratégie pour les entrepreneurs en pause (recul stratégique acquis)
+  if (a.q3_active && a.q3_active.boutique_active === false) {
+    strat += 2;
+  }
+
   acq = Math.min(40, Math.max(0, acq));
   strat = Math.min(30, Math.max(0, strat));
   exec = Math.min(30, Math.max(0, exec));
@@ -1802,12 +1846,26 @@ function generateDiagnostic(scoring) {
 
   let p1 = '', p2 = '', p3 = '', p4 = '';
 
+  const boutiqueActive = a.q3_active ? a.q3_active.boutique_active : null;
+
   if (niveau === 'debutant') {
     p1 = `${prenom}, tu n'es pas encore lancé sur ton projet, ou tu en es aux toutes premières étapes. Tu te formes, tu t'informes, tu cherches le bon angle. Le souci, c'est que tu te retrouves avec des dizaines de méthodes contradictoires, et chacune se présente comme la seule vraie. Résultat : tu tournes en rond, et chaque jour qui passe sans avoir lancé entame ta confiance. C'est une situation classique au démarrage, pas un défaut personnel.`;
   } else if (niveau === 'intermediaire') {
-    p1 = `${prenom}, tu as déjà fait du chiffre — entre 10 000 et 100 000 € de chiffre d'affaires cumulé selon ton parcours. Tu n'es plus au stade débutant, peu importe que ta boutique tourne aujourd'hui ou qu'elle soit en pause. Ce qui te freine, ce n'est plus l'absence d'action passée. C'est le sentiment d'avoir couru dans tous les sens sans savoir laquelle des actions allait vraiment bouger l'aiguille. Tant que la barre des 100 000 € de chiffre d'affaires cumulé n'est pas franchie, ce flou continue de coûter cher.`;
+    if (boutiqueActive === true) {
+      p1 = `${prenom}, ta boutique tourne. Tu as déjà fait entre 10 000 et 100 000 € de chiffre d'affaires cumulé — tu n'es plus au stade débutant. Ce qui te freine, ce n'est plus l'absence d'action. C'est le sentiment de courir dans tous les sens sans savoir laquelle des actions devant toi va vraiment bouger l'aiguille. Tant que la barre des 100 000 € de chiffre d'affaires cumulé n'est pas franchie, ce flou continue de coûter cher chaque jour.`;
+    } else if (boutiqueActive === false) {
+      p1 = `${prenom}, tu as déjà fait entre 10 000 et 100 000 € de chiffre d'affaires cumulé — tu sais que ce n'est pas de la chance, tu l'as construit. Aujourd'hui ta boutique est en pause, en transition, ou simplement à l'arrêt. Ce n'est pas un échec : c'est un moment de bascule. Le vrai sujet maintenant, c'est de savoir si tu relances la même chose, si tu pivotes, ou si tu passes à un autre niveau de jeu. Et pour trancher, il faut une lecture claire de ce qui a marché et de ce qui ne marchait plus.`;
+    } else {
+      p1 = `${prenom}, tu as déjà fait entre 10 000 et 100 000 € de chiffre d'affaires cumulé. Tu n'es plus au stade débutant. Ce qui te freine, c'est le sentiment de courir dans tous les sens sans savoir laquelle des actions va vraiment bouger l'aiguille. Tant que la barre des 100 000 € de chiffre d'affaires cumulé n'est pas franchie, ce flou continue de coûter cher.`;
+    }
   } else {
-    p1 = `${prenom}, tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Tu n'es plus dans la zone du débutant ni de l'intermédiaire qui galère, peu importe que ta boutique tourne aujourd'hui ou non. Tu y as mis du temps, tu y as mis de l'énergie, et tu sens que continuer dans la même logique te mène vers un mur. Le vrai problème, c'est que la marge de manœuvre se réduit — la machine demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
+    if (boutiqueActive === true) {
+      p1 = `${prenom}, ta boutique tourne et tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Tu n'es plus dans la zone du débutant ni de l'intermédiaire qui galère. Tu y mets du temps, tu y mets de l'énergie, et tu sens que continuer dans la même logique te mène vers un mur. Le vrai problème, c'est que la marge de manœuvre se réduit — la machine demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
+    } else if (boutiqueActive === false) {
+      p1 = `${prenom}, tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Tu sais ce que c'est de construire, de scaler, et de plafonner. Aujourd'hui ta boutique est en pause, en transition, ou à l'arrêt — et c'est précisément ce moment qui crée du recul. Tu vois maintenant ce que tu ne voyais pas en plein run. Le vrai sujet, c'est ce que tu construis ensuite : la même chose en mieux, ou un nouveau niveau de jeu.`;
+    } else {
+      p1 = `${prenom}, tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Tu n'es plus dans la zone du débutant ni de l'intermédiaire qui galère. Tu y as mis du temps, tu y as mis de l'énergie, et tu sens que continuer dans la même logique te mène vers un mur. La marge de manœuvre se réduit — la machine demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
+    }
   }
 
   if (blocker === 'clarte') {
