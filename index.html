@@ -1212,7 +1212,7 @@
     text-align: center;
     position: relative;
     border: 1px solid var(--line);
-    border-radius: 24px;
+    border-radius: 16px;
   }
   .programme-principle .principle-inner {
     max-width: 720px;
@@ -1220,33 +1220,33 @@
     position: relative;
     z-index: 2;
   }
-  /* Orbe unique qui glisse le long du contour arrondi de la carte (coins fluides en arc) */
-  .principle-orb {
+  /* Light Beam SVG — segment lumineux qui glisse le long du contour, gradient fade aux extrémités */
+  .border-beam {
     position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: radial-gradient(circle,
-      rgba(255, 255, 255, 1) 0%,
-      rgba(225, 240, 255, 0.9) 30%,
-      rgba(150, 205, 255, 0.4) 65%,
-      transparent 100%);
-    box-shadow:
-      0 0 6px rgba(255, 255, 255, 0.95),
-      0 0 14px rgba(165, 216, 255, 0.7),
-      0 0 28px rgba(91, 139, 201, 0.4);
+    inset: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
+    overflow: visible;
     z-index: 1;
-    offset-path: rect(2px calc(100% - 2px) calc(100% - 2px) 2px round 22px);
-    offset-anchor: center;
-    animation: orbRun 8s linear infinite;
   }
-  @keyframes orbRun {
-    from { offset-distance: 0%; }
-    to   { offset-distance: 100%; }
+  .border-beam .beam-path {
+    fill: none;
+    stroke: url(#beamGrad);
+    stroke-width: 0.4;
+    stroke-linecap: round;
+    stroke-dasharray: 15 385;
+    filter:
+      drop-shadow(0 0 1px #4FC3F7)
+      drop-shadow(0 0 2px #4FC3F7);
+    animation: beam-travel 5s linear infinite;
+  }
+  @keyframes beam-travel {
+    from { stroke-dashoffset: 400; }
+    to   { stroke-dashoffset: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .principle-orb { animation: none; }
+    .border-beam .beam-path { animation: none; }
   }
   .programme-principle p {
     font-size: 21px;
@@ -1889,7 +1889,16 @@
       <h2 class="outcome-h2">— Créer des revenus prévisibles, avec une méthode claire —</h2>
 
       <div class="programme-principle">
-        <div class="principle-orb" aria-hidden="true"></div>
+        <svg class="border-beam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0"/>
+              <stop offset="50%"  stop-color="#FFFFFF" stop-opacity="1"/>
+              <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <rect class="beam-path" x="0.5" y="0.5" width="99" height="99" rx="3" ry="3" pathLength="400" />
+        </svg>
         <div class="principle-inner">
           <p>On ne vend pas un accompagnement.<br><strong>On vend une transformation.</strong></p>
           <p style="margin-top:18px; font-size:17px; color: var(--text-2);">C'est pour ça que nos formules sont calibrées sur le temps réel qu'il faut pour transformer une situation. Pas une heure de plus, pas une heure de moins.</p>
