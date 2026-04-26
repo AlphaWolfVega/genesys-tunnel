@@ -1542,6 +1542,41 @@
     border-left: 1px solid var(--line);
   }
 
+  .formule-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 18px 0 28px;
+  }
+  .formule-bullets li {
+    padding: 14px 2px;
+    border-bottom: 1px solid rgba(165, 216, 255, 0.08);
+    color: var(--text-2);
+    font-size: 16px;
+    line-height: 1.65;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .formule-bullets li:last-child { border-bottom: none; }
+  .formule-bullets li .check {
+    color: var(--chrome-2);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+    font-size: 17px;
+  }
+  .formule-bullets li strong {
+    color: var(--chrome-1);
+    font-weight: 600;
+  }
+  .formule-bullets li.highlight {
+    background: rgba(91, 139, 201, 0.10);
+    padding: 18px 18px;
+    border-bottom: none;
+    margin-bottom: 6px;
+    border-left: 2px solid var(--chrome-2);
+  }
+
   .value-stack-list {
     margin-top: 24px;
     padding: 24px;
@@ -1978,9 +2013,9 @@
           </div>
 
           <div class="formule-pricing">
-            <div class="formule-price-barred">5 500 €</div>
+            <div class="formule-price-barred">6 500 €</div>
             <div class="formule-price">2 000 €</div>
-            <div class="formule-savings">— Tu économises 3 500 € —</div>
+            <div class="formule-savings">— Tu économises 4 500 € —</div>
             <p class="formule-payment-plans">Paiement en 1× ou 2× sans frais</p>
           </div>
 
@@ -1989,35 +2024,25 @@
           </div>
 
           <div class="formule-detail">
-            <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 1 — Diagnostic chiffré de ton business e-com</div>
-              <div class="programme-phase-content">On démonte tes chiffres réels : acquisition, conversion, panier moyen, rétention. On audite ton site, tes pubs, ton offre, ton tunnel. À la fin de la semaine, tu reçois un rapport écrit qui te dit exactement où tu perds du chiffre, combien ça te coûte, et lequel des 3 à 5 leviers identifiés peut le plus bouger l'aiguille pour toi.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 2 — Plan d'action écrit + premières activations</div>
-              <div class="programme-phase-content">On construit ensemble un plan d'attaque écrit, séquencé, daté. Le levier prioritaire est traduit en actions concrètes qu'on exécute en visio (page refaite, ads relancées, copy réécrite, automation branchée — selon ce que le diagnostic révèle). Les premières corrections sont déjà branchées dans ton business.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 3 — Exécution + ajustement en temps réel</div>
-              <div class="programme-phase-content">On observe ce que les chiffres disent au fil des jours. On ajuste ce qui doit l'être, on amplifie ce qui marche, on coupe ce qui ne bouge pas. Si pertinent, on active un deuxième levier en parallèle. Ton business commence à répondre différemment sur les KPIs qu'on a ciblés.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 4 — Système qui dure + plan 60 jours</div>
-              <div class="programme-phase-content">On verrouille ce qui marche dans des frameworks réutilisables (templates, briefs, checklists). Document de passation final qui détaille tout ce qu'on a installé, comment le maintenir, comment l'amplifier. Plan écrit pour les 60 jours suivants : tu sais quoi faire, dans quel ordre, et pourquoi.</div>
-            </div>
+            <div class="value-stack-title">Ce que tu reçois</div>
+            <ul class="formule-bullets">
+              <li class="highlight">
+                <span class="check">✓</span>
+                <span><strong>Présence directe de A à Z</strong> — chaque session se passe en visio Google Meet avec partage d'écran : on regarde ton business ensemble, et je te montre exactement quoi faire, comment, et dans quel ordre. Tu n'exécutes jamais seul dans le vide.</span>
+              </li>
+              <li><span class="check">✓</span><span>4 sessions individuelles 1h en visio Google Meet</span></li>
+              <li><span class="check">✓</span><span>Diagnostic 360° de ton business e-com livré sous quelques jours</span></li>
+              <li><span class="check">✓</span><span>Refonte du levier prioritaire identifié (offre, page produit, copy, ou positionnement)</span></li>
+              <li><span class="check">✓</span><span>Plan d'action écrit + roadmap 90 jours</span></li>
+              <li><span class="check">✓</span><span>Accès WhatsApp privé pendant 30 jours (réponse en moins d'1h)</span></li>
+              <li><span class="check">✓</span><span>Document de passation final + protocole de maintien</span></li>
+              <li><span class="check">✓</span><span>Accès Classroom GENESYS pendant 1 an</span></li>
+            </ul>
 
             <div class="value-stack-list">
-              <div class="value-stack-title">Décomposition value stack</div>
-              <div class="value-stack-row"><span class="label">Diagnostic 360° écrit + leviers chiffrés (rapport 15-20 pages)</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">4 sessions stratégiques 1h en visio × 400 €</span><span class="amount">1 600 €</span></div>
-              <div class="value-stack-row"><span class="label">Plan d'action 30 jours + roadmap 90 jours écrits</span><span class="amount">600 €</span></div>
-              <div class="value-stack-row"><span class="label">Frameworks et templates personnalisés selon ton levier</span><span class="amount">500 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès WhatsApp privé pendant 30 jours (réponse dans l'heure)</span><span class="amount">400 €</span></div>
-              <div class="value-stack-row"><span class="label">Document de passation final + protocole de maintien</span><span class="amount">400 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès Classroom GENESYS pendant 1 an</span><span class="amount">500 €</span></div>
-              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">5 500 €</span></div>
+              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale au prix du marché</span><span class="amount">6 500 €</span></div>
               <div class="value-stack-row value-stack-paid"><span class="label">Tu paies</span><span class="amount">2 000 €</span></div>
-              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">3 500 €</span></div>
+              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">4 500 €</span></div>
             </div>
           </div>
         </div>
@@ -2047,9 +2072,9 @@
           </div>
 
           <div class="formule-pricing">
-            <div class="formule-price-barred">14 300 €</div>
+            <div class="formule-price-barred">24 600 €</div>
             <div class="formule-price">5 000 €</div>
-            <div class="formule-savings">— Tu économises 9 300 € —</div>
+            <div class="formule-savings">— Tu économises 19 600 € —</div>
             <p class="formule-payment-plans">Paiement en 1× ou 2× sans frais</p>
           </div>
 
@@ -2058,36 +2083,26 @@
           </div>
 
           <div class="formule-detail">
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 1 — Diagnostic profond + démantèlement</div>
-              <div class="programme-phase-content">Audit 360° approfondi sur 4 axes : acquisition, conversion, offre, opérations. À la fin du mois, tu reçois un rapport écrit de 25-30 pages avec tes 3 vrais blocages chiffrés (impact en € sur ton chiffre actuel), un plan d'attaque séquencé sur 90 jours, et la première refonte exécutée ensemble en visio (page produit, ads, ou copywriting selon le blocage prioritaire). 4 sessions stratégiques 1h dans le mois. Premiers résultats visibles en semaine 4.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 2 — Construction du système</div>
-              <div class="programme-phase-content">On installe l'architecture qui va porter ta croissance. Système d'acquisition calibré (Meta, TikTok ou Google selon ton produit — audiences testées, créas validées, budgets structurés par étape). Tunnel de conversion optimisé (page produit retravaillée, panier, checkout, post-achat). Copywriting clé personnalisé (hero, page produit, séquence email, scripts ads). Dashboard de pilotage avec les 5-7 KPIs qui comptent vraiment, branchés sur tes données réelles. 4 sessions stratégiques 1h dans le mois.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 3 — Autonomie + amplification</div>
-              <div class="programme-phase-content">Tu prends les commandes. Pack automations e-com installé (email post-achat, relance panier abandonné, segmentation client, fidélisation) qui te sort de l'opérationnel. SOPs personnalisées (procédures écrites pour ads, support client, fulfillment, copy) → tu peux déléguer plus tard. Plan stratégique écrit pour les 6 mois suivants avec caps mesurables. Document de passation final qui détaille tout ce qui a été construit, comment le maintenir, comment l'amplifier. 4 sessions stratégiques 1h dans le mois.</div>
-            </div>
+            <div class="value-stack-title">Ce que tu reçois</div>
+            <ul class="formule-bullets">
+              <li class="highlight">
+                <span class="check">✓</span>
+                <span><strong>Présence directe de A à Z</strong> — chaque session se passe en visio Google Meet avec partage d'écran : on travaille ensemble sur ton business, et je te montre exactement quoi faire, comment, et dans quel ordre. Tu n'exécutes jamais seul dans le vide.</span>
+              </li>
+              <li><span class="check">✓</span><span>12 sessions individuelles 1h en visio Google Meet (4 par mois)</span></li>
+              <li><span class="check">✓</span><span>Diagnostic stratégique 360° GENESYS (positionnement, offre, conversion, narrative)</span></li>
+              <li><span class="check">✓</span><span>Refonte de ton offre principale, ta page produit, ta voix de marque</span></li>
+              <li><span class="check">✓</span><span>Séquences d'emails persuasifs réécrites + scripts d'annonces personnalisés</span></li>
+              <li><span class="check">✓</span><span>Plan d'amplification 6 mois écrit + document de passation final</span></li>
+              <li><span class="check">✓</span><span>Accès WhatsApp privé pendant 3 mois (réponse en moins de 2h)</span></li>
+              <li><span class="check">✓</span><span>Accès Classroom GENESYS pendant 1 an</span></li>
+              <li><span class="check">✓</span><span><strong>Bonus :</strong> Bibliothèque GENESYS, hot seats dans la cohort, carnet de prestataires, archives coaching</span></li>
+            </ul>
 
             <div class="value-stack-list">
-              <div class="value-stack-title">Décomposition value stack</div>
-              <div class="value-stack-row"><span class="label">Audit 360° approfondi (rapport 25-30 pages, 4 axes)</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">12 sessions stratégiques 1h en visio × 400 €</span><span class="amount">4 800 €</span></div>
-              <div class="value-stack-row"><span class="label">Plan d'attaque + roadmap 6 mois écrits</span><span class="amount">800 €</span></div>
-              <div class="value-stack-row"><span class="label">Système d'acquisition installé (campagnes, audiences, créas)</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">Tunnel de conversion optimisé (page produit + panier + checkout)</span><span class="amount">1 200 €</span></div>
-              <div class="value-stack-row"><span class="label">Copywriting clé personnalisé (hero, page produit, ads, séquence email)</span><span class="amount">800 €</span></div>
-              <div class="value-stack-row"><span class="label">Dashboard de pilotage (5-7 KPIs branchés sur tes données)</span><span class="amount">500 €</span></div>
-              <div class="value-stack-row"><span class="label">Pack automations e-com (post-achat, relance panier, segmentation, fidélisation)</span><span class="amount">600 €</span></div>
-              <div class="value-stack-row"><span class="label">SOPs personnalisées (procédures écrites pour les tâches récurrentes)</span><span class="amount">500 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès WhatsApp privé pendant 3 mois (réponse dans l'heure)</span><span class="amount">1 200 €</span></div>
-              <div class="value-stack-row"><span class="label">Document de passation final + protocole de maintien</span><span class="amount">400 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès Classroom GENESYS pendant 1 an</span><span class="amount">500 €</span></div>
-              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">14 300 €</span></div>
+              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale au prix du marché</span><span class="amount">24 600 €</span></div>
               <div class="value-stack-row value-stack-paid"><span class="label">Tu paies</span><span class="amount">5 000 €</span></div>
-              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">9 300 €</span></div>
+              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">19 600 €</span></div>
             </div>
           </div>
         </div>
@@ -2114,9 +2129,9 @@
           </div>
 
           <div class="formule-pricing">
-            <div class="formule-price-barred">17 000 €</div>
+            <div class="formule-price-barred">38 000 €</div>
             <div class="formule-price">9 000 €</div>
-            <div class="formule-savings">— Tu économises 8 000 € —</div>
+            <div class="formule-savings">— Tu économises 29 000 € —</div>
             <p class="formule-payment-plans">Paiement en 1×, 2× ou 3× sans frais</p>
           </div>
 
@@ -2125,36 +2140,27 @@
           </div>
 
           <div class="formule-detail">
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 1-2 — Audit + premiers déblocages</div>
-              <div class="programme-phase-content">On démonte ton business pour comprendre ce qui marche et ce qui te bloque vraiment. On active les leviers immédiats. Tu vois les premiers résultats dès le 1er mois, pas dans 6.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 3-4 — Construction de tes systèmes durables</div>
-              <div class="programme-phase-content">Acquisition, conversion, fulfillment, indicateurs : on installe les systèmes qui t'enlèvent du chaos quotidien. Tu commences à respirer. Tu vois enfin clair sur où tu vas.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 5 — Délégation + ton premier vrai relais</div>
-              <div class="programme-phase-content">On construit ton équipe (ou ton premier vrai employé). On t'apprend à briefer, à déléguer, à laisser tomber le perfectionnisme qui te bouffe. Tes process deviennent documentés et transmissibles.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Mois 6 — Plan stratégique 12 mois + autonomie</div>
-              <div class="programme-phase-content">Tu repars avec un plan clair pour l'année suivante. Tu sais où tu vas. Tu sais comment y aller. Et tu n'as plus besoin de personne pour te tenir la main.</div>
-            </div>
+            <div class="value-stack-title">Ce que tu reçois</div>
+            <ul class="formule-bullets">
+              <li class="highlight">
+                <span class="check">✓</span>
+                <span><strong>Présence directe de A à Z</strong> — chaque session se passe en visio Google Meet avec partage d'écran : on construit ensemble ton business sur 6 mois, et je te montre exactement quoi faire, comment, et dans quel ordre. Tu n'exécutes jamais seul dans le vide.</span>
+              </li>
+              <li><span class="check">✓</span><span>24 sessions individuelles 1h en visio Google Meet (4 par mois)</span></li>
+              <li><span class="check">✓</span><span>Diagnostic stratégique 360° GENESYS + 2 audits intermédiaires (M2 et M4)</span></li>
+              <li><span class="check">✓</span><span>Refonte profonde : offre, page produit, voix de marque, séquences email, scripts d'annonces</span></li>
+              <li><span class="check">✓</span><span>Système de fidélisation et automations e-com installés</span></li>
+              <li><span class="check">✓</span><span>SOPs et procédures écrites pour préparer ta délégation</span></li>
+              <li><span class="check">✓</span><span>Plan stratégique 12 mois écrit</span></li>
+              <li><span class="check">✓</span><span>Accès WhatsApp privé pendant 6 mois (réponse en moins de 2h)</span></li>
+              <li><span class="check">✓</span><span>Accès Classroom GENESYS pendant 1 an</span></li>
+              <li><span class="check">✓</span><span><strong>Bonus :</strong> Bibliothèque GENESYS, 4 hot seats dans la cohort, carnet de prestataires, archives coaching</span></li>
+            </ul>
 
             <div class="value-stack-list">
-              <div class="value-stack-title">Décomposition value stack</div>
-              <div class="value-stack-row"><span class="label">Audit stratégique 360°</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">24 sessions individuelles d'1h × 400 €</span><span class="amount">9 600 €</span></div>
-              <div class="value-stack-row"><span class="label">2 audits intermédiaires (M2 + M4) × 600 €</span><span class="amount">1 200 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès messagerie privée 6 mois</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">Frameworks GENESYS + accompagnement délégation</span><span class="amount">1 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Plan stratégique 6 mois → 12 mois</span><span class="amount">800 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès Classroom GENESYS pendant 6 mois</span><span class="amount">800 €</span></div>
-              <div class="value-stack-row"><span class="label">Mise en place systèmes opérationnels</span><span class="amount">600 €</span></div>
-              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">17 000 €</span></div>
+              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale au prix du marché</span><span class="amount">38 000 €</span></div>
               <div class="value-stack-row value-stack-paid"><span class="label">Tu paies</span><span class="amount">9 000 €</span></div>
-              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">8 000 €</span></div>
+              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">29 000 €</span></div>
             </div>
           </div>
         </div>
@@ -2185,9 +2191,9 @@
           </div>
 
           <div class="formule-pricing">
-            <div class="formule-price-barred">57 000 €</div>
+            <div class="formule-price-barred">95 000 €</div>
             <div class="formule-price">25 000 €</div>
-            <div class="formule-savings">— Tu économises 32 000 € —</div>
+            <div class="formule-savings">— Tu économises 70 000 € —</div>
             <p class="formule-payment-plans">Paiement en 1×, 2×, 3× ou 4× sans frais</p>
           </div>
 
@@ -2196,47 +2202,29 @@
           </div>
 
           <div class="formule-detail">
-            <div class="programme-phase" style="background:rgba(91,139,201,0.08); padding:18px 20px; border-left:2px solid var(--chrome-2); margin-bottom:28px;">
-              <div class="programme-phase-title" style="color:var(--chrome-1); font-size:15px;">★ DONE FOR YOU — On bosse pour toi</div>
-              <div class="programme-phase-content" style="border:none; padding:8px 0 0; color:var(--text);">Sur cette formule, tu nous délègues. Notre équipe construit, lance et gère ton business pendant 12 mois. Tu valides, on exécute. Tu vois les résultats arriver, sans avoir à tout faire toi-même.</div>
-            </div>
-
-            <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 1 — On reprend les fondations à ta place</div>
-              <div class="programme-phase-content">Audit complet de ton business actuel (ou recherche produit gagnant si tu démarres). On refait (ou on construit) ton site avec un design qui convertit. On lance ton tunnel d'acquisition (Meta, TikTok ou Google selon ton produit). Tu valides, on exécute. Tu n'écris pas une ligne, tu ne touches pas une pub.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 2 — On scale tes pubs + on construit ta marque</div>
-              <div class="programme-phase-content">Notre équipe gère ta publicité au quotidien : création des visuels, scaling des budgets, optimisation des campagnes. On crée ton identité de marque (logo, charte, ton de voix, narration). On produit ton storytelling vidéo (UGC, vidéos produits, ads). Tu vois les résultats, tu valides, on accélère.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 3 — On structure ton équipe + on diversifie</div>
-              <div class="programme-phase-content">On t'aide à recruter et briefer ton équipe interne (1 à 3 personnes selon ta situation). On ouvre un 2ème canal de revenus (organique, autre plateforme pub, etc.). On élargit ta gamme de produits si pertinent. Tu commences à sortir de l'opérationnel quotidien.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 4 — On installe ton autonomie + plan 36 mois</div>
-              <div class="programme-phase-content">On te transmet ton process décisionnel pour que tu pilotes sans nous. On documente tout ce qui a été fait, pour que ton équipe interne puisse continuer. On construit ton plan stratégique sur 3 ans (scaler, vendre, ou diversifier). À la sortie, ton business tourne sans toi à 80 %.</div>
-            </div>
-            <div class="programme-phase">
-              <div class="programme-phase-title">Bonus pendant les 12 mois</div>
-              <div class="programme-phase-content">Accès illimité à notre équipe via Slack privé + sessions hebdomadaires. 4 sessions trimestrielles avec experts invités (Meta avancée, opérations, branding premium, fiscalité). Accès au Classroom GENESYS à vie.</div>
-            </div>
+            <div class="value-stack-title">Ce que tu reçois</div>
+            <ul class="formule-bullets">
+              <li class="highlight">
+                <span class="check">✓</span>
+                <span><strong>Présence directe de A à Z + équipe dédiée</strong> — sessions hebdomadaires en visio Google Meet pour piloter ensemble. Notre équipe construit, lance et fait tourner ton business pendant 12 mois. Tu valides, on exécute. Tu vois les résultats arriver, sans avoir à tout faire toi-même.</span>
+              </li>
+              <li><span class="check">✓</span><span>48+ sessions de pilotage en visio Google Meet (1 par semaine)</span></li>
+              <li><span class="check">✓</span><span>Audit stratégique complet + recherche produit / analyse marché</span></li>
+              <li><span class="check">✓</span><span>Refonte ou création complète de ton site (design + dev + UX)</span></li>
+              <li><span class="check">✓</span><span>Gestion publicitaire 12 mois (création des visuels, scaling, optimisation)</span></li>
+              <li><span class="check">✓</span><span>Création complète de ta marque (logo, charte, voix, narration, storytelling vidéo)</span></li>
+              <li><span class="check">✓</span><span>Production de contenus (UGC, vidéos, photos produit)</span></li>
+              <li><span class="check">✓</span><span>Recrutement et briefing de ton équipe interne</span></li>
+              <li><span class="check">✓</span><span>4 sessions trimestrielles avec experts invités (publicité avancée, opérations, branding premium, fiscalité)</span></li>
+              <li><span class="check">✓</span><span>Plan stratégique 36 mois écrit</span></li>
+              <li><span class="check">✓</span><span>Accès direct équipe via Slack privé pendant 12 mois</span></li>
+              <li><span class="check">✓</span><span>Accès Classroom GENESYS à vie</span></li>
+            </ul>
 
             <div class="value-stack-list">
-              <div class="value-stack-title">Décomposition value stack</div>
-              <div class="value-stack-row"><span class="label">Audit stratégique 360° + recherche produit / analyse marché</span><span class="amount">3 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Refonte ou création de ton site (design + dev + UX)</span><span class="amount">8 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Gestion publicitaire 12 mois (création, scaling, optimisation)</span><span class="amount">18 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Création identité de marque (logo, charte, narration)</span><span class="amount">6 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Production de contenus (UGC, vidéos, photos produit)</span><span class="amount">5 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Recrutement & briefing de ton équipe</span><span class="amount">4 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Process décisionnel architecte + plan 36 mois</span><span class="amount">3 500 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès direct équipe 12 mois (Slack + sessions hebdo)</span><span class="amount">4 800 €</span></div>
-              <div class="value-stack-row"><span class="label">4 sessions trimestrielles avec experts invités</span><span class="amount">3 200 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès Classroom GENESYS à vie</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">57 000 €</span></div>
+              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale au prix du marché</span><span class="amount">95 000 €</span></div>
               <div class="value-stack-row value-stack-paid"><span class="label">Tu paies</span><span class="amount">25 000 €</span></div>
-              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">32 000 €</span></div>
+              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">70 000 €</span></div>
             </div>
           </div>
         </div>
