@@ -1289,28 +1289,28 @@
     <!-- STEP 1 — NIVEAU -->
     <section class="screen" id="screen-niveau">
       <div class="step-eyebrow">Étape 01 — Identification</div>
-      <h2 class="step-title chrome">Où en êtes-vous aujourd'hui ?</h2>
-      <p class="step-subtitle">Choisissez le profil qui vous correspond le mieux. Vos questions s'adapteront.</p>
+      <h2 class="step-title chrome">Où en es-tu aujourd'hui ?</h2>
+      <p class="step-subtitle">Choisis le profil qui te correspond le mieux. Tes questions s'adapteront.</p>
       <div class="levels">
         <button class="level-card" onclick="setNiveau('debutant')">
           <div class="level-num">— 01 —</div>
           <div class="level-orb"></div>
           <div class="level-title">DÉBUTANT</div>
-          <div class="level-desc">Vous explorez. Pas encore de boutique, ou moins de 1 000 € cumulés.</div>
+          <div class="level-desc">Tu n'as pas encore lancé, ou tu as fait moins de 10 000 € de chiffre d'affaires cumulé depuis le début.</div>
           <div class="level-cta">Choisir →</div>
         </button>
         <button class="level-card" onclick="setNiveau('intermediaire')">
           <div class="level-num">— 02 —</div>
           <div class="level-orb"></div>
           <div class="level-title">INTERMÉDIAIRE</div>
-          <div class="level-desc">Boutique en ligne. Vous vendez, mais ça galère. Moins de 5 000 € par mois.</div>
+          <div class="level-desc">Tu as déjà vendu entre 10 000 et 100 000 € de chiffre d'affaires cumulé. Tu sais que ça peut marcher, mais tu sens que tu plafonnes.</div>
           <div class="level-cta">Choisir →</div>
         </button>
         <button class="level-card" onclick="setNiveau('avance')">
           <div class="level-num">— 03 —</div>
           <div class="level-orb"></div>
           <div class="level-title">AVANCÉ</div>
-          <div class="level-desc">Plus de 5 000 €/mois stable. Vous cherchez à passer un cap.</div>
+          <div class="level-desc">Tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Ta boutique tourne, et tu cherches à passer un vrai cap.</div>
           <div class="level-cta">Choisir →</div>
         </button>
       </div>
@@ -1320,10 +1320,10 @@
     <!-- STEP 2 — PRÉNOM -->
     <section class="screen" id="screen-prenom">
       <div class="step-eyebrow">Étape 02 — Présentation</div>
-      <h2 class="step-title chrome">Comment vous appelez-vous ?</h2>
+      <h2 class="step-title chrome">Comment tu t'appelles ?</h2>
       <p class="step-subtitle">C'est plus naturel pour la suite du diagnostic.</p>
       <div class="input-wrap">
-        <input type="text" class="input" id="prenomInput" placeholder="Votre prénom" autocomplete="given-name" oninput="checkPrenom()" />
+        <input type="text" class="input" id="prenomInput" placeholder="Ton prénom" autocomplete="given-name" oninput="checkPrenom()" />
       </div>
       <div style="margin-top:48px"><button class="btn" id="prenomBtn" disabled onclick="savePrenom()">Continuer →</button></div>
       <div class="nav"><button class="back-link" onclick="goTo('niveau')">← Retour</button><div></div></div>
@@ -1345,11 +1345,11 @@
     <!-- STEP 8 — EMAIL -->
     <section class="screen" id="screen-email">
       <div class="step-eyebrow" id="emailGreeting">— Diagnostic Prêt —</div>
-      <h2 class="step-title chrome">Souhaitez-vous le recevoir par email ?</h2>
-      <p class="step-subtitle">Recommandé — vous pourrez le relire à tête reposée et garder votre plan d'action sous la main.</p>
+      <h2 class="step-title chrome">Tu veux le recevoir par email ?</h2>
+      <p class="step-subtitle">Recommandé — tu pourras le relire à tête reposée et garder ton plan d'action sous la main.</p>
       <div class="email-zone">
         <div class="input-wrap">
-          <input type="email" class="input" id="emailInput" placeholder="vous@email.com" oninput="checkEmail()" />
+          <input type="email" class="input" id="emailInput" placeholder="ton@email.com" oninput="checkEmail()" />
         </div>
         <div style="margin-top:48px">
           <button class="btn" id="emailBtn" disabled onclick="submitEmail()">Recevoir & Voir maintenant →</button>
@@ -1373,11 +1373,11 @@
     <!-- STEP 9B — DIAGNOSTIC -->
     <section class="screen" id="screen-diagnostic">
       <div class="diag-eyebrow">— Diagnostic Final —</div>
-      <h1 class="diag-greeting chrome"><span id="diagGreeting"></span>, voici votre diagnostic.</h1>
+      <h1 class="diag-greeting chrome"><span id="diagGreeting"></span>, voici ton diagnostic.</h1>
       <div class="divider-or"></div>
 
       <div class="score-card">
-        <div class="score-card-label">Ta Maturité E-Commerce</div>
+        <div class="score-card-label">Ta maturité e-commerce</div>
         <div class="score-bar"><div class="score-bar-fill" id="scoreBarFill"></div></div>
         <div class="score-number"><span class="num" id="scoreNumber">0</span><span class="out">/ 100</span></div>
         <div class="sub-scores">
@@ -1407,17 +1407,17 @@
 
     <!-- STEP 10A — OUTCOME SKOOL -->
     <section class="screen" id="screen-skool">
-      <div class="outcome-pre">Recommandation Pour <span id="skoolName">{prenom}</span></div>
+      <div class="outcome-pre">Recommandation pour <span id="skoolName">{prenom}</span></div>
       <h1 class="outcome-h1 chrome">GENESYS</h1>
-      <h2 class="outcome-h2">— Votre prochaine étape —</h2>
-      <p class="outcome-intro">GENESYS, c'est notre Skool — la plateforme qui combine une communauté privée de plus de 100 entrepreneurs francophones et un Classroom complet de formations. Vous rejoignez, vous accédez à tout, vous posez vos questions directement à notre équipe.</p>
+      <h2 class="outcome-h2">— Ta prochaine étape —</h2>
+      <p class="outcome-intro">GENESYS, c'est notre Skool — la plateforme qui combine une communauté privée de plus de 100 entrepreneurs francophones et un Classroom complet de formations. Tu rejoins, tu accèdes à tout, tu poses tes questions directement à notre équipe.</p>
 
-      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Ce Que Vous Obtenez</div>
+      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Ce que tu obtiens</div>
       <div class="benefits">
         <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">Le Classroom complet</div><div class="benefit-desc">Ecom Neuro (12h sur la psychologie d'achat), Copy Impact (25h de copywriting e-commerce), SUPERNOVA (formation A à Z), plus 15 modules complémentaires.</div></div></div>
         <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">La communauté active</div><div class="benefit-desc">Plus de 100 entrepreneurs francophones qui partagent leurs vraies données, leurs blocages, leurs wins, en continu.</div></div></div>
-        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">L'accès direct à l'équipe</div><div class="benefit-desc">Notre équipe répond aux questions techniques, stratégiques et opérationnelles dans le fil de la communauté.</div></div></div>
-        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">Mises à jour régulières</div><div class="benefit-desc">Le contenu évolue avec le marché. Vous n'apprenez pas des choses dépassées.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">L'accès direct à l'équipe</div><div class="benefit-desc">Notre équipe répond à tes questions techniques, stratégiques et opérationnelles dans le fil de la communauté.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">Mises à jour régulières</div><div class="benefit-desc">Le contenu évolue avec le marché. Tu n'apprends pas des choses dépassées.</div></div></div>
       </div>
 
       <div class="match-block">
@@ -1431,21 +1431,21 @@
 
     <!-- STEP 10B — OUTCOME CALL -->
     <section class="screen" id="screen-call">
-      <div class="outcome-pre">Recommandation Pour <span id="callName">{prenom}</span></div>
+      <div class="outcome-pre">Recommandation pour <span id="callName">{prenom}</span></div>
       <h1 class="outcome-h1 chrome">Accompagnement Personnalisé</h1>
       <h2 class="outcome-h2">— Appel diagnostic offert · 45 minutes —</h2>
-      <p class="outcome-intro">À votre niveau, ce qui débloque la situation, ce n'est pas une formation de plus. C'est un regard externe précis sur votre stratégie. Notre équipe vous propose un appel diagnostic gratuit de 45 minutes.</p>
+      <p class="outcome-intro">À ton niveau, ce qui débloque la situation, ce n'est pas une formation de plus. C'est un regard externe précis sur ta stratégie. Notre équipe te propose un appel diagnostic gratuit de 45 minutes.</p>
 
-      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Pendant cet appel, on regarde</div>
+      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Pendant cet appel, on regarde ensemble</div>
       <div class="benefits">
-        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Vos chiffres actuels et où ça coince réellement.</div></div></div>
-        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Le levier qui aurait le plus d'impact dans les 90 prochains jours.</div></div></div>
-        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Si votre profil correspond à ceux qu'on accompagne — et si oui, ce que ça implique.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Tes chiffres actuels et où ça coince réellement.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Le levier qui aurait le plus d'impact dans tes 90 prochains jours.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Si ton profil correspond à ceux qu'on accompagne — et si oui, ce que ça implique.</div></div></div>
       </div>
 
       <div class="match-block">
         <div class="step-eyebrow">Une approche sélective</div>
-        <p>Nous ne travaillons qu'avec les personnes dont le profil correspond à ce qu'on recherche. Cet appel sert aussi à évaluer cela ensemble. Pas de pitch agressif. Pas d'engagement à la fin. Juste un vrai échange stratégique.</p>
+        <p>On ne travaille qu'avec les personnes dont le profil correspond à ce qu'on recherche. Cet appel sert aussi à évaluer ça ensemble. Pas de pitch agressif. Pas d'engagement à la fin. Juste un vrai échange stratégique.</p>
       </div>
 
       <a href="#" target="_blank" rel="noopener" id="callCTA"><button class="btn cta-large">Réserver mon appel gratuit →</button></a>
@@ -1474,14 +1474,14 @@ const STATE = {
 
 const QUESTIONS = {
   debutant: [
-    { id: 'q3', title: "{prenom}, qu'est-ce qui décrit le mieux où vous en êtes ?",
+    { id: 'q3', title: "{prenom}, qu'est-ce qui décrit le mieux où tu en es ?",
       options: [
         { id: 'd1', text: "Je n'ai jamais lancé de boutique e-commerce", w: { a: 0, s: 0, e: 0 } },
-        { id: 'd2', text: "J'ai créé une boutique, je n'ai jamais fait de vente", w: { a: 5, s: 2, e: 5 } },
-        { id: 'd3', text: "J'ai fait quelques ventes, mais c'est dispersé / instable", w: { a: 10, s: 3, e: 8 } },
-        { id: 'd4', text: "J'ai testé plusieurs choses, j'abandonne trop vite", w: { a: 5, s: 0, e: 3 } }
+        { id: 'd2', text: "J'ai créé une boutique, je n'ai jamais fait de vente", w: { a: 4, s: 2, e: 4 } },
+        { id: 'd3', text: "J'ai fait quelques ventes, entre 0 et 3 000 € de chiffre d'affaires cumulé", w: { a: 8, s: 3, e: 7 } },
+        { id: 'd4', text: "J'ai fait entre 3 000 et 10 000 € de chiffre d'affaires cumulé, mais c'est instable", w: { a: 12, s: 4, e: 9 } }
       ] },
-    { id: 'q4', title: "Quel est votre plus gros frein, honnêtement ?",
+    { id: 'q4', title: "Quel est ton plus gros frein, honnêtement ?",
       options: [
         { id: 'd1', text: "Je ne sais pas par où commencer", blocker: 'clarte' },
         { id: 'd2', text: "Je suis perdu dans les formations contradictoires", blocker: 'clarte' },
@@ -1489,20 +1489,20 @@ const QUESTIONS = {
         { id: 'd4', text: "J'ai peur de perdre de l'argent", blocker: 'mental' },
         { id: 'd5', text: "Le manque de temps", blocker: 'execution' }
       ] },
-    { id: 'q5', title: "Combien d'heures par semaine pouvez-vous réellement consacrer à votre projet ?",
+    { id: 'q5', title: "Combien d'heures par semaine tu peux réellement consacrer à ton projet ?",
       options: [
         { id: 'd1', text: "Moins de 5h — je teste à côté de mon job", w: { e: 5 } },
         { id: 'd2', text: "5 à 15h — sérieusement le soir et le weekend", w: { e: 15 } },
         { id: 'd3', text: "15h+ — c'est ma priorité actuelle", w: { e: 22 } }
       ] },
-    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que vous considéreriez avoir réussi ?",
+    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que tu considères avoir réussi ?",
       options: [
-        { id: 'd1', text: "Avoir lancé et fait mes premières ventes (1 000 € à 5 000 €)", ambition: 1, w: { s: 12 } },
-        { id: 'd2', text: "Avoir une boutique qui génère 5 000 € à 10 000 € par mois", ambition: 2, w: { s: 18 } },
-        { id: 'd3', text: "Une vraie indépendance financière", ambition: 3, w: { s: 22 } },
-        { id: 'd4', text: "Je veux juste tester pour voir si c'est pour moi", ambition: 0, w: { s: 5 } }
+        { id: 'd1', text: "Avoir fait mes premières ventes stables (jusqu'à 10 000 € de chiffre d'affaires cumulé)", ambition: 1, w: { s: 10 } },
+        { id: 'd2', text: "Atteindre 10 000 à 50 000 € de chiffre d'affaires cumulé sur l'année", ambition: 2, w: { s: 16 } },
+        { id: 'd3', text: "Construire une vraie indépendance financière à long terme", ambition: 3, w: { s: 22 } },
+        { id: 'd4', text: "Je veux juste tester pour voir si c'est pour moi", ambition: 0, w: { s: 4 } }
       ] },
-    { id: 'q7', title: "Pour avancer, où en êtes-vous côté budget ?",
+    { id: 'q7', title: "Pour avancer, où en es-tu côté budget ?",
       options: [
         { id: 'd1', text: "Budget zéro, je veux du gratuit pour démarrer", budget: 0 },
         { id: 'd2', text: "50 à 100 € par mois pour me former et m'entourer", budget: 1 },
@@ -1512,22 +1512,22 @@ const QUESTIONS = {
   ],
 
   intermediaire: [
-    { id: 'q3', title: "{prenom}, votre boutique aujourd'hui, c'est plutôt :",
+    { id: 'q3', title: "{prenom}, ta boutique aujourd'hui, c'est plutôt :",
       options: [
-        { id: 'i1', text: "Un site qui tourne mais quasiment pas de ventes (moins de 500 €/mois)", w: { a: 12, e: 5 } },
-        { id: 'i2', text: "Quelques ventes irrégulières (500 à 2 000 €/mois)", w: { a: 18, e: 12 } },
-        { id: 'i3', text: "Un volume correct mais bloqué sous les 5 000 €/mois", w: { a: 22, e: 18 } },
-        { id: 'i4', text: "Tu as déjà eu des pics au-dessus, mais tu n'arrives pas à les stabiliser", w: { a: 25, e: 15 } }
+        { id: 'i1', text: "Entre 10 000 et 25 000 € de chiffre d'affaires cumulé (premières ventes régulières)", w: { a: 14, e: 10 } },
+        { id: 'i2', text: "Entre 25 000 et 50 000 € de chiffre d'affaires cumulé (volume installé)", w: { a: 18, e: 14 } },
+        { id: 'i3', text: "Entre 50 000 et 100 000 € de chiffre d'affaires cumulé (proche du cap suivant)", w: { a: 22, e: 18 } },
+        { id: 'i4', text: "Tu as eu des pics au-dessus, mais tu n'arrives pas à les stabiliser", w: { a: 20, e: 14 } }
       ] },
-    { id: 'q4', title: "Quand vous regardez honnêtement, où ça coince le plus ?",
+    { id: 'q4', title: "Quand tu regardes honnêtement, où ça coince le plus ?",
       options: [
         { id: 'i1', text: "Acquisition / publicité — le trafic ne vient pas ou il est trop cher", blocker: 'technique' },
         { id: 'i2', text: "Conversion — il y a du monde mais ça n'achète pas", blocker: 'technique' },
         { id: 'i3', text: "Produit — je doute que ce soit le bon", blocker: 'strategique_partiel' },
-        { id: 'i4', text: "Stratégie globale — je sais faire les actions, mais je ne sais pas dans quel ordre / quelle priorité", blocker: 'strategique' },
+        { id: 'i4', text: "Stratégie globale — je sais faire les actions, mais je ne sais pas dans quel ordre", blocker: 'strategique' },
         { id: 'i5', text: "Mental / exécution — je sais quoi faire, je ne le fais pas", blocker: 'mental' }
       ] },
-    { id: 'q5', title: "D'où vient l'essentiel de votre trafic actuellement ?",
+    { id: 'q5', title: "D'où vient l'essentiel de ton trafic actuellement ?",
       options: [
         { id: 'i1', text: "Publicité Meta / Facebook / Instagram" },
         { id: 'i2', text: "TikTok (organique ou ads)" },
@@ -1535,14 +1535,14 @@ const QUESTIONS = {
         { id: 'i4', text: "Organique (SEO, contenu, bouche-à-oreille)" },
         { id: 'i5', text: "Aucun trafic stable" }
       ] },
-    { id: 'q6', title: "Sur les 6 prochains mois, qu'est-ce qui changerait tout pour vous ?",
+    { id: 'q6', title: "Sur les 12 prochains mois, qu'est-ce qui changerait tout pour toi ?",
       options: [
-        { id: 'i1', text: "Atteindre 5 000 €/mois stable", ambition: 2 },
-        { id: 'i2', text: "Passer la barre des 10 000 €/mois", ambition: 3 },
+        { id: 'i1', text: "Passer la barre des 100 000 € de chiffre d'affaires cumulé", ambition: 2 },
+        { id: 'i2', text: "Atteindre 200 000 € et plus de chiffre d'affaires cumulé", ambition: 3 },
         { id: 'i3', text: "Construire un système qui ne dépend plus de moi 24/7", ambition: 3 },
         { id: 'i4', text: "Comprendre enfin pourquoi ça ne décolle pas", ambition: 1 }
       ] },
-    { id: 'q7', title: "Pour débloquer ça, où en êtes-vous côté budget ?",
+    { id: 'q7', title: "Pour débloquer ça, où en es-tu côté budget ?",
       options: [
         { id: 'i1', text: "Compte serré, je dois faire avec ce que j'ai", budget: 0 },
         { id: 'i2', text: "50 à 100 € par mois pour m'équiper et me former", budget: 1 },
@@ -1553,35 +1553,35 @@ const QUESTIONS = {
   ],
 
   avance: [
-    { id: 'q3', title: "{prenom}, parlons chiffres. Vous êtes plutôt à :",
+    { id: 'q3', title: "{prenom}, parlons chiffres. Tu es plutôt à :",
       options: [
-        { id: 'a1', text: "5 000 à 10 000 €/mois stable", w: { a: 28, e: 22 } },
-        { id: 'a2', text: "10 000 à 30 000 €/mois", w: { a: 32, e: 25 } },
-        { id: 'a3', text: "30 000 à 100 000 €/mois", w: { a: 36, e: 27 } },
-        { id: 'a4', text: "Plus de 100 000 €/mois", w: { a: 40, e: 28 } }
+        { id: 'a1', text: "Entre 100 000 et 300 000 € de chiffre d'affaires cumulé", w: { a: 28, e: 22 } },
+        { id: 'a2', text: "Entre 300 000 et 1 000 000 € de chiffre d'affaires cumulé", w: { a: 33, e: 25 } },
+        { id: 'a3', text: "Entre 1 000 000 et 3 000 000 € de chiffre d'affaires cumulé", w: { a: 37, e: 27 } },
+        { id: 'a4', text: "Plus de 3 000 000 € de chiffre d'affaires cumulé", w: { a: 40, e: 28 } }
       ] },
-    { id: 'q4', title: "Quand vous regardez votre plafond actuel, le vrai problème c'est :",
+    { id: 'q4', title: "Quand tu regardes ton plafond actuel, le vrai problème c'est :",
       options: [
-        { id: 'a1', text: "Acquisition — mes coûts pubs explosent et je n'arrive plus à scale", blocker: 'technique' },
+        { id: 'a1', text: "Acquisition — mes coûts publicitaires explosent et je n'arrive plus à scaler", blocker: 'technique' },
         { id: 'a2', text: "Conversion / copywriting — le trafic est là mais le taux n'est pas optimal", blocker: 'technique' },
         { id: 'a3', text: "Stratégie — je n'ai pas une vision claire des 12 prochains mois", blocker: 'strategique' },
         { id: 'a4', text: "Structure / équipe — je suis le bottleneck, je dois déléguer mais je ne sais pas comment", blocker: 'strategique' },
         { id: 'a5', text: "Diversification — je dépends trop d'un produit ou d'un canal", blocker: 'strategique' }
       ] },
-    { id: 'q5', title: "Combien d'heures par semaine vous y passez vraiment ?",
+    { id: 'q5', title: "Combien d'heures par semaine tu y passes vraiment ?",
       options: [
         { id: 'a1', text: "Moins de 20h — je veux automatiser plus", w: { e: 28 } },
         { id: 'a2', text: "20 à 40h — temps plein", w: { e: 24 } },
         { id: 'a3', text: "Plus de 40h — je suis dedans 24/7 et c'est trop", w: { e: 18 } }
       ] },
-    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que vous direz 'j'ai franchi un cap' ?",
+    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que tu te diras 'j'ai franchi un cap' ?",
       options: [
-        { id: 'a1', text: "Doubler mon chiffre d'affaires", ambition: 3 },
+        { id: 'a1', text: "Doubler mon chiffre d'affaires annuel", ambition: 3 },
         { id: 'a2', text: "Sortir de l'opérationnel et avoir une équipe qui tourne sans moi", ambition: 4 },
         { id: 'a3', text: "Construire une marque, pas juste un site qui vend", ambition: 4 },
         { id: 'a4', text: "Ouvrir un deuxième canal de revenus", ambition: 3 }
       ] },
-    { id: 'q7', title: "Seriez-vous prêt à investir dans un accompagnement personnalisé ?",
+    { id: 'q7', title: "Tu serais prêt à investir dans un accompagnement personnalisé ?",
       options: [
         { id: 'a1', text: "Pas pour l'instant, je préfère un environnement / une communauté", budget: 1, intent: 'skool_signal' },
         { id: 'a2', text: "Je suis ouvert si le retour est clair (500 à 2 000 €)", budget: 2 },
@@ -1593,19 +1593,19 @@ const QUESTIONS = {
 
 const ARCHETYPES = {
   debutant: [
-    { name: "L'Explorateur", desc: "Vous n'avez pas encore commencé, mais vous préparez le terrain. C'est plus malin que la majorité." },
-    { name: "Le Curieux Engagé", desc: "Vous avez l'envie et vous cherchez activement. Reste à canaliser cette énergie." },
-    { name: "Le Préparé", desc: "Vous arrivez avec le terrain défriché. Le plus dur est devant, mais vous partez bien." }
+    { name: "L'Explorateur", desc: "Tu n'as pas encore commencé, mais tu prépares le terrain. C'est plus malin que la majorité." },
+    { name: "Le Curieux Engagé", desc: "Tu as l'envie et tu cherches activement. Reste à canaliser cette énergie." },
+    { name: "Le Préparé", desc: "Tu arrives avec le terrain défriché. Le plus dur est devant, mais tu pars bien." }
   ],
   intermediaire: [
-    { name: "Le Bâtisseur Confus", desc: "Vous faites trop de choses à la fois. C'est l'erreur classique au démarrage." },
-    { name: "Le Bâtisseur Coincé", desc: "Vous avez posé les fondations. Votre site existe, votre produit est en ligne, vous faites des ventes. Mais vous sentez que vous plafonnez — et vous avez raison." },
-    { name: "Le Bâtisseur Affûté", desc: "Vous maîtrisez les bases. Le passage du palier suivant n'est plus une question de connaissances." }
+    { name: "Le Bâtisseur Confus", desc: "Tu fais trop de choses à la fois. C'est l'erreur classique du milieu de parcours." },
+    { name: "Le Bâtisseur Coincé", desc: "Tu as posé les fondations. Ton site existe, ton produit est en ligne, tu fais des ventes régulières. Mais tu sens que tu plafonnes — et tu as raison." },
+    { name: "Le Bâtisseur Affûté", desc: "Tu maîtrises les bases. Le passage du palier suivant n'est plus une question de connaissances." }
   ],
   avance: [
-    { name: "L'Opérateur Saturé", desc: "Vous faites tourner la machine, mais elle vous broie. Le problème n'est plus technique." },
-    { name: "Le Plafonné", desc: "Vous avez trouvé votre marché. Le verre apparaît au-dessus de vous. Le passer demande autre chose que de l'effort." },
-    { name: "Le Scale-Ready", desc: "Vous n'êtes plus au début. Vous cherchez le bon levier pour la prochaine étape — et vous savez que personne ne vous le donnera dans une formation." }
+    { name: "L'Opérateur Saturé", desc: "Tu fais tourner la machine, mais elle te broie. Le problème n'est plus technique." },
+    { name: "Le Plafonné", desc: "Tu as trouvé ton marché. Le plafond de verre apparaît au-dessus de toi. Le passer demande autre chose que de l'effort." },
+    { name: "Le Scale-Ready", desc: "Tu n'es plus au début. Tu cherches le bon levier pour la prochaine étape — et tu sais que personne ne te le donnera dans une formation." }
   ]
 };
 
@@ -1713,7 +1713,7 @@ function nextQuestion() {
 
   if (STATE.questionIndex >= QUESTIONS[STATE.niveau].length) {
     goTo('email');
-    document.getElementById('emailGreeting').textContent = `— Parfait ${STATE.prenom}, diagnostic prêt —`;
+    document.getElementById('emailGreeting').textContent = `— Parfait ${STATE.prenom}, ton diagnostic est prêt —`;
   } else {
     showQuestion();
   }
@@ -1754,9 +1754,9 @@ function computeScoring() {
   const a = STATE.answers;
   let acq = 0, strat = 0, exec = 0;
 
-  if (niveau === 'debutant') { acq = 5; strat = 5; exec = 5; }
-  if (niveau === 'intermediaire') { acq = 12; strat = 8; exec = 12; }
-  if (niveau === 'avance') { acq = 22; strat = 12; exec = 18; }
+  if (niveau === 'debutant') { acq = 4; strat = 5; exec = 5; }
+  if (niveau === 'intermediaire') { acq = 14; strat = 9; exec = 13; }
+  if (niveau === 'avance') { acq = 26; strat = 13; exec = 20; }
 
   Object.values(a).forEach(ans => {
     if (ans.w) {
@@ -1803,54 +1803,54 @@ function generateDiagnostic(scoring) {
   let p1 = '', p2 = '', p3 = '', p4 = '';
 
   if (niveau === 'debutant') {
-    p1 = `${prenom}, vous n'êtes pas encore lancé sur votre projet, ou vous en êtes aux toutes premières étapes. Vous vous formez, vous vous informez, vous cherchez le bon angle. Le souci, c'est que vous vous retrouvez avec des dizaines de méthodes contradictoires, et chacune se présente comme la seule vraie. Résultat : vous tournez en rond, et chaque jour qui passe sans avoir lancé entame votre confiance. C'est une situation classique au démarrage, pas un défaut personnel.`;
+    p1 = `${prenom}, tu n'es pas encore lancé sur ton projet, ou tu en es aux toutes premières étapes. Tu te formes, tu t'informes, tu cherches le bon angle. Le souci, c'est que tu te retrouves avec des dizaines de méthodes contradictoires, et chacune se présente comme la seule vraie. Résultat : tu tournes en rond, et chaque jour qui passe sans avoir lancé entame ta confiance. C'est une situation classique au démarrage, pas un défaut personnel.`;
   } else if (niveau === 'intermediaire') {
-    p1 = `${prenom}, votre boutique tourne. Vous générez du volume, vous faites du trafic, vous n'êtes plus au stade débutant. Ce qui vous freine aujourd'hui, ce n'est plus l'absence d'action. C'est le sentiment de courir dans tous les sens sans savoir laquelle des actions devant vous va vraiment bouger l'aiguille. Sous les 5 000 € par mois, ce flou vous coûte cher chaque jour, et la frustration s'installe.`;
+    p1 = `${prenom}, ta boutique tourne. Tu as déjà fait du chiffre — entre 10 000 et 100 000 € de chiffre d'affaires cumulé selon où tu en es. Tu n'es plus au stade débutant. Ce qui te freine aujourd'hui, ce n'est plus l'absence d'action. C'est le sentiment de courir dans tous les sens sans savoir laquelle des actions devant toi va vraiment bouger l'aiguille. Tant que tu n'as pas passé la barre des 100 000 € de chiffre d'affaires cumulé, ce flou te coûte cher chaque jour.`;
   } else {
-    p1 = `${prenom}, votre boutique tourne. Vous n'êtes plus dans la zone du débutant ni de l'intermédiaire qui galère. Vous y mettez du temps, vous y mettez de l'énergie, et vous sentez que continuer comme ça vous mène vers un mur. Le vrai problème c'est que vous n'avez plus de marge de manœuvre — vous faites tourner la machine, mais elle vous demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
+    p1 = `${prenom}, ta boutique tourne. Tu as dépassé les 100 000 € de chiffre d'affaires cumulé. Tu n'es plus dans la zone du débutant ni de l'intermédiaire qui galère. Tu y mets du temps, tu y mets de l'énergie, et tu sens que continuer comme ça te mène vers un mur. Le vrai problème c'est que tu n'as plus de marge de manœuvre — tu fais tourner la machine, mais elle te demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
   }
 
   if (blocker === 'clarte') {
-    p2 = `Le vrai blocage n'est pas le manque d'informations. C'est l'inverse : vous en avez trop, et personne ne vous dit dans quel ordre les utiliser. Vous n'avez pas besoin d'apprendre une méthode de plus. Vous avez besoin d'un cadre clair qui dise : étape 1, étape 2, étape 3, et stop. Tant que ça reste flou, le passage à l'action ne se fait pas — pas parce que vous manquez de volonté, mais parce que votre cerveau refuse d'avancer sans visibilité.`;
+    p2 = `Le vrai blocage n'est pas le manque d'informations. C'est l'inverse : tu en as trop, et personne ne te dit dans quel ordre les utiliser. Tu n'as pas besoin d'apprendre une méthode de plus. Tu as besoin d'un cadre clair qui te dise : étape 1, étape 2, étape 3, et stop. Tant que ça reste flou, le passage à l'action ne se fait pas — pas parce que tu manques de volonté, mais parce que ton cerveau refuse d'avancer sans visibilité.`;
   } else if (blocker === 'mental') {
-    p2 = `Le vrai blocage n'est pas la connaissance. Vous savez ce qu'il faut faire en théorie, mais vous n'avez pas un système qui dit : aujourd'hui c'est ÇA, et seulement ça. Sans cadre et sans environnement qui vous ramène, l'exécution s'effondre vite. Ce n'est pas une question de discipline. C'est une question d'écosystème. Travailler seul à plein régime, c'est extrêmement dur, et la majorité décroche.`;
+    p2 = `Le vrai blocage n'est pas la connaissance. Tu sais ce qu'il faut faire en théorie, mais tu n'as pas un système qui te dit : aujourd'hui c'est ÇA, et seulement ça. Sans cadre et sans environnement qui te ramène, l'exécution s'effondre vite. Ce n'est pas une question de discipline. C'est une question d'écosystème. Travailler seul à plein régime, c'est extrêmement dur, et la majorité décroche.`;
   } else if (blocker === 'strategique' || blocker === 'strategique_partiel') {
-    p2 = `Vous avez identifié le vrai problème : la stratégie globale, l'ordre des priorités. C'est confirmé par vos scores — votre acquisition tient debout, votre exécution aussi, mais votre clarté stratégique est en dessous. À votre niveau, ce n'est plus une question de connaissances. C'est un problème d'arbitrage. Vous avez plusieurs chantiers ouverts, et tant que vous ne savez pas lequel fermer en premier, le plafond reste là.`;
+    p2 = `Tu as identifié le vrai problème : la stratégie globale, l'ordre des priorités. C'est confirmé par tes scores — ton acquisition tient debout, ton exécution aussi, mais ta clarté stratégique est en dessous. À ton niveau, ce n'est plus une question de connaissances. C'est un problème d'arbitrage. Tu as plusieurs chantiers ouverts, et tant que tu ne sais pas lequel fermer en premier, le plafond reste là.`;
   } else if (blocker === 'technique') {
-    p2 = `Vous avez identifié un blocage technique précis. Ce genre de problème se résout en regardant ce que font les autres opérateurs au même niveau, en testant des angles, en partageant des données. Pas en payant cher pour qu'on vous dise quoi faire. Vos scores montrent que vous avez les bases — il vous manque l'environnement qui vous tient à jour des techniques qui marchent ce mois-ci, pas l'année dernière.`;
+    p2 = `Tu as identifié un blocage technique précis. Ce genre de problème se résout en regardant ce que font les autres opérateurs au même niveau, en testant des angles, en partageant des données. Pas en payant cher pour qu'on te dise quoi faire. Tes scores montrent que tu as les bases — il te manque l'environnement qui te tient à jour des techniques qui marchent ce mois-ci, pas l'année dernière.`;
   } else {
-    p2 = `Le manque de temps est un symptôme, pas une cause. La vraie question, c'est ce que vous faites des heures que vous avez. Beaucoup de gens à votre stade utilisent leurs 5h hebdomadaires à se former plutôt qu'à exécuter. Le tri entre apprendre et faire est ce qui sépare ceux qui démarrent vraiment de ceux qui restent en boucle.`;
+    p2 = `Le manque de temps est un symptôme, pas une cause. La vraie question, c'est ce que tu fais des heures que tu as. Beaucoup de gens à ton stade utilisent leurs 5h hebdomadaires à se former plutôt qu'à exécuter. Le tri entre apprendre et faire est ce qui sépare ceux qui démarrent vraiment de ceux qui restent en boucle.`;
   }
 
   if (niveau === 'debutant') {
     if (ambition >= 2) {
-      p3 = `Atteindre 5 000 à 10 000 € par mois sur les 12 prochains mois, c'est un objectif ambitieux mais réaliste avec un bon cadre et de l'exécution constante. Pour y arriver, il vous faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener vos premiers visiteurs. Pas plus. Le reste, c'est du bruit qui vous ralentit aujourd'hui.`;
+      p3 = `Atteindre 10 000 à 50 000 € de chiffre d'affaires cumulé sur les 12 prochains mois, c'est un objectif ambitieux mais réaliste avec un bon cadre et de l'exécution constante. Pour y arriver, il te faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener tes premiers visiteurs. Pas plus. Le reste, c'est du bruit qui te ralentit aujourd'hui.`;
     } else {
-      p3 = `Faire vos premières ventes entre 1 000 € et 5 000 € sur les 12 prochains mois, c'est un objectif sain et atteignable. Pour y arriver, il vous faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener vos premiers visiteurs. Le reste, c'est du bruit qui vous ralentit aujourd'hui.`;
+      p3 = `Faire tes premières ventes stables et atteindre tes premiers 10 000 € de chiffre d'affaires cumulé, c'est un objectif sain et atteignable. Pour y arriver, il te faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener tes premiers visiteurs. Le reste, c'est du bruit qui te ralentit aujourd'hui.`;
     }
   } else if (niveau === 'intermediaire') {
-    p3 = `Passer la barre des 5 000 ou 10 000 € par mois, ce n'est pas faire dix fois plus. C'est faire 30 % de mieux sur quelques leviers bien choisis. Acquisition mieux pilotée, taux de conversion travaillé proprement, panier moyen poussé. Mais sans regard externe sur votre compte, vous allez continuer à arbitrer dans le brouillard, et c'est exactement ce qui vous a maintenu sous votre plafond actuel.`;
+    p3 = `Passer la barre des 100 000 € de chiffre d'affaires cumulé, ce n'est pas faire dix fois plus. C'est faire 30 % de mieux sur quelques leviers bien choisis. Acquisition mieux pilotée, taux de conversion travaillé proprement, panier moyen poussé. Mais sans regard externe sur ton compte, tu vas continuer à arbitrer dans le brouillard, et c'est exactement ce qui t'a maintenu sous ton plafond actuel.`;
   } else {
-    p3 = `Passer le cap suivant, ce n'est pas embaucher trois personnes et croiser les doigts, ni doubler le budget publicitaire et espérer. C'est un changement de posture. Vous passez de celui qui fait, à celui qui décide. Ça implique de définir précisément ce que vous lâchez, ce que vous gardez, et comment vous mesurez que la machine tourne sans vous. Sans cette clarté en amont, vous risquez de payer des personnes ou de scaler des canaux qui ne vous rapprochent pas vraiment de l'objectif.`;
+    p3 = `Passer le cap suivant, ce n'est pas embaucher trois personnes et croiser les doigts, ni doubler le budget publicitaire et espérer. C'est un changement de posture. Tu passes de celui qui fait, à celui qui décide. Ça implique de définir précisément ce que tu lâches, ce que tu gardes, et comment tu mesures que la machine tourne sans toi. Sans cette clarté en amont, tu risques de payer des personnes ou de scaler des canaux qui ne te rapprochent pas vraiment de l'objectif.`;
   }
 
   if (scoring.recommendation === 'skool') {
     if (niveau === 'debutant') {
-      p4 = `Ce dont vous avez besoin maintenant, c'est un environnement où l'équipe vous montre le chemin sans détour, et où vous pouvez poser vos questions à des entrepreneurs qui ont déjà fait le trajet. C'est exactement ce qu'est GENESYS — notre Skool avec les formations et plus de 100 personnes actives. Vous y trouvez SUPERNOVA, la formation e-commerce de A à Z, et vous posez vos questions directement à l'équipe. ${prenom}, à votre stade, c'est le pari le plus rationnel.`;
+      p4 = `Ce dont tu as besoin maintenant, c'est un environnement où l'équipe te montre le chemin sans détour, et où tu peux poser tes questions à des entrepreneurs qui ont déjà fait le trajet. C'est exactement ce qu'est GENESYS — notre Skool avec les formations et plus de 100 personnes actives. Tu y trouves SUPERNOVA, la formation e-commerce de A à Z, et tu poses tes questions directement à l'équipe. ${prenom}, à ton stade, c'est le pari le plus rationnel.`;
     } else if (niveau === 'intermediaire') {
-      p4 = `Ce dont vous avez besoin maintenant, c'est un environnement actif où plus de 100 entrepreneurs francophones partagent leurs vraies données et leurs blocages. C'est exactement ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro (12h sur la psychologie d'achat), Copy Impact (25h de copywriting), plus une communauté qui vous ramène quand vous décrochez. ${prenom}, à votre stade, c'est l'écosystème qui débloque, pas une nouvelle formation isolée.`;
+      p4 = `Ce dont tu as besoin maintenant, c'est un environnement actif où plus de 100 entrepreneurs francophones partagent leurs vraies données et leurs blocages. C'est exactement ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro (12h sur la psychologie d'achat), Copy Impact (25h de copywriting), plus une communauté qui te ramène quand tu décroches. ${prenom}, à ton stade, c'est l'écosystème qui débloque, pas une nouvelle formation isolée.`;
     } else {
-      p4 = `Ce dont vous avez besoin maintenant, c'est exactement ce que vous avez déjà identifié : un environnement actif. C'est ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro et Copy Impact, plus une communauté de 100+ opérateurs qui partagent leurs vrais tests. Vous y trouverez des gens qui scalent à votre niveau, et qui partagent ce qui marche cette semaine. ${prenom}, c'est exactement le levier que vous cherchez.`;
+      p4 = `Ce dont tu as besoin maintenant, c'est exactement ce que tu as déjà identifié : un environnement actif. C'est ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro et Copy Impact, plus une communauté de 100+ opérateurs qui partagent leurs vrais tests. Tu vas y trouver des gens qui scalent à ton niveau, et qui partagent ce qui marche cette semaine. ${prenom}, c'est exactement le levier que tu cherches.`;
     }
   } else {
-    p4 = `Ce dont vous avez besoin maintenant, ce n'est pas une formation de plus. C'est qu'on regarde ensemble vos chiffres, et qu'on identifie le seul levier qui aurait le plus d'impact dans les 90 prochains jours. Notre équipe propose un appel diagnostic gratuit de 45 minutes. On regarde vos vrais chiffres, on tranche, et on voit si votre profil correspond à ceux qu'on accompagne. ${prenom}, à votre niveau, l'angle externe est ce qui débloque, pas une nouvelle formation.`;
+    p4 = `Ce dont tu as besoin maintenant, ce n'est pas une formation de plus. C'est qu'on regarde ensemble tes chiffres, et qu'on identifie le seul levier qui aurait le plus d'impact dans tes 90 prochains jours. Notre équipe propose un appel diagnostic gratuit de 45 minutes. On regarde tes vrais chiffres, on tranche, et on voit si ton profil correspond à ceux qu'on accompagne. ${prenom}, à ton niveau, l'angle externe est ce qui débloque, pas une nouvelle formation.`;
   }
 
   let match = '';
   if (scoring.recommendation === 'skool') {
-    match = `${prenom}, ce qu'il vous faut maintenant, c'est un cadre clair et une communauté active. GENESYS combine exactement ces deux choses — les formations pour structurer, la communauté de 100+ entrepreneurs pour garder le rythme, et notre équipe pour répondre à vos questions. C'est exactement ce qui vous manque aujourd'hui.`;
+    match = `${prenom}, ce qu'il te faut maintenant, c'est un cadre clair et une communauté active. GENESYS combine exactement ces deux choses — les formations pour structurer, la communauté de 100+ entrepreneurs pour garder le rythme, et notre équipe pour répondre à tes questions. C'est exactement ce qui te manque aujourd'hui.`;
   } else {
-    match = `${prenom}, à votre niveau, ce qui débloque ce n'est plus une formation. C'est un regard externe précis sur votre stratégie. C'est exactement ce qu'on regarde ensemble en 45 minutes, gratuitement, pendant cet appel.`;
+    match = `${prenom}, à ton niveau, ce qui débloque ce n'est plus une formation. C'est un regard externe précis sur ta stratégie. C'est exactement ce qu'on regarde ensemble en 45 minutes, gratuitement, pendant cet appel.`;
   }
 
   return { p1, p2, p3, p4, match };
