@@ -1220,7 +1220,7 @@
     position: relative;
     z-index: 2;
   }
-  /* Light Beam SVG — segment lumineux qui glisse le long du contour, gradient fade aux extrémités */
+  /* Light Beam SVG — viewBox 1000×1000 + pathLength 4000 + GPU compositing pour fluidité maximale */
   .border-beam {
     position: absolute;
     inset: 0;
@@ -1229,22 +1229,26 @@
     pointer-events: none;
     overflow: visible;
     z-index: 1;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
   }
   .border-beam .beam-path {
     fill: none;
     stroke: url(#beamGrad);
-    stroke-width: 0.4;
+    stroke-width: 4;
     stroke-linecap: round;
-    stroke-dasharray: 15 385;
+    stroke-dasharray: 150 3850;
     filter:
-      drop-shadow(0 0 1px #4FC3F7)
-      drop-shadow(0 0 2px #4FC3F7);
-    animation: beam-travel 8s linear infinite;
+      drop-shadow(0 0 2px #4FC3F7)
+      drop-shadow(0 0 4px #4FC3F7);
+    animation: beam-travel 14s linear infinite;
     will-change: stroke-dashoffset;
     transform: translateZ(0);
+    backface-visibility: hidden;
   }
   @keyframes beam-travel {
-    from { stroke-dashoffset: 400; }
+    from { stroke-dashoffset: 4000; }
     to   { stroke-dashoffset: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1891,7 +1895,7 @@
       <h2 class="outcome-h2">— Créer des revenus prévisibles, avec une méthode claire —</h2>
 
       <div class="programme-principle">
-        <svg class="border-beam" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <svg class="border-beam" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
           <defs>
             <linearGradient id="beamGrad" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%"   stop-color="#4FC3F7" stop-opacity="0"/>
@@ -1899,7 +1903,7 @@
               <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
             </linearGradient>
           </defs>
-          <rect class="beam-path" x="0.5" y="0.5" width="99" height="99" rx="3" ry="3" pathLength="400" />
+          <rect class="beam-path" x="5" y="5" width="990" height="990" rx="30" ry="30" pathLength="4000" />
         </svg>
         <div class="principle-inner">
           <p>On ne vend pas un accompagnement.<br><strong>On vend une transformation.</strong></p>
