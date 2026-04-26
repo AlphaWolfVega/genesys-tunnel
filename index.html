@@ -1212,6 +1212,7 @@
     text-align: center;
     position: relative;
     border: 1px solid var(--line);
+    border-radius: 24px;
   }
   .programme-principle .principle-inner {
     max-width: 720px;
@@ -1219,49 +1220,33 @@
     position: relative;
     z-index: 2;
   }
-  /* Border Beam SVG — faisceau lumineux qui parcourt le contour avec virages fluides en courbe */
-  .principle-beam {
+  /* Orbe unique qui glisse le long du contour arrondi de la carte (coins fluides en arc) */
+  .principle-orb {
     position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(225, 240, 255, 0.9) 30%,
+      rgba(150, 205, 255, 0.4) 65%,
+      transparent 100%);
+    box-shadow:
+      0 0 6px rgba(255, 255, 255, 0.95),
+      0 0 14px rgba(165, 216, 255, 0.7),
+      0 0 28px rgba(91, 139, 201, 0.4);
     pointer-events: none;
-    overflow: visible;
     z-index: 1;
+    offset-path: rect(2px calc(100% - 2px) calc(100% - 2px) 2px round 22px);
+    offset-anchor: center;
+    animation: orbRun 8s linear infinite;
   }
-  .principle-beam rect {
-    x: 2px;
-    y: 2px;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
-    rx: 26px;
-    ry: 26px;
-    fill: none;
-    stroke-linecap: round;
-  }
-  .principle-beam .beam-glow {
-    stroke: rgba(165, 216, 255, 0.55);
-    stroke-width: 2.5;
-    stroke-dasharray: 14 86;
-    filter: blur(2px);
-    animation: beamRun 14s linear infinite;
-  }
-  .principle-beam .beam-head {
-    stroke: rgba(240, 248, 255, 1);
-    stroke-width: 2;
-    stroke-dasharray: 5 95;
-    filter:
-      drop-shadow(0 0 4px rgba(235, 245, 255, 0.95))
-      drop-shadow(0 0 12px rgba(165, 216, 255, 0.6));
-    animation: beamRun 14s linear infinite;
-  }
-  @keyframes beamRun {
-    from { stroke-dashoffset: 0; }
-    to   { stroke-dashoffset: -100; }
+  @keyframes orbRun {
+    from { offset-distance: 0%; }
+    to   { offset-distance: 100%; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .principle-beam .beam-glow,
-    .principle-beam .beam-head { animation: none; }
+    .principle-orb { animation: none; }
   }
   .programme-principle p {
     font-size: 21px;
@@ -1904,10 +1889,7 @@
       <h2 class="outcome-h2">— Créer des revenus prévisibles, avec une méthode claire —</h2>
 
       <div class="programme-principle">
-        <svg class="principle-beam" preserveAspectRatio="none" aria-hidden="true">
-          <rect class="beam-glow" pathLength="100" />
-          <rect class="beam-head" pathLength="100" />
-        </svg>
+        <div class="principle-orb" aria-hidden="true"></div>
         <div class="principle-inner">
           <p>On ne vend pas un accompagnement.<br><strong>On vend une transformation.</strong></p>
           <p style="margin-top:18px; font-size:17px; color: var(--text-2);">C'est pour ça que nos formules sont calibrées sur le temps réel qu'il faut pour transformer une situation. Pas une heure de plus, pas une heure de moins.</p>
