@@ -1205,26 +1205,57 @@
 
   .programme-principle {
     background: var(--bg-card);
-    border: 1px solid var(--line);
     backdrop-filter: blur(10px);
     padding: 56px 48px;
     margin: 0 auto 96px;
     max-width: 1180px;
     text-align: center;
     position: relative;
+    border: 1px solid var(--line);
+    overflow: hidden;
+    isolation: isolate;
   }
   .programme-principle .principle-inner {
     max-width: 720px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
   }
+  /* Lumière rotative subtile autour du cadre — apaisement neurologique */
   .programme-principle::before {
     content: '';
     position: absolute;
-    top: 0; left: 50%;
-    transform: translateX(-50%);
-    width: 60%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--chrome-2), transparent);
+    width: 200%;
+    height: 200%;
+    top: -50%;
+    left: -50%;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0deg,
+      transparent 280deg,
+      rgba(165, 216, 255, 0.15) 295deg,
+      rgba(220, 238, 255, 0.45) 320deg,
+      rgba(165, 216, 255, 0.15) 345deg,
+      transparent 360deg
+    );
+    animation: principleRotate 14s linear infinite;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .programme-principle::after {
+    content: '';
+    position: absolute;
+    inset: 1px;
+    background: var(--bg-card);
+    backdrop-filter: blur(10px);
+    z-index: 1;
+    pointer-events: none;
+  }
+  @keyframes principleRotate {
+    to { transform: rotate(360deg); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .programme-principle::before { animation: none; }
   }
   .programme-principle p {
     font-size: 21px;
@@ -1864,7 +1895,7 @@
         <span class="line">Le Programme</span>
         <span class="line">d'Accompagnement</span>
       </h1>
-      <h2 class="outcome-h2">— Conçu pour les opérateurs avancés —</h2>
+      <h2 class="outcome-h2">— Arrêter de subir tes chiffres. Construire un business qui te libère —</h2>
 
       <div class="programme-principle">
         <div class="principle-inner">
@@ -1902,7 +1933,7 @@
           </svg>
           <h3>ACCOMPAGNEMENT</h3>
           <div class="compare-duration">— 3 et 6 mois —</div>
-          <p>Une évolution structurelle complète de ta façon d'opérer. Sur la durée, on transforme ta posture, ton système et ton plafond. Pour ceux qui veulent franchir un vrai cap stratégique et installer un changement durable.</p>
+          <p>Tu sens que tu pourrais faire 3 fois plus, mais quelque chose te ralentit ? Sur 3 ou 6 mois, on travaille ensemble pour briser le plafond invisible qui te bloque. Tu reprends confiance, tes chiffres décollent, et ton business commence enfin à respirer.</p>
         </div>
 
         <!-- Transformation -->
@@ -1914,8 +1945,8 @@
             <circle cx="32" cy="32" r="6" fill="#A5D8FF"/>
           </svg>
           <h3>TRANSFORMATION</h3>
-          <div class="compare-duration">— 12 mois —</div>
-          <p>Une refonte totale de ton activité sur 12 mois. Équipe, marque, structure, vision long terme. Tu deviens l'architecte stratégique d'une marque qui tourne sans toi, prête à scaler ou à être valorisée.</p>
+          <div class="compare-duration">— 12 mois · Done For You —</div>
+          <p>Pendant 12 mois, on construit ton business à ta place. Une équipe qui bosse pour toi. Une marque qui inspire. Un business qui tourne même quand tu n'es pas connecté. Tu reprends ton temps, ta liberté, et ta tête.</p>
         </div>
       </div>
 
@@ -1942,7 +1973,7 @@
 
           <div class="formule-block transformation">
             <div class="formule-section-label">Transformation</div>
-            <p class="formule-transformation">Un levier précis activé, mesurable en chiffres, avec un système concret pour le maintenir 90 jours.</p>
+            <p class="formule-transformation">Un levier précis activé, mesurable en chiffres, avec un système concret qui continue de produire des résultats dans la durée.</p>
           </div>
 
           <div class="formule-pricing">
@@ -1958,20 +1989,20 @@
 
           <div class="formule-detail">
             <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 1 — Diagnostic & Priorisation</div>
-              <div class="programme-phase-content">Audit stratégique 360° de ta situation actuelle (chiffres, posture, blocages). Identification des 3 leviers à plus haut impact. Plan d'action priorisé sur 30 jours.</div>
+              <div class="programme-phase-title">Semaine 1 — Audit complet de ton business</div>
+              <div class="programme-phase-content">On regarde tes vrais chiffres, ton site, tes pubs, ton produit. On démonte la machine pour comprendre ce qui bloque vraiment. On identifie le levier qui peut le plus bouger l'aiguille pour toi.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 2 — Activation Levier #1</div>
-              <div class="programme-phase-content">Travail sur le levier prioritaire identifié. Mise en place concrète, premiers ajustements, mesure des premiers résultats.</div>
+              <div class="programme-phase-title">Semaine 2 — Plan d'attaque + activation</div>
+              <div class="programme-phase-content">Tu repars avec un plan précis, écrit, daté. On commence à exécuter ensemble le levier prioritaire. Premiers ajustements, premiers résultats visibles.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 3 — Levier #2 + Ajustements</div>
-              <div class="programme-phase-content">Activation du deuxième levier prioritaire. Ajustements en continu sur le levier #1. Préparation de la suite.</div>
+              <div class="programme-phase-title">Semaine 3 — On pousse + on optimise</div>
+              <div class="programme-phase-content">On regarde ce qui bouge, on ajuste, on amplifie. Si pertinent, on active un deuxième levier en parallèle. Tu commences à voir ton business répondre différemment.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Semaine 4 — Levier #3 + Plan post-optimisation</div>
-              <div class="programme-phase-content">Activation du levier #3. Bilan complet : ce qui a bougé, ce qui reste à approfondir. Construction du plan d'action 90 jours pour maintenir et amplifier.</div>
+              <div class="programme-phase-title">Semaine 4 — Bilan + plan pour la suite</div>
+              <div class="programme-phase-content">On mesure les vrais résultats. Tu repars avec un plan d'action concret pour amplifier ce qu'on a installé. Tu sais quoi faire, dans quel ordre, et pourquoi.</div>
             </div>
 
             <div class="value-stack-list">
@@ -2004,19 +2035,19 @@
 
           <div class="formule-block target">
             <div class="formule-section-label">Pour qui</div>
-            <p class="formule-target">Tu cherches à passer un cap stratégique réel — pas une optimisation tactique, mais une vraie évolution de ta façon d'opérer.</p>
+            <p class="formule-target">Tu sens que tu pourrais faire beaucoup plus, mais tu plafonnes. Tu veux casser ce plafond et installer un vrai changement, pas juste un coup ponctuel.</p>
           </div>
 
           <div class="formule-block transformation">
             <div class="formule-section-label">Transformation</div>
-            <p class="formule-transformation">Ta posture d'opérateur évolue, ton plafond mental saute, un système structurant remplace l'improvisation.</p>
+            <p class="formule-transformation">Tu arrêtes de tourner en rond. Tes chiffres décollent. Tu sais enfin où aller, et comment y aller, sans te perdre dans 50 directions à la fois.</p>
           </div>
 
           <div class="formule-pricing">
             <div class="formule-price-barred">9 600 €</div>
             <div class="formule-price">5 000 €</div>
             <div class="formule-savings">— Tu économises 4 600 € —</div>
-            <p class="formule-payment-plans">Paiement en 1×, 2× ou 3× sans frais</p>
+            <p class="formule-payment-plans">Paiement en 1× ou 2× sans frais</p>
           </div>
 
           <div class="formule-toggle-wrap">
@@ -2025,16 +2056,16 @@
 
           <div class="formule-detail">
             <div class="programme-phase">
-              <div class="programme-phase-title">Mois 1 — Diagnostic profond & déblocage tactique</div>
-              <div class="programme-phase-content">Audit stratégique 360° (chiffres, structure, posture, vision). Identification des blocages prioritaires. Activation du déblocage tactique. Construction des frameworks GENESYS adaptés à ta situation.</div>
+              <div class="programme-phase-title">Mois 1 — Diagnostic profond + premiers déblocages</div>
+              <div class="programme-phase-content">Audit complet (chiffres, site, pubs, produit, structure). On identifie tes 3 vrais blocages. On commence à les casser un par un. Tu vois les premiers résultats dès la fin du mois.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Mois 2 — Construction du système</div>
-              <div class="programme-phase-content">Audit intermédiaire pour calibrer la suite. Mise en place du système d'acquisition optimisé. Travail sur la conversion (copy, page produit, parcours). Mise en place des KPI et tableaux de bord pour piloter.</div>
+              <div class="programme-phase-title">Mois 2 — Construction de ton système</div>
+              <div class="programme-phase-content">Mise en place de ton système d'acquisition optimisé. Travail en profondeur sur ta page produit, ton copywriting, ton tunnel de conversion. Mise en place de tes vrais indicateurs pour piloter sans naviguer à vue.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Mois 3 — Scalabilité & autonomie stratégique</div>
-              <div class="programme-phase-content">Travail sur la posture stratégique (toi en mode décisionnel, plus opérationnel). Plan stratégique 90 jours suivants co-construit. Ajustements finaux et tests. Bilan complet + roadmap de continuité 6 mois.</div>
+              <div class="programme-phase-title">Mois 3 — Autonomie + plan pour la suite</div>
+              <div class="programme-phase-content">On installe les automatisations qui t'enlèvent du travail au quotidien. Tu construis ton plan stratégique pour les 6 mois suivants. Tu repars avec un business qui tourne sans que tu réinventes la roue chaque jour.</div>
             </div>
 
             <div class="value-stack-list">
@@ -2066,12 +2097,12 @@
 
           <div class="formule-block target">
             <div class="formule-section-label">Pour qui</div>
-            <p class="formule-target">Tu veux structurer ta croissance long terme. Sortir de l'opérationnel, déléguer, construire un business qui ne dépend plus à 100 % de toi.</p>
+            <p class="formule-target">Tu en as marre d'être bouffé par ton business 24/7. Tu veux qu'il tourne sans avoir besoin que tu sois branché en permanence. Tu veux récupérer du temps et de la tête.</p>
           </div>
 
           <div class="formule-block transformation">
             <div class="formule-section-label">Transformation</div>
-            <p class="formule-transformation">Ton business tourne sans toi à 50 %. Tu passes de l'opérateur à l'architecte. Tu reprends ton temps et ta vision.</p>
+            <p class="formule-transformation">Ton business commence à tourner sans toi. Tu reprends ton temps. Tu reprends ta tête. Tu peux enfin penser à autre chose qu'à éteindre des feux toute la journée.</p>
           </div>
 
           <div class="formule-pricing">
@@ -2087,20 +2118,20 @@
 
           <div class="formule-detail">
             <div class="programme-phase">
-              <div class="programme-phase-title">Phase 1 — Déblocage & fondations (M1)</div>
-              <div class="programme-phase-content">Audit stratégique 360° approfondi. Identification des blocages structurels (pas seulement tactiques). Activation des leviers immédiats. Construction de la vision stratégique 12 mois.</div>
+              <div class="programme-phase-title">Mois 1-2 — Audit + premiers déblocages</div>
+              <div class="programme-phase-content">On démonte ton business pour comprendre ce qui marche et ce qui te bloque vraiment. On active les leviers immédiats. Tu vois les premiers résultats dès le 1er mois, pas dans 6.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Phase 2 — Construction des systèmes (M2-M3)</div>
-              <div class="programme-phase-content">Audit intermédiaire M2. Système d'acquisition optimisé et scalable. Système de conversion et copywriting structurel. Système de fulfillment, KPI, pilotage.</div>
+              <div class="programme-phase-title">Mois 3-4 — Construction de tes systèmes durables</div>
+              <div class="programme-phase-content">Acquisition, conversion, fulfillment, indicateurs : on installe les systèmes qui t'enlèvent du chaos quotidien. Tu commences à respirer. Tu vois enfin clair sur où tu vas.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Phase 3 — Délégation & équipe (M4-M5)</div>
-              <div class="programme-phase-content">Audit intermédiaire M4. Identification des tâches à déléguer. Accompagnement à l'embauche (process de recrutement, briefing, suivi). Construction de tes process opérationnels documentés.</div>
+              <div class="programme-phase-title">Mois 5 — Délégation + ton premier vrai relais</div>
+              <div class="programme-phase-content">On construit ton équipe (ou ton premier vrai employé). On t'apprend à briefer, à déléguer, à laisser tomber le perfectionnisme qui te bouffe. Tes process deviennent documentés et transmissibles.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Phase 4 — Autonomie & projection (M6)</div>
-              <div class="programme-phase-content">Bilan complet 6 mois. Plan stratégique 6 mois → 12 mois. Mise en place de ton process décisionnel autonome. Roadmap de continuité long terme.</div>
+              <div class="programme-phase-title">Mois 6 — Plan stratégique 12 mois + autonomie</div>
+              <div class="programme-phase-content">Tu repars avec un plan clair pour l'année suivante. Tu sais où tu vas. Tu sais comment y aller. Et tu n'as plus besoin de personne pour te tenir la main.</div>
             </div>
 
             <div class="value-stack-list">
@@ -2130,23 +2161,23 @@
             <circle cx="44" cy="44" r="6" fill="#A5D8FF"/>
           </svg>
           <div class="formule-name">TRANSFORMATION</div>
-          <div class="formule-duration">— 12 mois —</div>
+          <div class="formule-duration">— 12 mois · Done For You —</div>
 
           <div class="formule-block target">
             <div class="formule-section-label">Pour qui</div>
-            <p class="formule-target">Tu vises une transformation totale. De l'opérateur épuisé à l'architecte stratégique d'une marque qui tourne sans toi à 80-90 %.</p>
+            <p class="formule-target">Tu veux qu'on construise ton business avec toi, pas que tu te tapes tout seul. Tu veux passer du gars qui fait tout à la main à celui qui pilote une vraie marque, avec une équipe, des systèmes, et du temps pour vivre.</p>
           </div>
 
           <div class="formule-block transformation">
             <div class="formule-section-label">Transformation</div>
-            <p class="formule-transformation">Tu sors de l'opérationnel à 80-90 %. Tu deviens l'architecte d'une marque, plus l'opérateur d'une boutique. Tu peux scaler, vendre, ou transformer librement.</p>
+            <p class="formule-transformation">Une équipe qui bosse pour toi. Une marque qui parle pour toi. Un business qui te porte au lieu de te bouffer. Tu retrouves ta liberté, et tu peux enfin faire ce que tu veux de ta vie.</p>
           </div>
 
           <div class="formule-pricing">
-            <div class="formule-price-barred">44 000 €</div>
+            <div class="formule-price-barred">57 000 €</div>
             <div class="formule-price">25 000 €</div>
-            <div class="formule-savings">— Tu économises 19 000 € —</div>
-            <p class="formule-payment-plans">Paiement en 1×, 2× ou 3× sans frais</p>
+            <div class="formule-savings">— Tu économises 32 000 € —</div>
+            <p class="formule-payment-plans">Paiement en 1×, 2×, 3× ou 4× sans frais</p>
           </div>
 
           <div class="formule-toggle-wrap">
@@ -2154,42 +2185,47 @@
           </div>
 
           <div class="formule-detail">
+            <div class="programme-phase" style="background:rgba(91,139,201,0.08); padding:18px 20px; border-left:2px solid var(--chrome-2); margin-bottom:28px;">
+              <div class="programme-phase-title" style="color:var(--chrome-1); font-size:15px;">★ DONE FOR YOU — On bosse pour toi</div>
+              <div class="programme-phase-content" style="border:none; padding:8px 0 0; color:var(--text);">Sur cette formule, tu nous délègues. Notre équipe construit, lance et gère ton business pendant 12 mois. Tu valides, on exécute. Tu vois les résultats arriver, sans avoir à tout faire toi-même.</div>
+            </div>
+
             <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 1 — Refonte stratégique (M1-M3)</div>
-              <div class="programme-phase-content">Audit stratégique 360° + analyse de ta marque actuelle. Identification des blocages structurels et stratégiques. Activation des leviers immédiats. Construction de la vision 36 mois.</div>
+              <div class="programme-phase-title">Trimestre 1 — On reprend les fondations à ta place</div>
+              <div class="programme-phase-content">Audit complet de ton business actuel (ou recherche produit gagnant si tu démarres). On refait (ou on construit) ton site avec un design qui convertit. On lance ton tunnel d'acquisition (Meta, TikTok ou Google selon ton produit). Tu valides, on exécute. Tu n'écris pas une ligne, tu ne touches pas une pub.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 2 — Structuration équipe & processus (M4-M6)</div>
-              <div class="programme-phase-content">Audit intermédiaire trimestriel. Recrutement de ton équipe core (1 à 3 personnes selon situation). Construction des process opérationnels documentés. Mise en place des KPI stratégiques.</div>
+              <div class="programme-phase-title">Trimestre 2 — On scale tes pubs + on construit ta marque</div>
+              <div class="programme-phase-content">Notre équipe gère ta publicité au quotidien : création des visuels, scaling des budgets, optimisation des campagnes. On crée ton identité de marque (logo, charte, ton de voix, narration). On produit ton storytelling vidéo (UGC, vidéos produits, ads). Tu vois les résultats, tu valides, on accélère.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 3 — Construction de marque & diversification (M7-M9)</div>
-              <div class="programme-phase-content">Audit intermédiaire trimestriel. Travail sur le positionnement de marque (au-delà de la boutique). Identité, narration, ton de communication. Diversification des canaux ou des gammes de produits.</div>
+              <div class="programme-phase-title">Trimestre 3 — On structure ton équipe + on diversifie</div>
+              <div class="programme-phase-content">On t'aide à recruter et briefer ton équipe interne (1 à 3 personnes selon ta situation). On ouvre un 2ème canal de revenus (organique, autre plateforme pub, etc.). On élargit ta gamme de produits si pertinent. Tu commences à sortir de l'opérationnel quotidien.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Trimestre 4 — Sortie de l'opérationnel (M10-M12)</div>
-              <div class="programme-phase-content">Audit intermédiaire final. Mise en place de ton process décisionnel "architecte". Tu n'es plus dans la machine, tu décides de sa direction. Plan stratégique 12 mois → 36 mois (scaler, vendre, ou transformer).</div>
+              <div class="programme-phase-title">Trimestre 4 — On installe ton autonomie + plan 36 mois</div>
+              <div class="programme-phase-content">On te transmet ton process décisionnel pour que tu pilotes sans nous. On documente tout ce qui a été fait, pour que ton équipe interne puisse continuer. On construit ton plan stratégique sur 3 ans (scaler, vendre, ou diversifier). À la sortie, ton business tourne sans toi à 80 %.</div>
             </div>
             <div class="programme-phase">
-              <div class="programme-phase-title">Bonus — Sessions trimestrielles avec experts invités</div>
-              <div class="programme-phase-content">4 sessions par an avec des experts invités GENESYS sur des sujets spécifiques : acquisition Meta avancée, opérations e-commerce, branding premium, structure tax/légal.</div>
+              <div class="programme-phase-title">Bonus pendant les 12 mois</div>
+              <div class="programme-phase-content">Accès illimité à notre équipe via Slack privé + sessions hebdomadaires. 4 sessions trimestrielles avec experts invités (Meta avancée, opérations, branding premium, fiscalité). Accès au Classroom GENESYS à vie.</div>
             </div>
 
             <div class="value-stack-list">
               <div class="value-stack-title">Décomposition value stack</div>
-              <div class="value-stack-row"><span class="label">Audit stratégique 360°</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">48 sessions individuelles d'1h × 400 €</span><span class="amount">19 200 €</span></div>
-              <div class="value-stack-row"><span class="label">4 audits intermédiaires trimestriels × 600 €</span><span class="amount">2 400 €</span></div>
-              <div class="value-stack-row"><span class="label">Accès messagerie privée 12 mois</span><span class="amount">2 400 €</span></div>
-              <div class="value-stack-row"><span class="label">Accompagnement embauche & structuration équipe</span><span class="amount">4 000 €</span></div>
-              <div class="value-stack-row"><span class="label">Construction de ta marque</span><span class="amount">4 500 €</span></div>
-              <div class="value-stack-row"><span class="label">Plan stratégique 36 mois</span><span class="amount">1 800 €</span></div>
-              <div class="value-stack-row"><span class="label">Process décisionnel architecte</span><span class="amount">3 500 €</span></div>
+              <div class="value-stack-row"><span class="label">Audit stratégique 360° + recherche produit / analyse marché</span><span class="amount">3 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Refonte ou création de ton site (design + dev + UX)</span><span class="amount">8 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Gestion publicitaire 12 mois (création, scaling, optimisation)</span><span class="amount">18 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Création identité de marque (logo, charte, narration)</span><span class="amount">6 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Production de contenus (UGC, vidéos, photos produit)</span><span class="amount">5 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Recrutement & briefing de ton équipe</span><span class="amount">4 000 €</span></div>
+              <div class="value-stack-row"><span class="label">Process décisionnel architecte + plan 36 mois</span><span class="amount">3 500 €</span></div>
+              <div class="value-stack-row"><span class="label">Accès direct équipe 12 mois (Slack + sessions hebdo)</span><span class="amount">4 800 €</span></div>
+              <div class="value-stack-row"><span class="label">4 sessions trimestrielles avec experts invités</span><span class="amount">3 200 €</span></div>
               <div class="value-stack-row"><span class="label">Accès Classroom GENESYS à vie</span><span class="amount">1 500 €</span></div>
-              <div class="value-stack-row"><span class="label">4 sessions trimestrielles experts invités</span><span class="amount">3 200 €</span></div>
-              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">44 000 €</span></div>
+              <div class="value-stack-row value-stack-total-barred"><span class="label">Valeur totale</span><span class="amount">57 000 €</span></div>
               <div class="value-stack-row value-stack-paid"><span class="label">Tu paies</span><span class="amount">25 000 €</span></div>
-              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">19 000 €</span></div>
+              <div class="value-stack-row value-stack-savings"><span class="label">Tu économises</span><span class="amount">32 000 €</span></div>
             </div>
           </div>
         </div>
