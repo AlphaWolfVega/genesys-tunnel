@@ -222,6 +222,10 @@
     max-width: 920px;
     text-align: center;
   }
+  /* Quand on est sur la page programme, on élargit pour aligner tous les blocs sur la même largeur (1180px) */
+  body.programme-active .container {
+    max-width: 1200px;
+  }
 
   .screen { display: none; animation: screenIn 0.8s cubic-bezier(0.16,1,0.3,1); width: 100%; }
   .screen.active { display: block; }
@@ -1203,11 +1207,15 @@
     background: var(--bg-card);
     border: 1px solid var(--line);
     backdrop-filter: blur(10px);
-    padding: 44px 36px;
-    margin: 0 auto 80px;
-    max-width: 820px;
+    padding: 56px 48px;
+    margin: 0 auto 96px;
+    max-width: 1180px;
     text-align: center;
     position: relative;
+  }
+  .programme-principle .principle-inner {
+    max-width: 720px;
+    margin: 0 auto;
   }
   .programme-principle::before {
     content: '';
@@ -1859,8 +1867,10 @@
       <h2 class="outcome-h2">— Conçu pour les opérateurs avancés —</h2>
 
       <div class="programme-principle">
-        <p>On ne vend pas un accompagnement.<br><strong>On vend une transformation.</strong></p>
-        <p style="margin-top:18px; font-size:17px; color: var(--text-2);">C'est pour ça que nos formules sont calibrées sur le temps réel qu'il faut pour transformer une situation. Pas une heure de plus, pas une heure de moins.</p>
+        <div class="principle-inner">
+          <p>On ne vend pas un accompagnement.<br><strong>On vend une transformation.</strong></p>
+          <p style="margin-top:18px; font-size:17px; color: var(--text-2);">C'est pour ça que nos formules sont calibrées sur le temps réel qu'il faut pour transformer une situation. Pas une heure de plus, pas une heure de moins.</p>
+        </div>
       </div>
 
       <div class="programme-section-title">3 niveaux de profondeur</div>
@@ -2431,6 +2441,8 @@ function showScreen(screen) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   const el = document.getElementById('screen-' + screen);
   if (el) el.classList.add('active');
+  if (screen === 'programme') document.body.classList.add('programme-active');
+  else document.body.classList.remove('programme-active');
   window.scrollTo({ top: 0, behavior: 'auto' });
 }
 
