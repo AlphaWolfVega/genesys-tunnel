@@ -1220,7 +1220,7 @@
     position: relative;
     z-index: 2;
   }
-  /* Light Beam SVG — viewBox 1000×1000 + pathLength 4000 + GPU compositing pour fluidité maximale */
+  /* Light Beam SVG — tête lumineuse + ghost extension fantomatique avant/arrière */
   .border-beam {
     position: absolute;
     inset: 0;
@@ -1233,6 +1233,21 @@
     backface-visibility: hidden;
     perspective: 1000px;
   }
+  .border-beam .beam-ghost {
+    fill: none;
+    stroke: #4FC3F7;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 600 3400;
+    opacity: 0.45;
+    filter:
+      blur(2px)
+      drop-shadow(0 0 3px rgba(79, 195, 247, 0.55));
+    animation: beam-ghost-travel 10s linear infinite;
+    will-change: stroke-dashoffset;
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
   .border-beam .beam-path {
     fill: none;
     stroke: url(#beamGrad);
@@ -1242,7 +1257,7 @@
     filter:
       drop-shadow(0 0 2px #4FC3F7)
       drop-shadow(0 0 4px #4FC3F7);
-    animation: beam-travel 14s linear infinite;
+    animation: beam-travel 10s linear infinite;
     will-change: stroke-dashoffset;
     transform: translateZ(0);
     backface-visibility: hidden;
@@ -1251,8 +1266,13 @@
     from { stroke-dashoffset: 4000; }
     to   { stroke-dashoffset: 0; }
   }
+  @keyframes beam-ghost-travel {
+    from { stroke-dashoffset: 4225; }
+    to   { stroke-dashoffset: 225; }
+  }
   @media (prefers-reduced-motion: reduce) {
-    .border-beam .beam-path { animation: none; }
+    .border-beam .beam-path,
+    .border-beam .beam-ghost { animation: none; }
   }
   .programme-principle p {
     font-size: 21px;
@@ -1903,6 +1923,7 @@
               <stop offset="100%" stop-color="#4FC3F7" stop-opacity="0"/>
             </linearGradient>
           </defs>
+          <rect class="beam-ghost" x="5" y="5" width="990" height="990" rx="30" ry="30" pathLength="4000" />
           <rect class="beam-path" x="5" y="5" width="990" height="990" rx="30" ry="30" pathLength="4000" />
         </svg>
         <div class="principle-inner">
