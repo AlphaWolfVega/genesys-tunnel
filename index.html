@@ -1,0 +1,1967 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>GENESYS — Diagnostic E-Commerce</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg-deep: #020617;
+    --bg-cosmic: #030B23;
+    --bg-card: rgba(15, 30, 60, 0.4);
+    --bg-card-2: rgba(20, 40, 80, 0.6);
+    --line-faint: rgba(165, 216, 255, 0.08);
+    --line: rgba(165, 216, 255, 0.18);
+    --line-bright: rgba(165, 216, 255, 0.35);
+
+    --chrome-1: #DCEEFF;
+    --chrome-2: #A5D8FF;
+    --chrome-3: #5B8BC9;
+    --chrome-4: #2B5599;
+
+    --glow-blue: #3B82F6;
+    --glow-cyan: #67E8F9;
+    --or: #D4B96E;
+
+    --text: #E8EFFA;
+    --text-2: #9FB3D4;
+    --text-3: #5C7299;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: var(--bg-deep);
+    color: var(--text);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.65;
+    min-height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  /* ─── COSMIC BACKGROUND ─── */
+  .cosmos {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+  .cosmos::before {
+    content: '';
+    position: absolute;
+    inset: -10%;
+    background:
+      radial-gradient(ellipse at 50% 0%, rgba(59, 130, 246, 0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 20% 100%, rgba(103, 232, 249, 0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 80%, rgba(91, 139, 201, 0.12) 0%, transparent 60%);
+    animation: cosmosDrift 30s ease-in-out infinite alternate;
+  }
+  @keyframes cosmosDrift {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(-30px, 30px) scale(1.05); }
+  }
+  .cosmos::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' /%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    mix-blend-mode: overlay;
+  }
+
+  /* Stars */
+  .star {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle 3s ease-in-out infinite;
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 0.6; transform: scale(1); }
+  }
+
+  /* Sacred geometry SVG layer */
+  .sacred {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.18;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .sacred svg {
+    width: min(140vh, 140vw);
+    height: min(140vh, 140vw);
+    animation: sacredRotate 240s linear infinite;
+  }
+  @keyframes sacredRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ─── TOP BAR — transparente, le scroll-mask gère le voile ─── */
+  .top-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 22px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 50;
+    background: transparent;
+    pointer-events: none;
+  }
+  .top-bar .brand,
+  .top-bar .step-indicator { pointer-events: auto; }
+
+  /* Scroll fade — voile unifié sans cassure, fond progressivement */
+  .scroll-mask {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 200px;
+    z-index: 47;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+      rgba(2, 6, 23, 0.92) 0%,
+      rgba(2, 6, 23, 0.86) 18%,
+      rgba(2, 6, 23, 0.72) 38%,
+      rgba(2, 6, 23, 0.50) 58%,
+      rgba(2, 6, 23, 0.25) 78%,
+      rgba(2, 6, 23, 0.08) 92%,
+      rgba(2, 6, 23, 0) 100%
+    );
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    -webkit-mask-image: linear-gradient(180deg,
+      black 0%,
+      black 35%,
+      rgba(0, 0, 0, 0.85) 55%,
+      rgba(0, 0, 0, 0.55) 72%,
+      rgba(0, 0, 0, 0.25) 88%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(180deg,
+      black 0%,
+      black 35%,
+      rgba(0, 0, 0, 0.85) 55%,
+      rgba(0, 0, 0, 0.55) 72%,
+      rgba(0, 0, 0, 0.25) 88%,
+      transparent 100%
+    );
+  }
+  .brand {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    font-weight: 600;
+    color: var(--chrome-2);
+    text-shadow: 0 0 20px rgba(91, 139, 201, 0.5);
+  }
+  .step-indicator {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--chrome-3);
+  }
+
+  /* Progress dots (instead of bar) */
+  .progress-dots {
+    position: fixed;
+    top: 70px; left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 14px;
+    z-index: 49;
+  }
+  .pdot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    border: 1px solid var(--chrome-3);
+    background: transparent;
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+  }
+  .pdot.done {
+    background: var(--chrome-2);
+    border-color: var(--chrome-2);
+    box-shadow: 0 0 12px var(--chrome-2);
+  }
+  .pdot.current {
+    background: var(--chrome-1);
+    border-color: var(--chrome-1);
+    box-shadow: 0 0 16px var(--chrome-1), 0 0 32px var(--chrome-1);
+    animation: dotPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.4); }
+  }
+
+  main {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    padding: 140px 24px 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 920px;
+    text-align: center;
+  }
+
+  .screen { display: none; animation: screenIn 0.8s cubic-bezier(0.16,1,0.3,1); width: 100%; }
+  .screen.active { display: block; }
+  @keyframes screenIn {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); filter: blur(8px); }
+    to { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+  }
+
+  /* ─── CHROME BLUE TEXT — SOLID READABLE ─── */
+  .chrome {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    color: #D2E4F8;
+    letter-spacing: 0.015em;
+    line-height: 1.1;
+    text-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.15),
+      0 0 14px rgba(120, 170, 230, 0.5),
+      0 0 32px rgba(59, 130, 246, 0.22);
+  }
+  .chrome-sm {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    color: var(--chrome-2);
+    text-shadow: 0 0 15px rgba(91, 139, 201, 0.5);
+    letter-spacing: 0.15em;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: calc(100vh - 240px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-3);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: lineUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.3s forwards;
+  }
+  .hero-title {
+    font-size: clamp(18px, 4.4vw, 52px);
+    margin-bottom: 36px;
+    max-width: 100%;
+    padding: 0 4px;
+    letter-spacing: 0.01em;
+  }
+  .hero-title .line {
+    display: block;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(28px);
+    animation: lineUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .hero-title .line:nth-child(1) { animation-delay: 0.5s; }
+  .hero-title .line:nth-child(2) { animation-delay: 0.65s; }
+  .hero-title .line:nth-child(3) { animation-delay: 0.8s; }
+  @keyframes lineUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-sub {
+    font-size: clamp(17px, 2vw, 21px);
+    color: var(--text-2);
+    margin-bottom: 56px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: lineUp 0.9s cubic-bezier(0.16,1,0.3,1) 1.0s forwards;
+    line-height: 1.6;
+  }
+
+  /* ─── BTN — CHROME BLUE ─── */
+  .btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 22px 54px;
+    background: linear-gradient(180deg,
+      rgba(165, 216, 255, 0.12) 0%,
+      rgba(91, 139, 201, 0.18) 50%,
+      rgba(43, 85, 153, 0.22) 100%);
+    border: 1px solid rgba(165, 216, 255, 0.4);
+    color: var(--chrome-1);
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    text-decoration: none;
+    box-shadow:
+      inset 0 1px 0 rgba(220, 238, 255, 0.3),
+      inset 0 -1px 0 rgba(43, 85, 153, 0.5),
+      0 0 0 rgba(91, 139, 201, 0);
+    text-shadow: 0 0 12px rgba(91, 139, 201, 0.6);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+    min-height: 64px;
+  }
+  .btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(220, 238, 255, 0.25) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.8s cubic-bezier(0.16,1,0.3,1);
+  }
+  .btn:hover::before { transform: translateX(100%); }
+  .btn:hover {
+    border-color: var(--chrome-1);
+    box-shadow:
+      inset 0 1px 0 rgba(220, 238, 255, 0.5),
+      inset 0 -1px 0 rgba(43, 85, 153, 0.6),
+      0 0 60px rgba(91, 139, 201, 0.5),
+      0 0 120px rgba(59, 130, 246, 0.3);
+    transform: translateY(-2px);
+  }
+  .btn:disabled { opacity: 0.3; cursor: not-allowed; pointer-events: none; }
+
+  .btn.cta-large { padding: 26px 64px; font-size: 15px; min-height: 76px; }
+
+  .btn.pulse {
+    opacity: 0;
+    animation: lineUp 0.9s cubic-bezier(0.16,1,0.3,1) 1.3s forwards, btnPulse 3s ease-in-out 2.2s infinite;
+  }
+  @keyframes btnPulse {
+    0%, 100% { box-shadow: inset 0 1px 0 rgba(220,238,255,0.3), 0 0 0 rgba(91,139,201,0); }
+    50% { box-shadow: inset 0 1px 0 rgba(220,238,255,0.5), 0 0 80px rgba(91,139,201,0.6), 0 0 160px rgba(59,130,246,0.4); }
+  }
+
+  .trust {
+    margin-top: 40px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--text-3);
+    text-transform: uppercase;
+    opacity: 0;
+    animation: lineUp 0.9s cubic-bezier(0.16,1,0.3,1) 1.6s forwards;
+  }
+
+  /* ─── STEP CONTENT ─── */
+  .step-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0.85;
+  }
+  .step-title {
+    font-size: clamp(26px, 3.5vw, 42px);
+    line-height: 1.25;
+    margin-bottom: 20px;
+    max-width: 820px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 8px;
+    overflow-wrap: break-word;
+  }
+  .step-subtitle {
+    font-size: 17px;
+    color: var(--text-2);
+    margin-bottom: 56px;
+    max-width: 620px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
+  /* ─── LEVEL CARDS ─── */
+  .levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    max-width: 1080px;
+    margin: 0 auto;
+  }
+  @media (max-width: 768px) { .levels { grid-template-columns: 1fr; } }
+
+  .level-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    padding: 36px 28px 32px;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    min-height: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+  }
+  .level-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(91, 139, 201, 0.15) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .level-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--chrome-2), transparent);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .level-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--chrome-2);
+    box-shadow:
+      0 0 40px rgba(91, 139, 201, 0.3),
+      0 0 80px rgba(59, 130, 246, 0.15);
+    background: var(--bg-card-2);
+  }
+  .level-card:hover::before, .level-card:hover::after { opacity: 1; }
+
+  .level-num {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    color: var(--chrome-3);
+    letter-spacing: 0.3em;
+    margin-bottom: 24px;
+  }
+  .level-orb {
+    width: 64px; height: 64px;
+    margin: 0 auto 24px;
+    border-radius: 50%;
+    border: 1px solid var(--chrome-3);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s;
+  }
+  .level-orb::before {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--chrome-2);
+    opacity: 0.6;
+  }
+  .level-orb::after {
+    content: '';
+    position: absolute;
+    inset: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--chrome-2), transparent);
+    opacity: 0.4;
+  }
+  .level-card:hover .level-orb {
+    border-color: var(--chrome-1);
+    box-shadow: 0 0 20px var(--chrome-2);
+  }
+  .level-card:hover .level-orb::after {
+    opacity: 1;
+    animation: orbPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes orbPulse {
+    0%, 100% { transform: scale(0.8); opacity: 0.6; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
+
+  .level-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--chrome-2);
+    text-shadow: 0 0 15px rgba(91, 139, 201, 0.4);
+    margin-bottom: 18px;
+    letter-spacing: 0.1em;
+  }
+  .level-desc {
+    color: var(--text-2);
+    font-size: 15px;
+    line-height: 1.65;
+    flex: 1;
+  }
+  .level-cta {
+    margin-top: 24px;
+    font-family: 'Cinzel', serif;
+    color: var(--chrome-2);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  .level-card:hover .level-cta { opacity: 1; color: var(--chrome-1); }
+
+  /* ─── INPUT ─── */
+  .input-wrap {
+    max-width: 540px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--chrome-3);
+    color: var(--chrome-1);
+    font-size: 22px;
+    padding: 18px 4px;
+    outline: none;
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    text-align: center;
+    letter-spacing: 0.05em;
+    transition: all 0.3s;
+  }
+  .input:focus {
+    border-bottom-color: var(--chrome-1);
+    box-shadow: 0 1px 12px var(--chrome-2);
+  }
+  .input::placeholder { color: var(--text-3); font-weight: 400; letter-spacing: 0.1em; }
+
+  /* ─── OPTIONS ─── */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .option {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(8px);
+    padding: 22px 28px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    font-size: 16px;
+    color: var(--text);
+    text-align: left;
+    font-family: inherit;
+    line-height: 1.45;
+    min-height: 76px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+  }
+  .option::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(91, 139, 201, 0.08), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .option:hover {
+    border-color: var(--chrome-3);
+    background: var(--bg-card-2);
+    transform: translateX(4px);
+  }
+  .option:hover::before { opacity: 1; }
+  .option.selected {
+    border-color: var(--chrome-2);
+    background: var(--bg-card-2);
+    box-shadow: 0 0 30px rgba(91, 139, 201, 0.2);
+  }
+  .option.selected::before {
+    opacity: 1;
+    background: linear-gradient(90deg, rgba(91, 139, 201, 0.15), transparent);
+  }
+
+  .radio {
+    width: 20px; height: 20px;
+    border: 1px solid var(--chrome-3);
+    border-radius: 50%;
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .option.selected .radio {
+    border-color: var(--chrome-1);
+    box-shadow: 0 0 12px var(--chrome-2);
+  }
+  .option.selected .radio::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: radial-gradient(circle, var(--chrome-1), var(--chrome-2));
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--chrome-1);
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 56px;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+  .back-link {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    padding: 10px 0;
+  }
+  .back-link:hover { color: var(--chrome-2); }
+
+  /* ─── EMAIL ─── */
+  .email-zone {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+  .email-divider {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin: 36px 0;
+    color: var(--text-3);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+  }
+  .email-divider::before, .email-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+  .skip-link {
+    background: none;
+    border: none;
+    color: var(--text-3);
+    font-size: 13px;
+    cursor: pointer;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    padding: 8px 0;
+  }
+  .skip-link:hover { color: var(--chrome-2); }
+
+  /* ─── DIAGNOSTIC ─── */
+  .diag-greeting {
+    font-size: clamp(28px, 4vw, 46px);
+    margin-bottom: 16px;
+    padding: 0 8px;
+    overflow-wrap: break-word;
+  }
+  .diag-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-3);
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .divider-or {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--chrome-2), transparent);
+    margin: 64px auto;
+    max-width: 600px;
+    opacity: 0.4;
+  }
+
+  .score-card {
+    background: var(--bg-card);
+    border: 1px solid var(--chrome-3);
+    backdrop-filter: blur(20px);
+    padding: 56px 40px;
+    margin: 48px auto;
+    max-width: 720px;
+    position: relative;
+    overflow: hidden;
+  }
+  .score-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--chrome-1), transparent);
+  }
+  .score-card-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+  .score-bar {
+    height: 4px;
+    background: rgba(91, 139, 201, 0.1);
+    overflow: hidden;
+    margin-bottom: 32px;
+    border-radius: 2px;
+  }
+  .score-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--chrome-3), var(--chrome-1));
+    width: 0%;
+    transition: width 2.2s cubic-bezier(0.16,1,0.3,1);
+    box-shadow: 0 0 16px var(--chrome-2);
+  }
+  .score-number {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(72px, 12vw, 120px);
+    font-weight: 700;
+    margin-bottom: 40px;
+    line-height: 1;
+  }
+  .score-number .num {
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 60px rgba(91, 139, 201, 0.6);
+  }
+  .score-number .out {
+    font-size: 0.35em;
+    color: var(--text-3);
+    font-weight: 400;
+    margin-left: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .sub-scores { display: flex; flex-direction: column; gap: 14px; max-width: 480px; margin: 0 auto; }
+  .sub-score-row {
+    display: grid;
+    grid-template-columns: 110px 1fr 60px;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+  }
+  .sub-score-label {
+    font-family: 'Cinzel', serif;
+    color: var(--chrome-3);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 11px;
+    text-align: left;
+  }
+  .sub-score-bar {
+    height: 3px;
+    background: rgba(91, 139, 201, 0.1);
+  }
+  .sub-score-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--chrome-3), var(--chrome-1));
+    width: 0%;
+    transition: width 1.8s cubic-bezier(0.16,1,0.3,1) 0.6s;
+    box-shadow: 0 0 8px var(--chrome-2);
+  }
+  .sub-score-val {
+    font-family: 'Cinzel', serif;
+    color: var(--chrome-2);
+    font-weight: 600;
+    text-align: right;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  /* Archetype */
+  .archetype-block { margin: 64px auto; max-width: 820px; text-align: center; }
+  .archetype-name {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(26px, 4vw, 44px);
+    font-style: italic;
+    margin: 24px 0 20px;
+    line-height: 1.25;
+    padding: 0 8px;
+    overflow-wrap: break-word;
+  }
+  .archetype-desc {
+    font-size: 18px;
+    color: var(--text-2);
+    line-height: 1.7;
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  /* Diag sections */
+  .diag-section {
+    margin: 0 auto 56px;
+    max-width: 760px;
+    text-align: left;
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  .diag-section.in {
+    animation: lineUp 1s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .diag-section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    text-shadow: 0 0 12px rgba(91, 139, 201, 0.4);
+  }
+  .diag-section-label::before {
+    content: '';
+    display: inline-block;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--chrome-2), transparent);
+  }
+  .diag-section p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: var(--text);
+  }
+
+  .final-cta-block {
+    margin: 80px auto 40px;
+    max-width: 720px;
+    text-align: center;
+  }
+  .escape-link {
+    display: block;
+    margin: 32px auto 0;
+    color: var(--text-3);
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.3s;
+    padding: 8px 0;
+  }
+  .escape-link:hover { color: var(--chrome-2); }
+
+  /* ─── OUTCOME ─── */
+  .outcome-pre {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.5em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    text-shadow: 0 0 12px rgba(91, 139, 201, 0.4);
+  }
+  .outcome-h1 {
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 1.05;
+    margin-bottom: 24px;
+    padding: 0 12px;
+    overflow-wrap: break-word;
+    text-align: center;
+  }
+  .outcome-h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(20px, 2.5vw, 26px);
+    color: var(--chrome-2);
+    margin-bottom: 64px;
+    letter-spacing: 0.15em;
+    font-weight: 500;
+  }
+  .outcome-intro {
+    font-size: 19px;
+    line-height: 1.8;
+    margin: 0 auto 64px;
+    max-width: 720px;
+    color: var(--text);
+  }
+  .benefits {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin: 0 auto 64px;
+    max-width: 740px;
+    text-align: left;
+  }
+  .benefit {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 22px;
+    align-items: flex-start;
+  }
+  .benefit-check {
+    color: var(--chrome-2);
+    font-size: 22px;
+    line-height: 1;
+    margin-top: 4px;
+    text-shadow: 0 0 10px var(--chrome-2);
+  }
+  .benefit-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin-bottom: 8px;
+    color: var(--chrome-2);
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 10px rgba(91, 139, 201, 0.3);
+  }
+  .benefit-desc { font-size: 16px; color: var(--text-2); line-height: 1.7; }
+
+  .match-block {
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--chrome-2);
+    backdrop-filter: blur(10px);
+    padding: 32px 40px;
+    max-width: 760px;
+    margin: 0 auto 56px;
+    text-align: left;
+  }
+  .match-block .step-eyebrow { margin-bottom: 12px; text-align: left; }
+  .match-block p { font-size: 17px; line-height: 1.75; color: var(--text); }
+
+  .cta-subline {
+    margin-top: 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    color: var(--text-3);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+  }
+
+  /* ─── LOADER ─── */
+  .loader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 240px);
+    gap: 40px;
+  }
+  .loader-orb {
+    width: 80px; height: 80px;
+    position: relative;
+  }
+  .loader-orb::before, .loader-orb::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid var(--chrome-2);
+    border-radius: 50%;
+    animation: orbExpand 2s ease-out infinite;
+  }
+  .loader-orb::after { animation-delay: 1s; }
+  @keyframes orbExpand {
+    0% { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(2); opacity: 0; }
+  }
+  .loader-orb-core {
+    position: absolute;
+    inset: 30%;
+    background: radial-gradient(circle, var(--chrome-1), var(--chrome-3));
+    border-radius: 50%;
+    box-shadow: 0 0 30px var(--chrome-1), 0 0 60px var(--chrome-2);
+    animation: corePulse 1.5s ease-in-out infinite;
+  }
+  @keyframes corePulse {
+    0%, 100% { transform: scale(0.8); }
+    50% { transform: scale(1.2); }
+  }
+  .loader-text {
+    font-family: 'Cinzel', serif;
+    color: var(--chrome-2);
+    font-size: 13px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(91, 139, 201, 0.5);
+  }
+
+  /* ─── LEVEL UP TRANSITION ─── */
+  .level-up {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+  }
+  .level-up.show { animation: levelUpAnim 1.4s cubic-bezier(0.16,1,0.3,1) forwards; }
+  @keyframes levelUpAnim {
+    0% { opacity: 0; }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+  .level-up-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(59, 130, 246, 0.2), transparent 60%);
+    backdrop-filter: blur(20px);
+  }
+  .level-up-content {
+    position: relative;
+    text-align: center;
+    transform: scale(0.7);
+    animation: levelUpScale 1.4s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  @keyframes levelUpScale {
+    0% { transform: scale(0.7); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
+  .level-up-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    letter-spacing: 0.6em;
+    color: var(--chrome-2);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px var(--chrome-2);
+  }
+  .level-up-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(48px, 8vw, 88px);
+    font-weight: 700;
+    background: linear-gradient(180deg, var(--chrome-1), var(--chrome-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 60px rgba(91, 139, 201, 0.8);
+    letter-spacing: 0.05em;
+  }
+  .level-up-flash {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(220, 238, 255, 0.4), transparent 30%);
+    animation: flashOut 0.6s ease-out forwards;
+  }
+  @keyframes flashOut {
+    0% { opacity: 1; transform: scale(0.5); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+
+  /* ─── PARTICLES ─── */
+  .particles {
+    position: fixed;
+    inset: 0;
+    z-index: 199;
+    pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    background: var(--chrome-1);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--chrome-1);
+    opacity: 0;
+  }
+
+  footer {
+    margin-top: 120px;
+    padding-top: 40px;
+    border-top: 1px solid var(--line-faint);
+    color: var(--text-3);
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-align: center;
+    opacity: 0.5;
+    width: 100%;
+    max-width: 920px;
+  }
+
+  @media (max-width: 768px) {
+    main { padding: 100px 16px 60px; }
+    .container { max-width: 100%; }
+    .top-bar { padding: 14px 16px; }
+    .scroll-mask { height: 160px; }
+    .brand { font-size: 11px; letter-spacing: 0.25em; }
+    .step-indicator { font-size: 10px; }
+    .progress-dots { top: 56px; gap: 8px; }
+    .pdot { width: 6px; height: 6px; }
+    .hero { min-height: calc(100vh - 200px); }
+    .hero-eyebrow { font-size: 10px; letter-spacing: 0.3em; margin-bottom: 24px; }
+    .hero-title { font-size: clamp(14px, 5.4vw, 24px); padding: 0 4px; letter-spacing: 0.005em; }
+    .hero-sub { font-size: 16px; margin-bottom: 40px; padding: 0 12px; }
+    .trust { font-size: 10px; letter-spacing: 0.2em; padding: 0 8px; }
+    .step-eyebrow { font-size: 10px; letter-spacing: 0.3em; }
+    .step-title { font-size: clamp(22px, 6.5vw, 30px); padding: 0 12px; }
+    .step-subtitle { font-size: 15px; padding: 0 12px; }
+    .level-card { min-height: auto; padding: 28px 22px; }
+    .level-title { font-size: 18px; }
+    .level-desc { font-size: 14px; }
+    .level-orb { width: 52px; height: 52px; }
+    .levels { gap: 16px; }
+    .options { gap: 10px; }
+    .option { padding: 18px 18px; min-height: 64px; font-size: 15px; gap: 14px; }
+    .nav { flex-direction: column-reverse; gap: 20px; align-items: center; margin-top: 40px; }
+    .nav .btn { width: 100%; max-width: 360px; }
+    .input { font-size: 18px; }
+    .btn { padding: 18px 32px; font-size: 12px; letter-spacing: 0.2em; min-height: 56px; width: 100%; max-width: 360px; }
+    .btn.cta-large { padding: 20px 32px; font-size: 13px; min-height: 64px; }
+    .sub-score-row { grid-template-columns: 70px 1fr 44px; gap: 10px; font-size: 11px; }
+    .sub-score-label { font-size: 9px; letter-spacing: 0.15em; }
+    .sub-score-val { font-size: 10px; }
+    .score-card { padding: 32px 20px; }
+    .score-card-label { font-size: 10px; letter-spacing: 0.3em; }
+    .score-number { font-size: clamp(56px, 16vw, 80px); margin-bottom: 28px; }
+    .archetype-block { margin: 48px auto; }
+    .archetype-name { font-size: clamp(22px, 6vw, 32px); }
+    .archetype-desc { font-size: 16px; padding: 0 12px; }
+    .diag-section { margin-bottom: 40px; padding: 0 4px; }
+    .diag-section-label { font-size: 10px; letter-spacing: 0.3em; }
+    .diag-section p { font-size: 16px; line-height: 1.7; }
+    .divider-or { margin: 48px auto; }
+    .outcome-pre { font-size: 10px; letter-spacing: 0.3em; }
+    .outcome-h1 { font-size: clamp(34px, 9vw, 48px); padding: 0 12px; }
+    .outcome-h2 { font-size: 16px; letter-spacing: 0.1em; margin-bottom: 40px; padding: 0 12px; }
+    .outcome-intro { font-size: 16px; padding: 0 12px; margin-bottom: 48px; line-height: 1.7; }
+    .benefits { gap: 22px; padding: 0 8px; }
+    .benefit { grid-template-columns: 22px 1fr; gap: 14px; }
+    .benefit-title { font-size: 15px; }
+    .benefit-desc { font-size: 14px; }
+    .match-block { padding: 22px 20px; margin-bottom: 40px; }
+    .match-block p { font-size: 15px; }
+    .cta-subline { font-size: 10px; letter-spacing: 0.2em; padding: 0 12px; }
+    .email-divider { margin: 28px 0; font-size: 10px; }
+    .skip-link { font-size: 11px; }
+    .back-link { font-size: 11px; letter-spacing: 0.2em; }
+    .dev-reset { font-size: 9px; padding: 6px 10px; }
+    .sacred svg { opacity: 0.7; }
+  }
+  @media (max-width: 380px) {
+    .hero-title { font-size: clamp(13px, 5vw, 20px); letter-spacing: 0; }
+    .step-title { font-size: clamp(20px, 6vw, 26px); }
+    .outcome-h1 { font-size: clamp(28px, 8vw, 36px); }
+  }
+
+  .dev-reset {
+    position: fixed;
+    bottom: 16px;
+    left: 16px;
+    z-index: 100;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    color: var(--text-3);
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    padding: 8px 14px;
+    cursor: pointer;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s;
+  }
+  .dev-reset:hover { color: var(--chrome-2); border-color: var(--chrome-2); }
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND LAYERS -->
+<div class="cosmos">
+  <span class="star" style="top:8%; left:14%; animation-delay:0s"></span>
+  <span class="star" style="top:18%; left:88%; animation-delay:1.2s"></span>
+  <span class="star" style="top:32%; left:22%; animation-delay:0.6s"></span>
+  <span class="star" style="top:48%; left:76%; animation-delay:2.1s"></span>
+  <span class="star" style="top:62%; left:8%; animation-delay:1.5s"></span>
+  <span class="star" style="top:78%; left:48%; animation-delay:0.9s"></span>
+  <span class="star" style="top:88%; left:82%; animation-delay:1.8s"></span>
+  <span class="star" style="top:24%; left:50%; animation-delay:2.4s"></span>
+  <span class="star" style="top:55%; left:32%; animation-delay:0.3s"></span>
+  <span class="star" style="top:72%; left:68%; animation-delay:1.7s"></span>
+  <span class="star" style="top:14%; left:62%; animation-delay:2.7s"></span>
+  <span class="star" style="top:42%; left:92%; animation-delay:0.5s"></span>
+</div>
+
+<!-- SACRED GEOMETRY BACKGROUND -->
+<div class="sacred">
+  <svg viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="sg" cx="50%" cy="50%">
+        <stop offset="0%" stop-color="#A5D8FF" stop-opacity="0.6"/>
+        <stop offset="100%" stop-color="#A5D8FF" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <!-- Concentric circles -->
+    <circle cx="500" cy="500" r="490" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.4"/>
+    <circle cx="500" cy="500" r="380" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="500" cy="500" r="270" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.25"/>
+    <circle cx="500" cy="500" r="170" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.2"/>
+    <circle cx="500" cy="500" r="100" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.18"/>
+    <!-- Hexagon -->
+    <polygon points="500,100 846,300 846,700 500,900 154,700 154,300" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.2"/>
+    <!-- Inner triangle -->
+    <polygon points="500,200 760,650 240,650" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.18"/>
+    <polygon points="500,800 240,350 760,350" fill="none" stroke="#A5D8FF" stroke-width="0.5" opacity="0.18"/>
+    <!-- Cross lines -->
+    <line x1="500" y1="0" x2="500" y2="1000" stroke="#A5D8FF" stroke-width="0.3" opacity="0.15"/>
+    <line x1="0" y1="500" x2="1000" y2="500" stroke="#A5D8FF" stroke-width="0.3" opacity="0.15"/>
+    <!-- Golden ratio spiral hint -->
+    <path d="M 500,500 Q 650,500 650,650 Q 650,850 450,850 Q 150,850 150,550 Q 150,150 550,150 Q 950,150 950,550" fill="none" stroke="#A5D8FF" stroke-width="0.4" opacity="0.2"/>
+    <!-- Center orb -->
+    <circle cx="500" cy="500" r="40" fill="url(#sg)" opacity="0.5"/>
+  </svg>
+</div>
+
+<!-- SCROLL FADE MASK (sous la top-bar, masque progressif) -->
+<div class="scroll-mask"></div>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <div class="brand">GENESYS AGENCY</div>
+  <div class="step-indicator" id="stepIndicator">01 / 09</div>
+</div>
+
+<!-- PROGRESS DOTS -->
+<div class="progress-dots" id="progressDots"></div>
+
+<button class="dev-reset" onclick="resetTunnel()">RESET</button>
+
+<main>
+  <div class="container">
+
+    <!-- STEP 0 — HERO -->
+    <section class="screen active" id="screen-hero">
+      <div class="hero">
+        <div class="hero-eyebrow">— Diagnostic Personnalisé —</div>
+        <h1 class="hero-title chrome">
+          <span class="line">IDENTIFIEZ EN 3 MINUTES</span>
+          <span class="line">CE QUI BLOQUE VRAIMENT</span>
+          <span class="line">VOTRE BUSINESS E-COMMERCE.</span>
+        </h1>
+        <p class="hero-sub">Et recevez le plan exact pour la débloquer.<br>Diagnostic personnalisé, gratuit, sans engagement.</p>
+        <button class="btn cta-large pulse" onclick="goTo('niveau')">Commencer le diagnostic <span>→</span></button>
+        <div class="trust">8 Questions · 3 Minutes · Résultat Immédiat</div>
+      </div>
+    </section>
+
+    <!-- STEP 1 — NIVEAU -->
+    <section class="screen" id="screen-niveau">
+      <div class="step-eyebrow">Étape 01 — Identification</div>
+      <h2 class="step-title chrome">Où en êtes-vous aujourd'hui ?</h2>
+      <p class="step-subtitle">Choisissez le profil qui vous correspond le mieux. Vos questions s'adapteront.</p>
+      <div class="levels">
+        <button class="level-card" onclick="setNiveau('debutant')">
+          <div class="level-num">— 01 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">DÉBUTANT</div>
+          <div class="level-desc">Vous explorez. Pas encore de boutique, ou moins de 1 000 € cumulés.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+        <button class="level-card" onclick="setNiveau('intermediaire')">
+          <div class="level-num">— 02 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">INTERMÉDIAIRE</div>
+          <div class="level-desc">Boutique en ligne. Vous vendez, mais ça galère. Moins de 5 000 € par mois.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+        <button class="level-card" onclick="setNiveau('avance')">
+          <div class="level-num">— 03 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">AVANCÉ</div>
+          <div class="level-desc">Plus de 5 000 €/mois stable. Vous cherchez à passer un cap.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+      </div>
+      <div class="nav"><button class="back-link" onclick="goTo('hero')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- STEP 2 — PRÉNOM -->
+    <section class="screen" id="screen-prenom">
+      <div class="step-eyebrow">Étape 02 — Présentation</div>
+      <h2 class="step-title chrome">Comment vous appelez-vous ?</h2>
+      <p class="step-subtitle">C'est plus naturel pour la suite du diagnostic.</p>
+      <div class="input-wrap">
+        <input type="text" class="input" id="prenomInput" placeholder="Votre prénom" autocomplete="given-name" oninput="checkPrenom()" />
+      </div>
+      <div style="margin-top:48px"><button class="btn" id="prenomBtn" disabled onclick="savePrenom()">Continuer →</button></div>
+      <div class="nav"><button class="back-link" onclick="goTo('niveau')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- QUESTIONS DYNAMIQUES -->
+    <section class="screen" id="screen-question">
+      <div class="step-eyebrow" id="qLabel">Question 01 / 05</div>
+      <h2 class="step-title chrome" id="qTitle"></h2>
+      <div style="margin-top:40px">
+        <div class="options" id="qOptions"></div>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="prevQuestion()">← Retour</button>
+        <button class="btn" id="qContinue" disabled onclick="nextQuestion()">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- STEP 8 — EMAIL -->
+    <section class="screen" id="screen-email">
+      <div class="step-eyebrow" id="emailGreeting">— Diagnostic Prêt —</div>
+      <h2 class="step-title chrome">Souhaitez-vous le recevoir par email ?</h2>
+      <p class="step-subtitle">Recommandé — vous pourrez le relire à tête reposée et garder votre plan d'action sous la main.</p>
+      <div class="email-zone">
+        <div class="input-wrap">
+          <input type="email" class="input" id="emailInput" placeholder="vous@email.com" oninput="checkEmail()" />
+        </div>
+        <div style="margin-top:48px">
+          <button class="btn" id="emailBtn" disabled onclick="submitEmail()">Recevoir & Voir maintenant →</button>
+        </div>
+        <div class="email-divider">— ou —</div>
+        <button class="skip-link" onclick="skipEmail()">Voir le diagnostic sans email →</button>
+      </div>
+      <div class="nav" style="margin-top:80px"><button class="back-link" onclick="prevQuestion()">← Retour</button><div></div></div>
+    </section>
+
+    <!-- STEP 9A — LOADER -->
+    <section class="screen" id="screen-loader">
+      <div class="loader">
+        <div class="loader-orb">
+          <div class="loader-orb-core"></div>
+        </div>
+        <div class="loader-text">Analyse en cours...</div>
+      </div>
+    </section>
+
+    <!-- STEP 9B — DIAGNOSTIC -->
+    <section class="screen" id="screen-diagnostic">
+      <div class="diag-eyebrow">— Diagnostic Final —</div>
+      <h1 class="diag-greeting chrome"><span id="diagGreeting"></span>, voici votre diagnostic.</h1>
+      <div class="divider-or"></div>
+
+      <div class="score-card">
+        <div class="score-card-label">Ta Maturité E-Commerce</div>
+        <div class="score-bar"><div class="score-bar-fill" id="scoreBarFill"></div></div>
+        <div class="score-number"><span class="num" id="scoreNumber">0</span><span class="out">/ 100</span></div>
+        <div class="sub-scores">
+          <div class="sub-score-row"><div class="sub-score-label">Acquisition</div><div class="sub-score-bar"><div class="sub-score-bar-fill" id="subAcq"></div></div><div class="sub-score-val" id="subAcqVal">0/40</div></div>
+          <div class="sub-score-row"><div class="sub-score-label">Stratégie</div><div class="sub-score-bar"><div class="sub-score-bar-fill" id="subStrat"></div></div><div class="sub-score-val" id="subStratVal">0/30</div></div>
+          <div class="sub-score-row"><div class="sub-score-label">Exécution</div><div class="sub-score-bar"><div class="sub-score-bar-fill" id="subExec"></div></div><div class="sub-score-val" id="subExecVal">0/30</div></div>
+        </div>
+      </div>
+
+      <div class="archetype-block">
+        <div class="diag-eyebrow">Ton Archétype</div>
+        <div class="archetype-name chrome" id="archName">"..."</div>
+        <div class="archetype-desc" id="archDesc"></div>
+      </div>
+
+      <div class="divider-or"></div>
+
+      <div class="diag-section" id="sec1"><div class="diag-section-label">Où tu en es</div><p id="p1"></p></div>
+      <div class="diag-section" id="sec2"><div class="diag-section-label">Ton vrai blocker</div><p id="p2"></p></div>
+      <div class="diag-section" id="sec3"><div class="diag-section-label">Où tu veux aller</div><p id="p3"></p></div>
+      <div class="diag-section" id="sec4"><div class="diag-section-label">Ce dont tu as besoin maintenant</div><p id="p4"></p></div>
+
+      <div class="final-cta-block diag-section" id="secCTA">
+        <button class="btn cta-large" id="finalCTA" onclick="goToOutcome()">Voir ma recommandation →</button>
+      </div>
+    </section>
+
+    <!-- STEP 10A — OUTCOME SKOOL -->
+    <section class="screen" id="screen-skool">
+      <div class="outcome-pre">Recommandation Pour <span id="skoolName">{prenom}</span></div>
+      <h1 class="outcome-h1 chrome">GENESYS</h1>
+      <h2 class="outcome-h2">— Votre prochaine étape —</h2>
+      <p class="outcome-intro">GENESYS, c'est notre Skool — la plateforme qui combine une communauté privée de plus de 100 entrepreneurs francophones et un Classroom complet de formations. Vous rejoignez, vous accédez à tout, vous posez vos questions directement à notre équipe.</p>
+
+      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Ce Que Vous Obtenez</div>
+      <div class="benefits">
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">Le Classroom complet</div><div class="benefit-desc">Ecom Neuro (12h sur la psychologie d'achat), Copy Impact (25h de copywriting e-commerce), SUPERNOVA (formation A à Z), plus 15 modules complémentaires.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">La communauté active</div><div class="benefit-desc">Plus de 100 entrepreneurs francophones qui partagent leurs vraies données, leurs blocages, leurs wins, en continu.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">L'accès direct à l'équipe</div><div class="benefit-desc">Notre équipe répond aux questions techniques, stratégiques et opérationnelles dans le fil de la communauté.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-title">Mises à jour régulières</div><div class="benefit-desc">Le contenu évolue avec le marché. Vous n'apprenez pas des choses dépassées.</div></div></div>
+      </div>
+
+      <div class="match-block">
+        <div class="step-eyebrow">Pourquoi ça matche pour toi</div>
+        <p id="skoolMatch"></p>
+      </div>
+
+      <a href="https://www.skool.com/genesys" target="_blank" rel="noopener"><button class="btn cta-large">Rejoindre GENESYS →</button></a>
+      <div class="cta-subline">— Redirection vers Skool —</div>
+    </section>
+
+    <!-- STEP 10B — OUTCOME CALL -->
+    <section class="screen" id="screen-call">
+      <div class="outcome-pre">Recommandation Pour <span id="callName">{prenom}</span></div>
+      <h1 class="outcome-h1 chrome">Accompagnement Personnalisé</h1>
+      <h2 class="outcome-h2">— Appel diagnostic offert · 45 minutes —</h2>
+      <p class="outcome-intro">À votre niveau, ce qui débloque la situation, ce n'est pas une formation de plus. C'est un regard externe précis sur votre stratégie. Notre équipe vous propose un appel diagnostic gratuit de 45 minutes.</p>
+
+      <div class="step-eyebrow" style="text-align:center; margin-bottom:32px">Pendant cet appel, on regarde</div>
+      <div class="benefits">
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Vos chiffres actuels et où ça coince réellement.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Le levier qui aurait le plus d'impact dans les 90 prochains jours.</div></div></div>
+        <div class="benefit"><div class="benefit-check">✦</div><div><div class="benefit-desc" style="margin-top:0">Si votre profil correspond à ceux qu'on accompagne — et si oui, ce que ça implique.</div></div></div>
+      </div>
+
+      <div class="match-block">
+        <div class="step-eyebrow">Une approche sélective</div>
+        <p>Nous ne travaillons qu'avec les personnes dont le profil correspond à ce qu'on recherche. Cet appel sert aussi à évaluer cela ensemble. Pas de pitch agressif. Pas d'engagement à la fin. Juste un vrai échange stratégique.</p>
+      </div>
+
+      <a href="#" target="_blank" rel="noopener" id="callCTA"><button class="btn cta-large">Réserver mon appel gratuit →</button></a>
+      <div class="cta-subline">— 45 minutes · Sans frais · Sans engagement —</div>
+
+      <button class="escape-link" onclick="goTo('skool')">Pas prêt pour un accompagnement ? Voir GENESYS →</button>
+    </section>
+
+    <footer>GENESYS AGENCY</footer>
+  </div>
+</main>
+
+<script>
+// ─────────────────────────────────────────────────────────
+// STATE & DATA
+// ─────────────────────────────────────────────────────────
+
+const STATE = {
+  niveau: null,
+  prenom: '',
+  email: '',
+  answers: {},
+  questionIndex: 0,
+  history: ['hero']
+};
+
+const QUESTIONS = {
+  debutant: [
+    { id: 'q3', title: "{prenom}, qu'est-ce qui décrit le mieux où vous en êtes ?",
+      options: [
+        { id: 'd1', text: "Je n'ai jamais lancé de boutique e-commerce", w: { a: 0, s: 0, e: 0 } },
+        { id: 'd2', text: "J'ai créé une boutique, je n'ai jamais fait de vente", w: { a: 5, s: 2, e: 5 } },
+        { id: 'd3', text: "J'ai fait quelques ventes, mais c'est dispersé / instable", w: { a: 10, s: 3, e: 8 } },
+        { id: 'd4', text: "J'ai testé plusieurs choses, j'abandonne trop vite", w: { a: 5, s: 0, e: 3 } }
+      ] },
+    { id: 'q4', title: "Quel est votre plus gros frein, honnêtement ?",
+      options: [
+        { id: 'd1', text: "Je ne sais pas par où commencer", blocker: 'clarte' },
+        { id: 'd2', text: "Je suis perdu dans les formations contradictoires", blocker: 'clarte' },
+        { id: 'd3', text: "Je n'ai pas confiance que ça peut marcher pour moi", blocker: 'mental' },
+        { id: 'd4', text: "J'ai peur de perdre de l'argent", blocker: 'mental' },
+        { id: 'd5', text: "Le manque de temps", blocker: 'execution' }
+      ] },
+    { id: 'q5', title: "Combien d'heures par semaine pouvez-vous réellement consacrer à votre projet ?",
+      options: [
+        { id: 'd1', text: "Moins de 5h — je teste à côté de mon job", w: { e: 5 } },
+        { id: 'd2', text: "5 à 15h — sérieusement le soir et le weekend", w: { e: 15 } },
+        { id: 'd3', text: "15h+ — c'est ma priorité actuelle", w: { e: 22 } }
+      ] },
+    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que vous considéreriez avoir réussi ?",
+      options: [
+        { id: 'd1', text: "Avoir lancé et fait mes premières ventes (1 000 € à 5 000 €)", ambition: 1, w: { s: 12 } },
+        { id: 'd2', text: "Avoir une boutique qui génère 5 000 € à 10 000 € par mois", ambition: 2, w: { s: 18 } },
+        { id: 'd3', text: "Une vraie indépendance financière", ambition: 3, w: { s: 22 } },
+        { id: 'd4', text: "Je veux juste tester pour voir si c'est pour moi", ambition: 0, w: { s: 5 } }
+      ] },
+    { id: 'q7', title: "Pour avancer, où en êtes-vous côté budget ?",
+      options: [
+        { id: 'd1', text: "Budget zéro, je veux du gratuit pour démarrer", budget: 0 },
+        { id: 'd2', text: "50 à 100 € par mois pour me former et m'entourer", budget: 1 },
+        { id: 'd3', text: "500 € à 2 000 € sur les 6 prochains mois", budget: 2 },
+        { id: 'd4', text: "Plus de 2 000 € si le retour est clair", budget: 3 }
+      ] }
+  ],
+
+  intermediaire: [
+    { id: 'q3', title: "{prenom}, votre boutique aujourd'hui, c'est plutôt :",
+      options: [
+        { id: 'i1', text: "Un site qui tourne mais quasiment pas de ventes (moins de 500 €/mois)", w: { a: 12, e: 5 } },
+        { id: 'i2', text: "Quelques ventes irrégulières (500 à 2 000 €/mois)", w: { a: 18, e: 12 } },
+        { id: 'i3', text: "Un volume correct mais bloqué sous les 5 000 €/mois", w: { a: 22, e: 18 } },
+        { id: 'i4', text: "Tu as déjà eu des pics au-dessus, mais tu n'arrives pas à les stabiliser", w: { a: 25, e: 15 } }
+      ] },
+    { id: 'q4', title: "Quand vous regardez honnêtement, où ça coince le plus ?",
+      options: [
+        { id: 'i1', text: "Acquisition / publicité — le trafic ne vient pas ou il est trop cher", blocker: 'technique' },
+        { id: 'i2', text: "Conversion — il y a du monde mais ça n'achète pas", blocker: 'technique' },
+        { id: 'i3', text: "Produit — je doute que ce soit le bon", blocker: 'strategique_partiel' },
+        { id: 'i4', text: "Stratégie globale — je sais faire les actions, mais je ne sais pas dans quel ordre / quelle priorité", blocker: 'strategique' },
+        { id: 'i5', text: "Mental / exécution — je sais quoi faire, je ne le fais pas", blocker: 'mental' }
+      ] },
+    { id: 'q5', title: "D'où vient l'essentiel de votre trafic actuellement ?",
+      options: [
+        { id: 'i1', text: "Publicité Meta / Facebook / Instagram" },
+        { id: 'i2', text: "TikTok (organique ou ads)" },
+        { id: 'i3', text: "Google Ads / Google Shopping" },
+        { id: 'i4', text: "Organique (SEO, contenu, bouche-à-oreille)" },
+        { id: 'i5', text: "Aucun trafic stable" }
+      ] },
+    { id: 'q6', title: "Sur les 6 prochains mois, qu'est-ce qui changerait tout pour vous ?",
+      options: [
+        { id: 'i1', text: "Atteindre 5 000 €/mois stable", ambition: 2 },
+        { id: 'i2', text: "Passer la barre des 10 000 €/mois", ambition: 3 },
+        { id: 'i3', text: "Construire un système qui ne dépend plus de moi 24/7", ambition: 3 },
+        { id: 'i4', text: "Comprendre enfin pourquoi ça ne décolle pas", ambition: 1 }
+      ] },
+    { id: 'q7', title: "Pour débloquer ça, où en êtes-vous côté budget ?",
+      options: [
+        { id: 'i1', text: "Compte serré, je dois faire avec ce que j'ai", budget: 0 },
+        { id: 'i2', text: "50 à 100 € par mois pour m'équiper et me former", budget: 1 },
+        { id: 'i3', text: "500 à 2 000 € disponibles sur les prochains mois", budget: 2 },
+        { id: 'i4', text: "2 000 à 5 000 € si le levier est clair", budget: 3 },
+        { id: 'i5', text: "Plus de 5 000 € pour un accompagnement personnalisé", budget: 4 }
+      ] }
+  ],
+
+  avance: [
+    { id: 'q3', title: "{prenom}, parlons chiffres. Vous êtes plutôt à :",
+      options: [
+        { id: 'a1', text: "5 000 à 10 000 €/mois stable", w: { a: 28, e: 22 } },
+        { id: 'a2', text: "10 000 à 30 000 €/mois", w: { a: 32, e: 25 } },
+        { id: 'a3', text: "30 000 à 100 000 €/mois", w: { a: 36, e: 27 } },
+        { id: 'a4', text: "Plus de 100 000 €/mois", w: { a: 40, e: 28 } }
+      ] },
+    { id: 'q4', title: "Quand vous regardez votre plafond actuel, le vrai problème c'est :",
+      options: [
+        { id: 'a1', text: "Acquisition — mes coûts pubs explosent et je n'arrive plus à scale", blocker: 'technique' },
+        { id: 'a2', text: "Conversion / copywriting — le trafic est là mais le taux n'est pas optimal", blocker: 'technique' },
+        { id: 'a3', text: "Stratégie — je n'ai pas une vision claire des 12 prochains mois", blocker: 'strategique' },
+        { id: 'a4', text: "Structure / équipe — je suis le bottleneck, je dois déléguer mais je ne sais pas comment", blocker: 'strategique' },
+        { id: 'a5', text: "Diversification — je dépends trop d'un produit ou d'un canal", blocker: 'strategique' }
+      ] },
+    { id: 'q5', title: "Combien d'heures par semaine vous y passez vraiment ?",
+      options: [
+        { id: 'a1', text: "Moins de 20h — je veux automatiser plus", w: { e: 28 } },
+        { id: 'a2', text: "20 à 40h — temps plein", w: { e: 24 } },
+        { id: 'a3', text: "Plus de 40h — je suis dedans 24/7 et c'est trop", w: { e: 18 } }
+      ] },
+    { id: 'q6', title: "Dans 12 mois, qu'est-ce qui ferait que vous direz 'j'ai franchi un cap' ?",
+      options: [
+        { id: 'a1', text: "Doubler mon chiffre d'affaires", ambition: 3 },
+        { id: 'a2', text: "Sortir de l'opérationnel et avoir une équipe qui tourne sans moi", ambition: 4 },
+        { id: 'a3', text: "Construire une marque, pas juste un site qui vend", ambition: 4 },
+        { id: 'a4', text: "Ouvrir un deuxième canal de revenus", ambition: 3 }
+      ] },
+    { id: 'q7', title: "Seriez-vous prêt à investir dans un accompagnement personnalisé ?",
+      options: [
+        { id: 'a1', text: "Pas pour l'instant, je préfère un environnement / une communauté", budget: 1, intent: 'skool_signal' },
+        { id: 'a2', text: "Je suis ouvert si le retour est clair (500 à 2 000 €)", budget: 2 },
+        { id: 'a3', text: "Oui, jusqu'à 5 000 € sur les 6 prochains mois", budget: 4, intent: 'call_signal' },
+        { id: 'a4', text: "Oui, plus de 5 000 € pour un vrai accompagnement haut de gamme", budget: 5, intent: 'call_signal_strong' }
+      ] }
+  ]
+};
+
+const ARCHETYPES = {
+  debutant: [
+    { name: "L'Explorateur", desc: "Vous n'avez pas encore commencé, mais vous préparez le terrain. C'est plus malin que la majorité." },
+    { name: "Le Curieux Engagé", desc: "Vous avez l'envie et vous cherchez activement. Reste à canaliser cette énergie." },
+    { name: "Le Préparé", desc: "Vous arrivez avec le terrain défriché. Le plus dur est devant, mais vous partez bien." }
+  ],
+  intermediaire: [
+    { name: "Le Bâtisseur Confus", desc: "Vous faites trop de choses à la fois. C'est l'erreur classique au démarrage." },
+    { name: "Le Bâtisseur Coincé", desc: "Vous avez posé les fondations. Votre site existe, votre produit est en ligne, vous faites des ventes. Mais vous sentez que vous plafonnez — et vous avez raison." },
+    { name: "Le Bâtisseur Affûté", desc: "Vous maîtrisez les bases. Le passage du palier suivant n'est plus une question de connaissances." }
+  ],
+  avance: [
+    { name: "L'Opérateur Saturé", desc: "Vous faites tourner la machine, mais elle vous broie. Le problème n'est plus technique." },
+    { name: "Le Plafonné", desc: "Vous avez trouvé votre marché. Le verre apparaît au-dessus de vous. Le passer demande autre chose que de l'effort." },
+    { name: "Le Scale-Ready", desc: "Vous n'êtes plus au début. Vous cherchez le bon levier pour la prochaine étape — et vous savez que personne ne vous le donnera dans une formation." }
+  ]
+};
+
+const STEP_TOTAL = 9;
+
+// ─────────────────────────────────────────────────────────
+// PROGRESS DOTS
+// ─────────────────────────────────────────────────────────
+
+function renderDots() {
+  const wrap = document.getElementById('progressDots');
+  wrap.innerHTML = '';
+  for (let i = 0; i < STEP_TOTAL; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot';
+    wrap.appendChild(d);
+  }
+}
+
+function updateDots(step) {
+  const dots = document.querySelectorAll('.pdot');
+  dots.forEach((d, i) => {
+    d.classList.remove('done', 'current');
+    if (i + 1 < step) d.classList.add('done');
+    else if (i + 1 === step) d.classList.add('current');
+  });
+}
+
+// ─────────────────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────────────────
+
+function showScreen(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById('screen-' + screen);
+  if (el) el.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'auto' });
+}
+
+function goTo(screen, push = true) {
+  showScreen(screen);
+  if (push) STATE.history.push(screen);
+  saveState();
+  updateProgress(screen);
+}
+
+function updateProgress(screen) {
+  const map = { hero: 1, niveau: 2, prenom: 3, question: 4, email: 8, loader: 9, diagnostic: 9, skool: 9, call: 9 };
+  let step = map[screen] || 1;
+  if (screen === 'question') step = 4 + STATE.questionIndex;
+  document.getElementById('stepIndicator').textContent = String(step).padStart(2,'0') + ' / 09';
+  updateDots(step);
+}
+
+function setNiveau(niveau) {
+  STATE.niveau = niveau;
+  STATE.questionIndex = 0;
+  goTo('prenom');
+}
+
+function checkPrenom() {
+  const v = document.getElementById('prenomInput').value.trim();
+  document.getElementById('prenomBtn').disabled = v.length < 2;
+}
+
+function savePrenom() {
+  STATE.prenom = document.getElementById('prenomInput').value.trim();
+  STATE.prenom = STATE.prenom.charAt(0).toUpperCase() + STATE.prenom.slice(1).toLowerCase();
+  STATE.questionIndex = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  showScreen('question');
+  STATE.history.push('question');
+  saveState();
+  const q = QUESTIONS[STATE.niveau][STATE.questionIndex];
+  document.getElementById('qLabel').textContent = `Question ${String(STATE.questionIndex + 1).padStart(2,'0')} / 05`;
+  document.getElementById('qTitle').textContent = q.title.replace('{prenom}', STATE.prenom);
+  const opts = document.getElementById('qOptions');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.innerHTML = `<div class="radio"></div><div>${opt.text}</div>`;
+    btn.onclick = () => selectOption(i, opt, btn);
+    opts.appendChild(btn);
+  });
+  document.getElementById('qContinue').disabled = true;
+  STATE.tempAnswer = null;
+  updateProgress('question');
+}
+
+function selectOption(i, opt, btnEl) {
+  document.querySelectorAll('#qOptions .option').forEach(b => b.classList.remove('selected'));
+  btnEl.classList.add('selected');
+  STATE.tempAnswer = { index: i, ...opt };
+  document.getElementById('qContinue').disabled = false;
+}
+
+function nextQuestion() {
+  const q = QUESTIONS[STATE.niveau][STATE.questionIndex];
+  STATE.answers[q.id] = STATE.tempAnswer;
+  STATE.questionIndex++;
+
+  if (STATE.questionIndex >= QUESTIONS[STATE.niveau].length) {
+    goTo('email');
+    document.getElementById('emailGreeting').textContent = `— Parfait ${STATE.prenom}, diagnostic prêt —`;
+  } else {
+    showQuestion();
+  }
+  saveState();
+}
+
+function prevQuestion() {
+  if (STATE.questionIndex === 0) {
+    goTo('prenom');
+  } else {
+    STATE.questionIndex--;
+    showQuestion();
+  }
+}
+
+function checkEmail() {
+  const v = document.getElementById('emailInput').value.trim();
+  const ok = /^[\w._%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(v);
+  document.getElementById('emailBtn').disabled = !ok;
+}
+
+function submitEmail() {
+  STATE.email = document.getElementById('emailInput').value.trim();
+  startDiagnostic();
+}
+
+function skipEmail() {
+  STATE.email = null;
+  startDiagnostic();
+}
+
+// ─────────────────────────────────────────────────────────
+// SCORING & DIAGNOSTIC (identique à v1)
+// ─────────────────────────────────────────────────────────
+
+function computeScoring() {
+  const niveau = STATE.niveau;
+  const a = STATE.answers;
+  let acq = 0, strat = 0, exec = 0;
+
+  if (niveau === 'debutant') { acq = 5; strat = 5; exec = 5; }
+  if (niveau === 'intermediaire') { acq = 12; strat = 8; exec = 12; }
+  if (niveau === 'avance') { acq = 22; strat = 12; exec = 18; }
+
+  Object.values(a).forEach(ans => {
+    if (ans.w) {
+      acq += ans.w.a || 0;
+      strat += ans.w.s || 0;
+      exec += ans.w.e || 0;
+    }
+  });
+
+  acq = Math.min(40, Math.max(0, acq));
+  strat = Math.min(30, Math.max(0, strat));
+  exec = Math.min(30, Math.max(0, exec));
+  const total = acq + strat + exec;
+
+  let zone = 0;
+  if (total <= 40) zone = 0;
+  else if (total <= 65) zone = 1;
+  else zone = 2;
+  const arch = ARCHETYPES[niveau][zone];
+
+  let recommendation = 'skool';
+  const blocker = a.q4 ? a.q4.blocker : null;
+  const budget = a.q7 ? a.q7.budget : 0;
+  const intent = a.q7 ? a.q7.intent : null;
+
+  const isIntOrAv = niveau === 'intermediaire' || niveau === 'avance';
+  const isStrategic = blocker === 'strategique' || blocker === 'strategique_partiel';
+  const hasBudget = budget >= 3;
+
+  if (isIntOrAv && isStrategic && hasBudget) recommendation = 'call';
+  if (intent === 'call_signal_strong') recommendation = 'call';
+  if (intent === 'skool_signal') recommendation = 'skool';
+
+  return { total, acq, strat, exec, arch, recommendation, zone };
+}
+
+function generateDiagnostic(scoring) {
+  const niveau = STATE.niveau;
+  const prenom = STATE.prenom;
+  const a = STATE.answers;
+  const blocker = a.q4 ? a.q4.blocker : null;
+  const ambition = a.q6 ? a.q6.ambition : 1;
+
+  let p1 = '', p2 = '', p3 = '', p4 = '';
+
+  if (niveau === 'debutant') {
+    p1 = `${prenom}, vous n'êtes pas encore lancé sur votre projet, ou vous en êtes aux toutes premières étapes. Vous vous formez, vous vous informez, vous cherchez le bon angle. Le souci, c'est que vous vous retrouvez avec des dizaines de méthodes contradictoires, et chacune se présente comme la seule vraie. Résultat : vous tournez en rond, et chaque jour qui passe sans avoir lancé entame votre confiance. C'est une situation classique au démarrage, pas un défaut personnel.`;
+  } else if (niveau === 'intermediaire') {
+    p1 = `${prenom}, votre boutique tourne. Vous générez du volume, vous faites du trafic, vous n'êtes plus au stade débutant. Ce qui vous freine aujourd'hui, ce n'est plus l'absence d'action. C'est le sentiment de courir dans tous les sens sans savoir laquelle des actions devant vous va vraiment bouger l'aiguille. Sous les 5 000 € par mois, ce flou vous coûte cher chaque jour, et la frustration s'installe.`;
+  } else {
+    p1 = `${prenom}, votre boutique tourne. Vous n'êtes plus dans la zone du débutant ni de l'intermédiaire qui galère. Vous y mettez du temps, vous y mettez de l'énergie, et vous sentez que continuer comme ça vous mène vers un mur. Le vrai problème c'est que vous n'avez plus de marge de manœuvre — vous faites tourner la machine, mais elle vous demande de plus en plus d'efforts pour des résultats qui plafonnent.`;
+  }
+
+  if (blocker === 'clarte') {
+    p2 = `Le vrai blocage n'est pas le manque d'informations. C'est l'inverse : vous en avez trop, et personne ne vous dit dans quel ordre les utiliser. Vous n'avez pas besoin d'apprendre une méthode de plus. Vous avez besoin d'un cadre clair qui dise : étape 1, étape 2, étape 3, et stop. Tant que ça reste flou, le passage à l'action ne se fait pas — pas parce que vous manquez de volonté, mais parce que votre cerveau refuse d'avancer sans visibilité.`;
+  } else if (blocker === 'mental') {
+    p2 = `Le vrai blocage n'est pas la connaissance. Vous savez ce qu'il faut faire en théorie, mais vous n'avez pas un système qui dit : aujourd'hui c'est ÇA, et seulement ça. Sans cadre et sans environnement qui vous ramène, l'exécution s'effondre vite. Ce n'est pas une question de discipline. C'est une question d'écosystème. Travailler seul à plein régime, c'est extrêmement dur, et la majorité décroche.`;
+  } else if (blocker === 'strategique' || blocker === 'strategique_partiel') {
+    p2 = `Vous avez identifié le vrai problème : la stratégie globale, l'ordre des priorités. C'est confirmé par vos scores — votre acquisition tient debout, votre exécution aussi, mais votre clarté stratégique est en dessous. À votre niveau, ce n'est plus une question de connaissances. C'est un problème d'arbitrage. Vous avez plusieurs chantiers ouverts, et tant que vous ne savez pas lequel fermer en premier, le plafond reste là.`;
+  } else if (blocker === 'technique') {
+    p2 = `Vous avez identifié un blocage technique précis. Ce genre de problème se résout en regardant ce que font les autres opérateurs au même niveau, en testant des angles, en partageant des données. Pas en payant cher pour qu'on vous dise quoi faire. Vos scores montrent que vous avez les bases — il vous manque l'environnement qui vous tient à jour des techniques qui marchent ce mois-ci, pas l'année dernière.`;
+  } else {
+    p2 = `Le manque de temps est un symptôme, pas une cause. La vraie question, c'est ce que vous faites des heures que vous avez. Beaucoup de gens à votre stade utilisent leurs 5h hebdomadaires à se former plutôt qu'à exécuter. Le tri entre apprendre et faire est ce qui sépare ceux qui démarrent vraiment de ceux qui restent en boucle.`;
+  }
+
+  if (niveau === 'debutant') {
+    if (ambition >= 2) {
+      p3 = `Atteindre 5 000 à 10 000 € par mois sur les 12 prochains mois, c'est un objectif ambitieux mais réaliste avec un bon cadre et de l'exécution constante. Pour y arriver, il vous faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener vos premiers visiteurs. Pas plus. Le reste, c'est du bruit qui vous ralentit aujourd'hui.`;
+    } else {
+      p3 = `Faire vos premières ventes entre 1 000 € et 5 000 € sur les 12 prochains mois, c'est un objectif sain et atteignable. Pour y arriver, il vous faut trois choses concrètes : une méthode claire pour choisir un produit, un site qui ne fasse pas amateur, et les bons outils pour amener vos premiers visiteurs. Le reste, c'est du bruit qui vous ralentit aujourd'hui.`;
+    }
+  } else if (niveau === 'intermediaire') {
+    p3 = `Passer la barre des 5 000 ou 10 000 € par mois, ce n'est pas faire dix fois plus. C'est faire 30 % de mieux sur quelques leviers bien choisis. Acquisition mieux pilotée, taux de conversion travaillé proprement, panier moyen poussé. Mais sans regard externe sur votre compte, vous allez continuer à arbitrer dans le brouillard, et c'est exactement ce qui vous a maintenu sous votre plafond actuel.`;
+  } else {
+    p3 = `Passer le cap suivant, ce n'est pas embaucher trois personnes et croiser les doigts, ni doubler le budget publicitaire et espérer. C'est un changement de posture. Vous passez de celui qui fait, à celui qui décide. Ça implique de définir précisément ce que vous lâchez, ce que vous gardez, et comment vous mesurez que la machine tourne sans vous. Sans cette clarté en amont, vous risquez de payer des personnes ou de scaler des canaux qui ne vous rapprochent pas vraiment de l'objectif.`;
+  }
+
+  if (scoring.recommendation === 'skool') {
+    if (niveau === 'debutant') {
+      p4 = `Ce dont vous avez besoin maintenant, c'est un environnement où l'équipe vous montre le chemin sans détour, et où vous pouvez poser vos questions à des entrepreneurs qui ont déjà fait le trajet. C'est exactement ce qu'est GENESYS — notre Skool avec les formations et plus de 100 personnes actives. Vous y trouvez SUPERNOVA, la formation e-commerce de A à Z, et vous posez vos questions directement à l'équipe. ${prenom}, à votre stade, c'est le pari le plus rationnel.`;
+    } else if (niveau === 'intermediaire') {
+      p4 = `Ce dont vous avez besoin maintenant, c'est un environnement actif où plus de 100 entrepreneurs francophones partagent leurs vraies données et leurs blocages. C'est exactement ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro (12h sur la psychologie d'achat), Copy Impact (25h de copywriting), plus une communauté qui vous ramène quand vous décrochez. ${prenom}, à votre stade, c'est l'écosystème qui débloque, pas une nouvelle formation isolée.`;
+    } else {
+      p4 = `Ce dont vous avez besoin maintenant, c'est exactement ce que vous avez déjà identifié : un environnement actif. C'est ce qu'est GENESYS — notre Skool avec les formations Ecom Neuro et Copy Impact, plus une communauté de 100+ opérateurs qui partagent leurs vrais tests. Vous y trouverez des gens qui scalent à votre niveau, et qui partagent ce qui marche cette semaine. ${prenom}, c'est exactement le levier que vous cherchez.`;
+    }
+  } else {
+    p4 = `Ce dont vous avez besoin maintenant, ce n'est pas une formation de plus. C'est qu'on regarde ensemble vos chiffres, et qu'on identifie le seul levier qui aurait le plus d'impact dans les 90 prochains jours. Notre équipe propose un appel diagnostic gratuit de 45 minutes. On regarde vos vrais chiffres, on tranche, et on voit si votre profil correspond à ceux qu'on accompagne. ${prenom}, à votre niveau, l'angle externe est ce qui débloque, pas une nouvelle formation.`;
+  }
+
+  let match = '';
+  if (scoring.recommendation === 'skool') {
+    match = `${prenom}, ce qu'il vous faut maintenant, c'est un cadre clair et une communauté active. GENESYS combine exactement ces deux choses — les formations pour structurer, la communauté de 100+ entrepreneurs pour garder le rythme, et notre équipe pour répondre à vos questions. C'est exactement ce qui vous manque aujourd'hui.`;
+  } else {
+    match = `${prenom}, à votre niveau, ce qui débloque ce n'est plus une formation. C'est un regard externe précis sur votre stratégie. C'est exactement ce qu'on regarde ensemble en 45 minutes, gratuitement, pendant cet appel.`;
+  }
+
+  return { p1, p2, p3, p4, match };
+}
+
+function startDiagnostic() {
+  goTo('loader');
+  setTimeout(() => {
+    const scoring = computeScoring();
+    const diag = generateDiagnostic(scoring);
+    STATE.scoring = scoring;
+    STATE.diag = diag;
+    renderDiagnostic(scoring, diag);
+    goTo('diagnostic');
+  }, 2200);
+}
+
+function renderDiagnostic(scoring, diag) {
+  document.getElementById('diagGreeting').textContent = STATE.prenom;
+  document.getElementById('archName').textContent = `"${scoring.arch.name}"`;
+  document.getElementById('archDesc').textContent = scoring.arch.desc;
+  document.getElementById('p1').textContent = diag.p1;
+  document.getElementById('p2').textContent = diag.p2;
+  document.getElementById('p3').textContent = diag.p3;
+  document.getElementById('p4').textContent = diag.p4;
+
+  document.getElementById('subAcqVal').textContent = `${scoring.acq}/40`;
+  document.getElementById('subStratVal').textContent = `${scoring.strat}/30`;
+  document.getElementById('subExecVal').textContent = `${scoring.exec}/30`;
+
+  const cta = document.getElementById('finalCTA');
+  cta.innerHTML = scoring.recommendation === 'call'
+    ? 'Voir mon accompagnement →'
+    : 'Voir GENESYS →';
+
+  setTimeout(() => {
+    document.getElementById('scoreBarFill').style.width = scoring.total + '%';
+    document.getElementById('subAcq').style.width = (scoring.acq / 40 * 100) + '%';
+    document.getElementById('subStrat').style.width = (scoring.strat / 30 * 100) + '%';
+    document.getElementById('subExec').style.width = (scoring.exec / 30 * 100) + '%';
+    animateNumber('scoreNumber', 0, scoring.total, 2200);
+  }, 400);
+
+  ['sec1', 'sec2', 'sec3', 'sec4', 'secCTA'].forEach((id, i) => {
+    setTimeout(() => {
+      document.getElementById(id).classList.add('in');
+    }, 1500 + i * 280);
+  });
+}
+
+function animateNumber(elId, from, to, duration) {
+  const el = document.getElementById(elId);
+  const start = performance.now();
+  function frame(now) {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 4);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (t < 1) requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+}
+
+function goToOutcome() {
+  if (STATE.scoring.recommendation === 'call') {
+    document.getElementById('callName').textContent = STATE.prenom;
+    goTo('call');
+  } else {
+    document.getElementById('skoolName').textContent = STATE.prenom;
+    document.getElementById('skoolMatch').textContent = STATE.diag.match;
+    goTo('skool');
+  }
+}
+
+// ─────────────────────────────────────────────────────────
+// PERSISTENCE
+// ─────────────────────────────────────────────────────────
+
+function saveState() {
+  try { localStorage.setItem('awv_tunnel_state', JSON.stringify(STATE)); } catch (e) {}
+}
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('awv_tunnel_state');
+    if (s) {
+      const parsed = JSON.parse(s);
+      Object.assign(STATE, parsed);
+      const last = STATE.history[STATE.history.length - 1];
+      if (last && last !== 'hero') {
+        if (last === 'question') showQuestion();
+        else { showScreen(last); updateProgress(last); }
+      }
+    }
+  } catch (e) {}
+}
+
+function resetTunnel() {
+  if (!confirm('Reset le tunnel et recommencer ?')) return;
+  localStorage.removeItem('awv_tunnel_state');
+  location.reload();
+}
+
+// ─────────────────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────────────────
+
+window.addEventListener('DOMContentLoaded', () => {
+  renderDots();
+  loadState();
+  updateProgress(STATE.history[STATE.history.length - 1] || 'hero');
+});
+</script>
+</body>
+</html>
