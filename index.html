@@ -419,6 +419,107 @@
   }
   @media (max-width: 768px) { .levels { grid-template-columns: 1fr; } }
 
+  /* ─── ENTRY CARDS (1er écran : 2 boutons membre Skool / non-membre) ─── */
+  .entry-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    max-width: 880px;
+    margin: 56px auto 0;
+  }
+  .entry-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--line);
+    backdrop-filter: blur(12px);
+    padding: 44px 32px 36px;
+    cursor: pointer;
+    transition: all 0.5s cubic-bezier(0.16,1,0.3,1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    color: var(--text);
+    font-family: inherit;
+  }
+  .entry-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--chrome-2), transparent);
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+  .entry-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--chrome-2);
+    box-shadow: 0 0 40px rgba(91, 139, 201, 0.3), 0 0 80px rgba(59, 130, 246, 0.15);
+    background: var(--bg-card-2);
+  }
+  .entry-card:hover::after { opacity: 1; }
+  .entry-card.featured {
+    border-color: var(--chrome-2);
+    background: rgba(91, 139, 201, 0.08);
+  }
+  .entry-card.featured::before {
+    content: '★ Membre GENESYS';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--chrome-2);
+    color: #0a1628;
+    padding: 6px 16px;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-family: 'Cinzel', serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    white-space: nowrap;
+    z-index: 2;
+  }
+  .entry-card-orb {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: radial-gradient(circle,
+      rgba(220, 240, 255, 0.95) 0%,
+      rgba(165, 216, 255, 0.5) 35%,
+      rgba(91, 139, 201, 0.2) 65%,
+      transparent 100%);
+    margin: 14px 0 26px;
+    box-shadow: 0 0 24px rgba(165, 216, 255, 0.55), 0 0 48px rgba(91, 139, 201, 0.3);
+  }
+  .entry-card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 22px;
+    color: var(--chrome-1);
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+  .entry-card-desc {
+    font-size: 14px;
+    color: var(--text-2);
+    line-height: 1.65;
+    margin-bottom: 28px;
+    max-width: 320px;
+  }
+  .entry-card-cta {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    color: var(--chrome-2);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: auto;
+  }
+  @media (max-width: 768px) {
+    .entry-cards { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; }
+    .entry-card { padding: 36px 22px 28px; }
+  }
+
   .level-card {
     position: relative;
     background: var(--bg-card);
@@ -1784,8 +1885,34 @@
 <main>
   <div class="container">
 
-    <!-- STEP 0 — HERO -->
-    <section class="screen active" id="screen-hero">
+    <!-- STEP 0 — ENTRY (membre Skool ou non) -->
+    <section class="screen active" id="screen-entry">
+      <div class="hero">
+        <div class="hero-eyebrow">— GENESYS Diagnostic —</div>
+        <h1 class="hero-title chrome">
+          <span class="line">Avant de commencer,</span>
+          <span class="line">dis-moi où tu en es.</span>
+        </h1>
+        <p class="hero-sub">Choisis ce qui te correspond le mieux pour qu'on adapte ton parcours.</p>
+        <div class="entry-cards">
+          <button class="entry-card featured" onclick="entryChoice('member')">
+            <div class="entry-card-orb"></div>
+            <div class="entry-card-title">Je suis dans le Skool GENESYS</div>
+            <div class="entry-card-desc">Tu fais déjà partie de notre communauté privée et tu veux passer à l'étape suivante.</div>
+            <div class="entry-card-cta">Continuer →</div>
+          </button>
+          <button class="entry-card" onclick="entryChoice('non-member')">
+            <div class="entry-card-orb"></div>
+            <div class="entry-card-title">Je ne suis pas dans le Skool GENESYS</div>
+            <div class="entry-card-desc">Tu découvres GENESYS et tu veux qu'on identifie ce qui bloque ton business.</div>
+            <div class="entry-card-cta">Continuer →</div>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 0B — HERO (chemin non-membre) -->
+    <section class="screen" id="screen-hero">
       <div class="hero">
         <div class="hero-eyebrow">— Diagnostic Personnalisé —</div>
         <h1 class="hero-title chrome">
@@ -1796,6 +1923,7 @@
         <p class="hero-sub">Et reçois la solution exacte pour passer au niveau supérieur.<br>Diagnostic personnalisé, gratuit, sans engagement.</p>
         <button class="btn cta-large pulse" onclick="goTo('niveau')">Commencer le diagnostic <span>→</span></button>
         <div class="trust">8 Questions · 2 Minutes · Résultat Immédiat</div>
+        <div class="nav" style="margin-top:60px"><button class="back-link" onclick="goTo('entry')">← Retour</button><div></div></div>
       </div>
     </section>
 
@@ -2309,6 +2437,255 @@
       <button class="escape-link" onclick="goTo('skool')">Pas prêt pour un accompagnement ? Voir GENESYS →</button>
     </section>
 
+    <!-- ═══════════════════════════════════════════════ -->
+    <!-- BRANCHE A — MEMBRE SKOOL GENESYS                -->
+    <!-- ═══════════════════════════════════════════════ -->
+
+    <!-- SK-01 PRÉNOM -->
+    <section class="screen" id="screen-sk-prenom">
+      <div class="step-eyebrow">Étape 01 — Présentation</div>
+      <h2 class="step-title chrome">Comment tu t'appelles ?</h2>
+      <p class="step-subtitle">C'est plus naturel pour la suite du diagnostic.</p>
+      <div class="input-wrap">
+        <input type="text" class="input" id="skPrenomInput" placeholder="Ton prénom" autocomplete="given-name" oninput="checkSkPrenom()" />
+      </div>
+      <div style="margin-top:48px"><button class="btn" id="skPrenomBtn" disabled onclick="saveSkPrenom()">Continuer →</button></div>
+      <div class="nav"><button class="back-link" onclick="goTo('entry')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- SK-02 WHATSAPP -->
+    <section class="screen" id="screen-sk-whatsapp">
+      <div class="step-eyebrow">Étape 02 — Contact</div>
+      <h2 class="step-title chrome">Quel est ton numéro WhatsApp ?</h2>
+      <p class="step-subtitle">On te contactera sur ce numéro pour les détails de ton appel diagnostic.</p>
+      <div class="input-wrap">
+        <input type="tel" class="input" id="skWhatsappInput" placeholder="+33 6 12 34 56 78" oninput="checkSkWhatsapp()" />
+      </div>
+      <div style="margin-top:48px"><button class="btn" id="skWhatsappBtn" disabled onclick="saveSkWhatsapp()">Continuer →</button></div>
+      <div class="nav"><button class="back-link" onclick="goTo('sk-prenom')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- SK-03 NIVEAU -->
+    <section class="screen" id="screen-sk-niveau">
+      <div class="step-eyebrow">Étape 03 — Identification</div>
+      <h2 class="step-title chrome">Où en es-tu aujourd'hui ?</h2>
+      <p class="step-subtitle">Choisis le profil qui te correspond le mieux.</p>
+      <div class="levels">
+        <button class="level-card" onclick="setSkNiveau('debutant')">
+          <div class="level-num">— 01 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">DÉBUTANT</div>
+          <div class="level-desc">Tu n'as pas encore lancé, ou tu as fait moins de 10 000 € de chiffre d'affaires cumulé depuis le début.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+        <button class="level-card" onclick="setSkNiveau('intermediaire')">
+          <div class="level-num">— 02 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">INTERMÉDIAIRE</div>
+          <div class="level-desc">Tu as fait entre 10 000 et 100 000 € de chiffre d'affaires cumulé depuis le début.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+        <button class="level-card" onclick="setSkNiveau('avance')">
+          <div class="level-num">— 03 —</div>
+          <div class="level-orb"></div>
+          <div class="level-title">AVANCÉ</div>
+          <div class="level-desc">Tu as dépassé les 100 000 € de chiffre d'affaires cumulé depuis le début.</div>
+          <div class="level-cta">Choisir →</div>
+        </button>
+      </div>
+      <div class="nav"><button class="back-link" onclick="goTo('sk-whatsapp')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- SK-04 BOUTIQUE ACTIVE -->
+    <section class="screen" id="screen-sk-boutique">
+      <div class="step-eyebrow">Étape 04 — Activité</div>
+      <h2 class="step-title chrome">As-tu une boutique qui tourne actuellement ?</h2>
+      <p class="step-subtitle">Pour adapter les questions à ta situation actuelle.</p>
+      <div class="options" id="skBoutiqueOptions">
+        <button class="option" onclick="setSkBoutique(true, this)"><div class="radio"></div><div>Oui, j'ai une boutique active</div></button>
+        <button class="option" onclick="setSkBoutique(false, this)"><div class="radio"></div><div>Non, pas en ce moment (en pause, transition ou en cours de lancement)</div></button>
+      </div>
+      <div class="nav"><button class="back-link" onclick="goTo('sk-niveau')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- SK-05 NICHE (si boutique active) -->
+    <section class="screen" id="screen-sk-niche">
+      <div class="step-eyebrow">Étape 05 — Niche</div>
+      <h2 class="step-title chrome">Dans quelle niche es-tu ?</h2>
+      <p class="step-subtitle">Choisis ce qui correspond le mieux à ton produit.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('niche', 'mode', this)"><div class="radio"></div><div>Mode et habillement</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'beaute', this)"><div class="radio"></div><div>Beauté et cosmétique</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'accessoires', this)"><div class="radio"></div><div>Accessoires et bijoux</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'food', this)"><div class="radio"></div><div>Food et suppléments</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'maison', this)"><div class="radio"></div><div>Maison et déco</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'sport', this)"><div class="radio"></div><div>Sport et fitness</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'bienetre', this)"><div class="radio"></div><div>Bien-être et santé</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'enfant', this)"><div class="radio"></div><div>Enfant et parents</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'tech', this)"><div class="radio"></div><div>Tech et gadgets</div></button>
+        <button class="option" onclick="selectSkOption('niche', 'autre', this)"><div class="radio"></div><div>Autre niche</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-boutique')">← Retour</button>
+        <button class="btn" id="skNicheContinue" disabled onclick="goTo('sk-anciennete')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-06 ANCIENNETÉ (si boutique active) -->
+    <section class="screen" id="screen-sk-anciennete">
+      <div class="step-eyebrow">Étape 06 — Ancienneté</div>
+      <h2 class="step-title chrome">Depuis combien de temps tu vends en ligne ?</h2>
+      <p class="step-subtitle">Pour calibrer le contexte de ton business.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('anciennete', 'lt6m', this)"><div class="radio"></div><div>Moins de 6 mois</div></button>
+        <button class="option" onclick="selectSkOption('anciennete', '6m1a', this)"><div class="radio"></div><div>Entre 6 mois et 1 an</div></button>
+        <button class="option" onclick="selectSkOption('anciennete', '1a3a', this)"><div class="radio"></div><div>Entre 1 an et 3 ans</div></button>
+        <button class="option" onclick="selectSkOption('anciennete', 'gt3a', this)"><div class="radio"></div><div>Plus de 3 ans</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-niche')">← Retour</button>
+        <button class="btn" id="skAncienneteContinue" disabled onclick="goTo('sk-ca-actuel')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-07 CA ACTUEL -->
+    <section class="screen" id="screen-sk-ca-actuel">
+      <div class="step-eyebrow">— Tes chiffres —</div>
+      <h2 class="step-title chrome">Quel est ton CA actuel mensuel ?</h2>
+      <p class="step-subtitle">Sois honnête, c'est le point de départ pour bien calibrer la suite.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('caActuel', 'lt1k', this)"><div class="radio"></div><div>Moins de 1 000 €/mois (ou pas encore de CA)</div></button>
+        <button class="option" onclick="selectSkOption('caActuel', '1k5k', this)"><div class="radio"></div><div>Entre 1 000 et 5 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caActuel', '5k15k', this)"><div class="radio"></div><div>Entre 5 000 et 15 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caActuel', '15k50k', this)"><div class="radio"></div><div>Entre 15 000 et 50 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caActuel', 'gt50k', this)"><div class="radio"></div><div>Plus de 50 000 €/mois</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="prevSkCAActuel()">← Retour</button>
+        <button class="btn" id="skCAActuelContinue" disabled onclick="goTo('sk-ca-cible')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-08 CA CIBLE -->
+    <section class="screen" id="screen-sk-ca-cible">
+      <div class="step-eyebrow">— Ton objectif —</div>
+      <h2 class="step-title chrome">Quel CA mensuel tu veux atteindre ?</h2>
+      <p class="step-subtitle">Sois ambitieux mais réaliste.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('caCible', '10k', this)"><div class="radio"></div><div>10 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caCible', '30k', this)"><div class="radio"></div><div>30 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caCible', '50k', this)"><div class="radio"></div><div>50 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caCible', '100k', this)"><div class="radio"></div><div>100 000 €/mois</div></button>
+        <button class="option" onclick="selectSkOption('caCible', 'gt200k', this)"><div class="radio"></div><div>200 000 €/mois et plus</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-ca-actuel')">← Retour</button>
+        <button class="btn" id="skCACibleContinue" disabled onclick="goTo('sk-delai')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-09 DÉLAI -->
+    <section class="screen" id="screen-sk-delai">
+      <div class="step-eyebrow">— Ton délai —</div>
+      <h2 class="step-title chrome">En combien de temps tu veux l'atteindre ?</h2>
+      <p class="step-subtitle">Plus c'est rapide, plus l'accompagnement doit être intense.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('delai', '3m', this)"><div class="radio"></div><div>En 3 mois</div></button>
+        <button class="option" onclick="selectSkOption('delai', '6m', this)"><div class="radio"></div><div>En 6 mois</div></button>
+        <button class="option" onclick="selectSkOption('delai', '12m', this)"><div class="radio"></div><div>En 12 mois</div></button>
+        <button class="option" onclick="selectSkOption('delai', '24m', this)"><div class="radio"></div><div>Entre 18 et 24 mois</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-ca-cible')">← Retour</button>
+        <button class="btn" id="skDelaiContinue" disabled onclick="goTo('sk-blocage')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-10 BLOCAGE -->
+    <section class="screen" id="screen-sk-blocage">
+      <div class="step-eyebrow">— Ton blocage —</div>
+      <h2 class="step-title chrome">Quel est ton blocage principal aujourd'hui ?</h2>
+      <p class="step-subtitle">Ce que tu ressens comme le frein numéro un.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('blocage', 'acquisition', this)"><div class="radio"></div><div>Acquisition — je ne sais pas comment trouver des clients qualifiés</div></button>
+        <button class="option" onclick="selectSkOption('blocage', 'conversion', this)"><div class="radio"></div><div>Conversion — j'ai du trafic mais peu de ventes</div></button>
+        <button class="option" onclick="selectSkOption('blocage', 'offre', this)"><div class="radio"></div><div>Offre et pricing — je ne sais pas comment me positionner</div></button>
+        <button class="option" onclick="selectSkOption('blocage', 'branding', this)"><div class="radio"></div><div>Branding et marque — mon image n'est pas claire ou pas assez forte</div></button>
+        <button class="option" onclick="selectSkOption('blocage', 'operations', this)"><div class="radio"></div><div>Opérations et délégation — je suis bouffé par l'opérationnel</div></button>
+        <button class="option" onclick="selectSkOption('blocage', 'mental', this)"><div class="radio"></div><div>Posture et mental — je doute, je procrastine, je n'arrive pas à scaler</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-delai')">← Retour</button>
+        <button class="btn" id="skBlocageContinue" disabled onclick="goTo('sk-invest')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-11 INVESTISSEMENT -->
+    <section class="screen" id="screen-sk-invest">
+      <div class="step-eyebrow">— Engagement —</div>
+      <h2 class="step-title chrome">Es-tu prêt à investir dans un accompagnement personnalisé pour y arriver ?</h2>
+      <p class="step-subtitle">Sois honnête — c'est uniquement pour qu'on adapte ce qu'on te propose.</p>
+      <div class="options">
+        <button class="option" onclick="selectSkOption('invest', 'oui-now', this)"><div class="radio"></div><div>Oui, je suis prêt à investir maintenant</div></button>
+        <button class="option" onclick="selectSkOption('invest', 'oui-discuss', this)"><div class="radio"></div><div>Oui, mais j'ai besoin d'en discuter d'abord</div></button>
+        <button class="option" onclick="selectSkOption('invest', 'pas-pret', this)"><div class="radio"></div><div>Pas tout de suite, je veux continuer à apprendre dans le Skool</div></button>
+      </div>
+      <div class="nav">
+        <button class="back-link" onclick="goTo('sk-blocage')">← Retour</button>
+        <button class="btn" id="skInvestContinue" disabled onclick="goTo('sk-email')">Continuer →</button>
+      </div>
+    </section>
+
+    <!-- SK-12 EMAIL -->
+    <section class="screen" id="screen-sk-email">
+      <div class="step-eyebrow">— Diagnostic Prêt —</div>
+      <h2 class="step-title chrome">Tu veux le recevoir par email ?</h2>
+      <p class="step-subtitle">Recommandé — tu pourras le relire à tête reposée et garder ton plan d'action sous la main.</p>
+      <div class="email-zone">
+        <div class="input-wrap">
+          <input type="email" class="input" id="skEmailInput" placeholder="ton@email.com" oninput="checkSkEmail()" />
+        </div>
+        <div style="margin-top:48px">
+          <button class="btn" id="skEmailBtn" disabled onclick="submitSkEmail()">Recevoir et voir maintenant →</button>
+        </div>
+        <div class="email-divider">— ou —</div>
+        <button class="skip-link" onclick="skipSkEmail()">Voir le diagnostic sans email →</button>
+      </div>
+      <div class="nav" style="margin-top:80px"><button class="back-link" onclick="goTo('sk-invest')">← Retour</button><div></div></div>
+    </section>
+
+    <!-- SK-13 LOADER -->
+    <section class="screen" id="screen-sk-loader">
+      <div class="loader">
+        <div class="loader-orb"><div class="loader-orb-core"></div></div>
+        <div class="loader-text">Analyse en cours...</div>
+      </div>
+    </section>
+
+    <!-- SK-14 DIAGNOSTIC -->
+    <section class="screen" id="screen-sk-diagnostic">
+      <div class="diag-eyebrow">— Diagnostic Final —</div>
+      <h1 class="diag-greeting chrome"><span id="skDiagGreeting"></span>, voici ton diagnostic.</h1>
+      <div class="divider-or"></div>
+      <div id="skDiagText" style="max-width:720px; margin:0 auto;"></div>
+      <div style="margin-top:60px; text-align:center;" id="skDiagCTA"></div>
+    </section>
+
+    <!-- SK-15 STAY (route si pas prêt à investir) -->
+    <section class="screen" id="screen-sk-stay">
+      <div class="diag-eyebrow">— On t'attend —</div>
+      <h1 class="diag-greeting chrome"><span id="skStayGreeting"></span>, continue ton chemin.</h1>
+      <div class="divider-or"></div>
+      <p style="font-size:18px; line-height:1.8; max-width:680px; margin:0 auto 48px; color:var(--text); text-align:center;">
+        Continue à exécuter ce qu'on enseigne dans le Skool GENESYS. Tu y as toutes les formations, les lives hebdo, la communauté, et l'accès direct à notre équipe.
+        <br><br>
+        Quand tu seras prêt à passer la vitesse supérieure avec un accompagnement personnalisé, on t'attend pour un appel. Reviens à ce moment-là.
+      </p>
+      <div style="text-align:center;">
+        <a href="https://www.skool.com/genesys" target="_blank" rel="noopener"><button class="btn cta-large">Retour au Skool GENESYS →</button></a>
+      </div>
+    </section>
+
     <footer>GENESYS AGENCY</footer>
   </div>
 </main>
@@ -2324,7 +2701,23 @@ const STATE = {
   email: '',
   answers: {},
   questionIndex: 0,
-  history: ['hero']
+  history: ['entry']
+};
+
+// Branche A — données spécifiques aux membres Skool
+const SK = {
+  prenom: '',
+  whatsapp: '',
+  niveau: null,
+  boutique: null,
+  niche: null,
+  anciennete: null,
+  caActuel: null,
+  caCible: null,
+  delai: null,
+  blocage: null,
+  invest: null,
+  email: ''
 };
 
 const QUESTIONS = {
@@ -2532,6 +2925,38 @@ function goTo(screen, push = true) {
 }
 
 function updateProgress(screen) {
+  // Branche A — entry + SK : progression dédiée
+  if (screen === 'entry') {
+    const ind = document.getElementById('stepIndicator');
+    if (ind) ind.textContent = '— · —';
+    return;
+  }
+  if (screen && screen.startsWith('sk-')) {
+    const skTotal = (SK.boutique === false) ? 10 : 12;
+    const skMap = {
+      'sk-prenom': 1,
+      'sk-whatsapp': 2,
+      'sk-niveau': 3,
+      'sk-boutique': 4,
+      'sk-niche': 5,
+      'sk-anciennete': 6,
+      'sk-ca-actuel': SK.boutique === true ? 7 : 5,
+      'sk-ca-cible': SK.boutique === true ? 8 : 6,
+      'sk-delai': SK.boutique === true ? 9 : 7,
+      'sk-blocage': SK.boutique === true ? 10 : 8,
+      'sk-invest': SK.boutique === true ? 11 : 9,
+      'sk-email': SK.boutique === true ? 12 : 10,
+      'sk-loader': skTotal,
+      'sk-diagnostic': skTotal,
+      'sk-stay': skTotal
+    };
+    const skStep = skMap[screen] || 1;
+    const ind = document.getElementById('stepIndicator');
+    if (ind) ind.textContent = String(skStep).padStart(2,'0') + ' / ' + String(skTotal).padStart(2,'0');
+    return;
+  }
+
+  // Branche B — flow non-membre (existant)
   const total = getStepTotal();
   const nbQuestions = STATE.niveau ? QUESTIONS[STATE.niveau].length : 5;
   let step = 1;
@@ -2640,6 +3065,156 @@ function submitEmail() {
 function skipEmail() {
   STATE.email = null;
   startDiagnostic();
+}
+
+// ─────────────────────────────────────────────────────────
+// BRANCHE A — MEMBRE SKOOL : HANDLERS
+// ─────────────────────────────────────────────────────────
+
+function entryChoice(type) {
+  if (type === 'member') {
+    goTo('sk-prenom');
+  } else {
+    goTo('hero');
+  }
+}
+
+function checkSkPrenom() {
+  const v = document.getElementById('skPrenomInput').value.trim();
+  document.getElementById('skPrenomBtn').disabled = v.length < 2;
+}
+
+function saveSkPrenom() {
+  let v = document.getElementById('skPrenomInput').value.trim();
+  v = v.charAt(0).toUpperCase() + v.slice(1).toLowerCase();
+  SK.prenom = v;
+  goTo('sk-whatsapp');
+}
+
+function checkSkWhatsapp() {
+  const v = document.getElementById('skWhatsappInput').value.trim();
+  const digits = v.replace(/[^0-9]/g, '');
+  document.getElementById('skWhatsappBtn').disabled = digits.length < 6;
+}
+
+function saveSkWhatsapp() {
+  SK.whatsapp = document.getElementById('skWhatsappInput').value.trim();
+  goTo('sk-niveau');
+}
+
+function setSkNiveau(niveau) {
+  SK.niveau = niveau;
+  goTo('sk-boutique');
+}
+
+function setSkBoutique(active, btn) {
+  document.querySelectorAll('#skBoutiqueOptions .option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  SK.boutique = active;
+  setTimeout(() => {
+    if (active) goTo('sk-niche');
+    else goTo('sk-ca-actuel');
+  }, 220);
+}
+
+function selectSkOption(field, value, btn) {
+  const parent = btn.closest('.options');
+  parent.querySelectorAll('.option').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  SK[field] = value;
+  const continueIds = {
+    niche: 'skNicheContinue',
+    anciennete: 'skAncienneteContinue',
+    caActuel: 'skCAActuelContinue',
+    caCible: 'skCACibleContinue',
+    delai: 'skDelaiContinue',
+    blocage: 'skBlocageContinue',
+    invest: 'skInvestContinue'
+  };
+  const btnId = continueIds[field];
+  if (btnId) {
+    const btnEl = document.getElementById(btnId);
+    if (btnEl) btnEl.disabled = false;
+  }
+}
+
+function prevSkCAActuel() {
+  if (SK.boutique === true) goTo('sk-anciennete');
+  else goTo('sk-boutique');
+}
+
+function checkSkEmail() {
+  const v = document.getElementById('skEmailInput').value.trim();
+  const ok = /^[\w._%+-]+@[\w.-]+\.[A-Za-z]{2,}$/.test(v);
+  document.getElementById('skEmailBtn').disabled = !ok;
+}
+
+function submitSkEmail() {
+  SK.email = document.getElementById('skEmailInput').value.trim();
+  startSkDiagnostic();
+}
+
+function skipSkEmail() {
+  SK.email = '';
+  startSkDiagnostic();
+}
+
+function startSkDiagnostic() {
+  goTo('sk-loader');
+  setTimeout(() => {
+    if (SK.invest === 'pas-pret') {
+      document.getElementById('skStayGreeting').textContent = SK.prenom;
+      goTo('sk-stay');
+    } else {
+      renderSkDiagnostic();
+      goTo('sk-diagnostic');
+    }
+  }, 2000);
+}
+
+function renderSkDiagnostic() {
+  document.getElementById('skDiagGreeting').textContent = SK.prenom;
+
+  const caActuelLabel = {
+    'lt1k': 'moins de 1 000 € par mois',
+    '1k5k': 'entre 1 000 et 5 000 € par mois',
+    '5k15k': 'entre 5 000 et 15 000 € par mois',
+    '15k50k': 'entre 15 000 et 50 000 € par mois',
+    'gt50k': 'plus de 50 000 € par mois'
+  }[SK.caActuel] || '—';
+
+  const caCibleLabel = {
+    '10k': '10 000 € par mois',
+    '30k': '30 000 € par mois',
+    '50k': '50 000 € par mois',
+    '100k': '100 000 € par mois',
+    'gt200k': '200 000 € par mois et plus'
+  }[SK.caCible] || '—';
+
+  const delaiLabel = {
+    '3m': '3 mois',
+    '6m': '6 mois',
+    '12m': '12 mois',
+    '24m': '18 à 24 mois'
+  }[SK.delai] || '—';
+
+  const blocageLabel = {
+    'acquisition': "trouver des clients qualifiés (acquisition)",
+    'conversion': "transformer ton trafic en ventes (conversion)",
+    'offre': "ton positionnement et ton pricing",
+    'branding': "construire une marque qui inspire",
+    'operations': "sortir de l'opérationnel et déléguer",
+    'mental': "ta posture et ton mental"
+  }[SK.blocage] || '—';
+
+  const para1 = `Tu fais aujourd'hui ${caActuelLabel}. Tu vises ${caCibleLabel} d'ici ${delaiLabel}. Ton blocage principal : ${blocageLabel}.`;
+  const para2 = `À ton niveau, ce qui débloque la situation, ce n'est pas une formation supplémentaire dans le Skool. C'est un regard externe précis sur ce qui te freine, et un système calibré sur ton blocage spécifique. C'est exactement le rôle de notre programme d'accompagnement personnalisé.`;
+  const ctaHTML = `<button class="btn cta-large" onclick="goTo('programme')">Voir le programme d'accompagnement →</button>`;
+
+  document.getElementById('skDiagText').innerHTML =
+    `<p style="font-size:18px; line-height:1.8; color: var(--text); max-width: 720px; margin: 0 auto 28px;">${para1}</p>` +
+    `<p style="font-size:18px; line-height:1.8; color: var(--text-2); max-width: 720px; margin: 0 auto;">${para2}</p>`;
+  document.getElementById('skDiagCTA').innerHTML = ctaHTML;
 }
 
 // ─────────────────────────────────────────────────────────
@@ -2866,7 +3441,7 @@ function loadState() {
       const parsed = JSON.parse(s);
       Object.assign(STATE, parsed);
       const last = STATE.history[STATE.history.length - 1];
-      if (last && last !== 'hero') {
+      if (last && last !== 'hero' && last !== 'entry') {
         if (last === 'question') showQuestion();
         else { showScreen(last); updateProgress(last); }
       }
