@@ -464,21 +464,26 @@
     background: rgba(91, 139, 201, 0.08);
   }
   .entry-card.featured::before {
-    content: '★ Membre GENESYS';
+    content: '★ MEMBRE GENESYS';
     position: absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--chrome-2);
+    background: linear-gradient(135deg, #FFFFFF 0%, #DCEEFF 50%, #FFFFFF 100%);
     color: #0a1628;
-    padding: 6px 16px;
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    padding: 9px 22px;
+    font-size: 12px;
+    letter-spacing: 0.24em;
     font-family: 'Cinzel', serif;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
     white-space: nowrap;
-    z-index: 2;
+    z-index: 3;
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    box-shadow:
+      0 0 18px rgba(165, 216, 255, 0.75),
+      0 0 38px rgba(91, 139, 201, 0.4),
+      0 2px 8px rgba(0, 0, 0, 0.35);
   }
   .entry-card-orb {
     width: 64px;
