@@ -425,7 +425,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 28px;
     max-width: 880px;
-    margin: 56px auto 0;
+    margin: 32px auto 0;
   }
   .entry-card {
     position: relative;
@@ -516,8 +516,37 @@
     margin-top: auto;
   }
   @media (max-width: 768px) {
-    .entry-cards { grid-template-columns: 1fr; gap: 18px; margin-top: 36px; }
+    .entry-cards { grid-template-columns: 1fr; gap: 18px; margin-top: 24px; }
     .entry-card { padding: 36px 22px 28px; }
+  }
+
+  /* ─── EXPLICATION GENESYS (sous les 2 cartes d'entrée) ─── */
+  .entry-info {
+    max-width: 720px;
+    margin: 56px auto 0;
+    padding: 24px 28px;
+    background: rgba(15, 30, 60, 0.4);
+    border: 1px solid rgba(165, 216, 255, 0.15);
+    text-align: center;
+  }
+  .entry-info-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--chrome-3);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .entry-info p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-2);
+    font-style: italic;
+    margin: 0;
+  }
+  @media (max-width: 768px) {
+    .entry-info { padding: 20px 18px; margin-top: 36px; }
+    .entry-info p { font-size: 13px; }
   }
 
   .level-card {
@@ -1893,7 +1922,7 @@
           <span class="line">Avant de commencer,</span>
           <span class="line">dis-moi où tu en es.</span>
         </h1>
-        <p class="hero-sub">Choisis ce qui te correspond le mieux pour qu'on adapte ton parcours.</p>
+        <p class="hero-sub">Deux options en dessous — choisis celle qui te correspond pour qu'on adapte ton parcours.</p>
         <div class="entry-cards">
           <button class="entry-card featured" onclick="entryChoice('member')">
             <div class="entry-card-orb"></div>
@@ -1907,6 +1936,10 @@
             <div class="entry-card-desc">Tu découvres GENESYS et tu veux qu'on identifie ce qui bloque ton business.</div>
             <div class="entry-card-cta">Continuer →</div>
           </button>
+        </div>
+        <div class="entry-info">
+          <div class="entry-info-eyebrow">— Tu ne connais pas encore GENESYS ? —</div>
+          <p>GENESYS, c'est notre Skool — la plateforme privée qui combine une communauté de plus de 100 entrepreneurs francophones, un Classroom complet de formations e-commerce, des lives hebdomadaires avec notre équipe, et un accès direct pour poser tes questions au quotidien.</p>
         </div>
       </div>
     </section>
