@@ -469,21 +469,26 @@
     top: 0;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #FFFFFF 0%, #DCEEFF 50%, #FFFFFF 100%);
-    color: #0a1628;
-    padding: 9px 22px;
-    font-size: 12px;
-    letter-spacing: 0.24em;
+    background: #0a1628 !important;
+    color: #DCEEFF !important;
+    -webkit-text-fill-color: #DCEEFF !important;
+    background-clip: border-box !important;
+    -webkit-background-clip: border-box !important;
+    padding: 10px 24px;
+    font-size: 13px;
+    letter-spacing: 0.26em;
     font-family: 'Cinzel', serif;
     font-weight: 700;
     text-transform: uppercase;
     white-space: nowrap;
     z-index: 3;
-    border: 1px solid rgba(255, 255, 255, 0.95);
+    border: 1.5px solid #A5D8FF;
+    text-shadow: 0 0 10px rgba(220, 238, 255, 0.85), 0 0 22px rgba(165, 216, 255, 0.55);
     box-shadow:
-      0 0 18px rgba(165, 216, 255, 0.75),
-      0 0 38px rgba(91, 139, 201, 0.4),
-      0 2px 8px rgba(0, 0, 0, 0.35);
+      0 0 22px rgba(165, 216, 255, 0.9),
+      0 0 44px rgba(91, 139, 201, 0.55),
+      inset 0 0 14px rgba(165, 216, 255, 0.18),
+      0 3px 10px rgba(0, 0, 0, 0.5);
   }
   .entry-card-orb {
     width: 64px;
